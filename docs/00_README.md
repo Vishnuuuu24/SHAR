@@ -24,7 +24,7 @@ If documents conflict, use the higher item and update the lower item before impl
 - The primary 14-label result will use weak/noisy training labels and an official-interval-derived, event-only test protocol. The original UCF intervals are useful but imperfect, so the wording must remain exact.
 - No manual annotation is required. Independent published annotations are used for evaluation: UCF-Crime2Local for surveillance boxes, COCO for masks, and optionally AVA v2.2 for movie action localization.
 - Pseudo-labels are optional ROI proposals or training auxiliaries only. They cannot be used as evaluation ground truth.
-- The base remains YOLO11 for the custom-module study. YOLO26 is an optional current official comparison, not a silent base swap.
+- YOLO11 remains the pinned stock ROI teacher. Custom detector modules are deferred; YOLO26 is an optional current official comparison only if independently labeled detector work is revived.
 - The SEMSCNN-inspired 2-D visual head is a core, outcome-gated hypothesis. Gaussian fusion, detector Slide Loss, and shallow MSDAM placement are deferred research notes until independent localization labels and a new owner decision justify the added work.
 
 ## Immediate attention gates
