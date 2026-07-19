@@ -1,0 +1,6 @@
+# Local datasets are intentionally excluded from version control.
+/Datasets/
+
+# macOS metadata
+.DS_Store
+._*
