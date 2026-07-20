@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0.0",
+  "ignored_names": [".DS_Store"],
+  "ignored_prefixes": ["._"],
+  "datasets": [
+    {
+      "dataset_id": "ucf_crime_kaggle_frames",
+      "root": "Datasets/UCF Crime Dataset Kaggle",
+      "include_extensions": [".png"],
+      "component_rules": [
+        {"prefix": "Train", "component_id": "ucf_kaggle_train_frames"},
+        {"prefix": "Test", "component_id": "ucf_kaggle_test_frames"}
+      ],
+      "group_depth": 2,
+      "expectations": {
+        "total_files": 1377653,
+        "prefix_counts": {
+          "Train": 1266345,
+          "Test": 111308
+        },
+        "required_child_directories": {
+          "Train": ["Abuse", "Arrest", "Arson", "Assault", "Burglary", "Explosion", "Fighting", "NormalVideos", "RoadAccidents", "Robbery", "Shooting", "Shoplifting", "Stealing", "Vandalism"],
+          "Test": ["Abuse", "Arrest", "Arson", "Assault", "Burglary", "Explosion", "Fighting", "NormalVideos", "RoadAccidents", "Robbery", "Shooting", "Shoplifting", "Stealing", "Vandalism"]
+        },
+        "image_extensions": [".png"],
+        "allowed_resolutions": ["64x64"]
+      }
+    },
+    {
+      "dataset_id": "cuhk_avenue",
+      "root": "Datasets/CUHK Avenue",
+      "include_extensions": [],
+      "component_rules": [
+        {"prefix": "Avenue Dataset/training_videos", "component_id": "avenue_training_media"},
+        {"prefix": "Avenue Dataset/testing_videos", "component_id": "avenue_testing_media"},
+        {"prefix": "Avenue Dataset/training_vol", "component_id": "avenue_training_volumes"},
+        {"prefix": "Avenue Dataset/testing_vol", "component_id": "avenue_testing_volumes"},
+        {"prefix": "ground_truth_demo/testing_label_mask", "component_id": "avenue_demo_annotations"},
+        {"prefix": "ground_truth_demo/testing_videos", "component_id": "avenue_demo_media"},
+        {"prefix": "ground_truth_demo", "component_id": "avenue_demo_support"}
+      ],
+      "group_depth": 2,
+      "expectations": {
+        "prefix_extension_counts": [
+          {"prefix": "Avenue Dataset/training_videos", "extension": ".avi", "count": 16},
+          {"prefix": "Avenue Dataset/testing_videos", "extension": ".avi", "count": 21}
+        ]
+      }
+    }
+  ]
+}

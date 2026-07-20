@@ -54,7 +54,7 @@ The complete Kaggle Test folders may be scored only as **full-directory inherite
 
 ## 5. No-manual-annotation protocol
 
-- Stock detector outputs are ROI proposals, stored with checkpoint digest, threshold, and `label_source=teacher_roi`.
+- Stock detector outputs are ROI proposals with `label_scope=teacher_roi` and `label_source=teacher`; store the exact checkpoint/version/digest and threshold in the linked provenance record.
 - Teacher outputs are never copied into evaluation ground-truth files and never used to compute headline mAP against themselves.
 - Optional future localization uses published UCF-Crime2Local, COCO, or AVA annotations.
 - Manual visual review may diagnose data mapping, but no success criterion depends on creating or correcting labels.

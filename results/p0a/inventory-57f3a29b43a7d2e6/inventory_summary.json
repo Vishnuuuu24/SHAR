@@ -1,0 +1,120 @@
+{
+  "combined_content_tree_sha256": "57f3a29b43a7d2e6f88470edad75d810203bfa5c5978f8fc60dbb524a15da52a",
+  "config_path": "data/registry/local_inventory.json",
+  "config_sha256": "62ecd60f93a29daa1a58e997ebc517b33e74e29c3e262c25643cd219636b7087",
+  "datasets": [
+    {
+      "component_counts": {
+        "ucf_kaggle_test_frames": 111308,
+        "ucf_kaggle_train_frames": 1266345
+      },
+      "content_tree_sha256": "919ce93cdfeb8992b00e2c303fcfc02be57f06a46ec98c8daad7c71ca4fe0257",
+      "dataset_id": "ucf_crime_kaggle_frames",
+      "error_count": 0,
+      "errors": [],
+      "expectation_issues": [],
+      "extension_counts": {
+        ".png": 1377653
+      },
+      "file_count": 1377653,
+      "group_counts": {
+        "Test/Abuse": 297,
+        "Test/Arrest": 3365,
+        "Test/Arson": 2793,
+        "Test/Assault": 2657,
+        "Test/Burglary": 7657,
+        "Test/Explosion": 6510,
+        "Test/Fighting": 1231,
+        "Test/NormalVideos": 64952,
+        "Test/RoadAccidents": 2663,
+        "Test/Robbery": 835,
+        "Test/Shooting": 7630,
+        "Test/Shoplifting": 7623,
+        "Test/Stealing": 1984,
+        "Test/Vandalism": 1111,
+        "Train/Abuse": 19076,
+        "Train/Arrest": 26397,
+        "Train/Arson": 24421,
+        "Train/Assault": 10360,
+        "Train/Burglary": 39504,
+        "Train/Explosion": 18753,
+        "Train/Fighting": 24684,
+        "Train/NormalVideos": 947768,
+        "Train/RoadAccidents": 23486,
+        "Train/Robbery": 41493,
+        "Train/Shooting": 7140,
+        "Train/Shoplifting": 24835,
+        "Train/Stealing": 44802,
+        "Train/Vandalism": 13626
+      },
+      "ok_count": 1377653,
+      "prefix_counts": {
+        "Test": 111308,
+        "Train": 1266345
+      },
+      "prefix_extension_counts": {
+        "Test|.png": 111308,
+        "Train|.png": 1266345
+      },
+      "resolution_counts": {
+        "64x64": 1377653
+      },
+      "root": "Datasets/UCF Crime Dataset Kaggle",
+      "total_bytes": 11573357152
+    },
+    {
+      "component_counts": {
+        "avenue_demo_annotations": 21,
+        "avenue_demo_support": 2,
+        "avenue_testing_media": 21,
+        "avenue_testing_volumes": 21,
+        "avenue_training_media": 16,
+        "avenue_training_volumes": 16
+      },
+      "content_tree_sha256": "54c61c1c0fda0c793f2a3cd1db1cad388c96dfec313426bd350f019e936b2e56",
+      "dataset_id": "cuhk_avenue",
+      "error_count": 0,
+      "errors": [],
+      "expectation_issues": [],
+      "extension_counts": {
+        ".avi": 37,
+        ".m": 1,
+        ".mat": 58,
+        ".txt": 1
+      },
+      "file_count": 97,
+      "group_counts": {
+        "Avenue Dataset/testing_videos": 21,
+        "Avenue Dataset/testing_vol": 21,
+        "Avenue Dataset/training_videos": 16,
+        "Avenue Dataset/training_vol": 16,
+        "ground_truth_demo/Readme.txt": 1,
+        "ground_truth_demo/ground_truth_show.m": 1,
+        "ground_truth_demo/testing_label_mask": 21
+      },
+      "ok_count": 97,
+      "prefix_counts": {
+        "Avenue Dataset/testing_videos": 21,
+        "Avenue Dataset/training_videos": 16
+      },
+      "prefix_extension_counts": {
+        "Avenue Dataset/testing_videos|.avi": 21,
+        "Avenue Dataset/training_videos|.avi": 16
+      },
+      "resolution_counts": {},
+      "root": "Datasets/CUHK Avenue",
+      "total_bytes": 830450056
+    }
+  ],
+  "elapsed_seconds": 162.087,
+  "finished_at_utc": "2026-07-20T05:01:47.804991+00:00",
+  "git": {
+    "revision": "abab9267c472a6aa1255d0794101952fb7970fae",
+    "worktree_status": "M .gitignore\n M docs/DATA_SPEC.md\n M docs/DECISIONS.md\n M docs/PROJECT_STATUS.md\n?? data/\n?? docs/P0A_WORK_ITEM.md\n?? scripts/\n?? tests/"
+  },
+  "kind": "P0A local content inventory; not a training or research result",
+  "scanner_sha256": "aad09e8180c62d5684e6a6869e68e0d5bcfca5bb702cf99a61ad28dfa18e1a55",
+  "schema_version": "1.0.0",
+  "started_at_utc": "2026-07-20T04:59:05.718884+00:00",
+  "workers": 8
+}

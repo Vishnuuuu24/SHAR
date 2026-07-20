@@ -1,0 +1,32 @@
+{
+  "checks": {
+    "V-D1": {
+      "issues": [],
+      "verdict": "PASS"
+    },
+    "V-D5": {
+      "issues": [],
+      "verdict": "PASS"
+    },
+    "V-D6": {
+      "issues": [],
+      "pending_local_license_evidence": [
+        "ucf_crime_kaggle_frames/ucf_kaggle_frames_media",
+        "ucf_crime_kaggle_frames/ucf_kaggle_folder_labels",
+        "cuhk_avenue/avenue_media",
+        "cuhk_avenue/avenue_masks"
+      ],
+      "safety_action": "Affected use and all raw redistribution remain blocked until terms evidence is supplied.",
+      "verdict": "BLOCKED"
+    }
+  },
+  "inventory_digest": "57f3a29b43a7d2e6f88470edad75d810203bfa5c5978f8fc60dbb524a15da52a",
+  "overall_verdict": "BLOCKED",
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "benefit_claim_made": false,
+    "headline_evaluation_performed": false,
+    "interval_mapping_performed": false,
+    "training_performed": false
+  }
+}

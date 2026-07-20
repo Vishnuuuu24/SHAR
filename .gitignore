@@ -4,3 +4,13 @@
 # macOS metadata
 .DS_Store
 ._*
+
+# Project-local Python environment and caches
+/.venv/
+__pycache__/
+*.py[cod]
+
+# Detailed local inventories contain licensed-data filenames. Aggregate
+# summaries and verification artifacts remain eligible for version control.
+/results/p0a/inventory-*/inventory_files.csv.gz
+/results/p0a/.inventory-tmp-*/

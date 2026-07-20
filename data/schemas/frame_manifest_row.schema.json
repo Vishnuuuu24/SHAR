@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shar.local/schemas/frame-manifest-row-1.0.0.json",
+  "title": "SHAR frame manifest row",
+  "description": "P0A-approved provenance contract. Quarantined unresolved files stay outside compliant manifests.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-column-order": [
+    "filepath",
+    "source_dataset",
+    "source_video_id",
+    "source_frame_index",
+    "label",
+    "label_scope",
+    "label_source",
+    "annotation_version",
+    "inside_official_interval",
+    "split",
+    "file_digest"
+  ],
+  "required": [
+    "filepath",
+    "source_dataset",
+    "source_video_id",
+    "source_frame_index",
+    "label",
+    "label_scope",
+    "label_source",
+    "annotation_version",
+    "inside_official_interval",
+    "split",
+    "file_digest"
+  ],
+  "properties": {
+    "filepath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "POSIX path relative to the configured dataset root; absolute and parent-traversal paths are prohibited."
+    },
+    "source_dataset": {"type": "string", "minLength": 1},
+    "source_video_id": {"type": "string", "minLength": 1},
+    "source_frame_index": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Index convention is declared by the P0B mapping artifact. Null is only for natively non-frame assets, never an unresolved required mapping."
+    },
+    "label": {"type": "string", "minLength": 1},
+    "label_scope": {
+      "type": "string",
+      "enum": ["video_inherited", "temporal_interval", "box", "instance_mask", "atomic_action", "teacher_roi"]
+    },
+    "label_source": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Exact official release, mirror snapshot, or the literal teacher source class."
+    },
+    "annotation_version": {"type": "string", "minLength": 1},
+    "inside_official_interval": {
+      "type": ["boolean", "null"],
+      "description": "Null for training, Normal, external-task, or not-yet-mapped rows; boolean for mapped anomalous UCF test rows."
+    },
+    "split": {"type": "string", "enum": ["train", "validation", "test"]},
+    "file_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"label_scope": {"const": "teacher_roi"}}, "required": ["label_scope"]},
+      "then": {"properties": {"label_source": {"const": "teacher"}}}
+    }
+  ]
+}

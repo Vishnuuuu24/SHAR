@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "approved_for": "P0A task and manifest contract freeze",
+  "primary_task": {
+    "name": "UCF 14-label weak/noisy frame classification",
+    "training_supervision": "weak/noisy video-label-inherited frames",
+    "canonical_labels": ["Abuse", "Arrest", "Arson", "Assault", "Burglary", "Explosion", "Fighting", "RoadAccidents", "Robbery", "Shooting", "Shoplifting", "Stealing", "Vandalism", "Normal"],
+    "folder_label_map": {"NormalVideos": "Normal"},
+    "primary_metric": "macro_f1",
+    "persisted_metrics": ["accuracy", "macro_precision", "macro_recall", "macro_f1", "per_class_f1", "confusion_matrix", "source_video_clustered_95pct_ci"]
+  },
+  "split_contract": {
+    "allowed_manifest_values": ["train", "validation", "test"],
+    "outer_split": "Preserve the source Train/Test organization.",
+    "validation": "Derive approximately 10% per class from Train, grouped by reconstructed source_video_id.",
+    "leakage_rule": "No source_video_id may cross train and validation.",
+    "unresolved_rule": "Keep unresolved source-video mappings outside compliant manifests in a separate quarantine report.",
+    "prohibited": ["frame-random split", "test-guided tuning"]
+  },
+  "evaluation_views": {
+    "headline": {
+      "name": "official-interval-derived event-only 14-label evaluation",
+      "membership": "Inside-interval anomalous test frames plus frames from official Normal test videos.",
+      "blocked_by": "B-001"
+    },
+    "sensitivity": {
+      "name": "full-directory inherited-label noisy proxy",
+      "membership": "Complete Kaggle Test folders with inherited folder labels.",
+      "must_be_separate": true
+    }
+  },
+  "manifest_contract": {
+    "format": "UTF-8 CSV with the exact header and stable row ordering",
+    "schema": "data/schemas/frame_manifest_row.schema.json",
+    "columns_in_order": ["filepath", "source_dataset", "source_video_id", "source_frame_index", "label", "label_scope", "label_source", "annotation_version", "inside_official_interval", "split", "file_digest"],
+    "null_semantics": {
+      "source_frame_index": "null only when the native asset has no applicable frame index; unresolved required mappings are quarantined instead",
+      "inside_official_interval": "null for training, Normal, external-task, and not-yet-mapped rows; boolean is required for mapped anomalous UCF test rows"
+    },
+    "index_base": "Declared per annotation release and mapping artifact during P0B; never inferred silently"
+  },
+  "teacher_boundary": {
+    "label_scope": "teacher_roi",
+    "label_source": "teacher",
+    "checkpoint_identity": "Store exact checkpoint/version/digest in the provenance record referenced by the run or derived artifact.",
+    "evaluation_ground_truth": false
+  },
+  "metric_separation": [
+    "UCF 14-label classification accuracy/F1",
+    "temporal VAD AUC/AP",
+    "COCO box/mask mAP",
+    "AVA Frame-mAP",
+    "UCF-Crime2Local localization metrics",
+    "CUHK Avenue native binary/region metrics"
+  ],
+  "prohibited_claims": [
+    "Folder labels are frame-level event ground truth.",
+    "Official intervals are clean or exhaustive ground truth.",
+    "Teacher ROIs are independent localization ground truth.",
+    "Task-native metrics can be ranked as one common score."
+  ]
+}
