@@ -1,6 +1,6 @@
 # Technical stack — SHAR
 
-> v2.0 · 2026-07-19 · Choices are provisional until Phase 0 freezes exact versions and checkpoints.
+> v3.0 · 2026-07-20 · Choices are provisional until Phase 0 freezes exact versions and checkpoints.
 
 ## Core future stack
 
@@ -16,7 +16,7 @@
 | Metrics | scikit-learn, torchmetrics, dataset-native evaluators | Validate against small hand-calculated fixtures; cluster uncertainty by video. |
 | Explainability | pinned Grad-CAM implementation | Qualitative artifact only. |
 | Configuration | YAML plus immutable manifest/config digests | Every result row must be reconstructable. |
-| Tracking | CSV/JSON artifacts; optional W&B | Local artifacts are authoritative; external service is optional. |
+| Tracking | Immutable CSV/JSON/JSONL artifacts plus concise `TRAINING_LOG.md`; optional W&B | Machine artifacts are authoritative; the Markdown ledger is an index; external service is optional. |
 
 ## Core project modules after the audit
 
@@ -27,6 +27,7 @@
 5. ResNet50 controls, temporal baseline, and SEMSCNN-inspired 2-D multiscale-SE head.
 6. CE, weighted CE, focal, and Balanced Softmax controls.
 7. Metric/provenance writers and video-clustered confidence intervals.
+8. Run lifecycle, immutable artifact closure, live project status, and concise training ledger support.
 
 No implementation file is created by this documentation pass.
 
@@ -50,7 +51,7 @@ SHAR/
   pipelines/           # future denoise, ROI, classify orchestration
   eval/                # metrics, confidence intervals, tables
   scripts/             # future entry points
-  results/             # immutable metric/provenance artifacts
-  docs/                # authoritative specification
+  results/             # immutable run manifests, seed telemetry/summaries, aggregates, verdicts
+  docs/                # authoritative specification, roadmap/control/status, concise training index
   papers/              # local PDFs; currently no JSON extractions
 ```

@@ -1,6 +1,6 @@
 # Validation plan — SHAR
 
-> v2.0 · 2026-07-19 · A claim is permitted only when its mapped check is green.
+> v3.0 · 2026-07-20 · A claim is permitted only when its mapped check is green.
 
 ## 1. Phase 0 data validation
 
@@ -15,7 +15,17 @@
 | V-D7 | Noise determinism | same file/config/global seed is bitwise identical across fresh interpreter processes and data-loader worker counts |
 | V-D8 | Compute readiness | MPS device/operation compatibility recorded; representative steady-state throughput measured; pre-run ETA/storage/memory range issued per `COMPUTE_POLICY.md` |
 
-## 2. Future unit/integration checks
+## 2. Execution-governance checks
+
+| ID | Check | Green condition |
+|---|---|---|
+| V-G1 | Sprint readiness | active work has sprint/work-item ID, governing IDs, scope/non-goals, dependencies, artifacts, DoD, verification, and blockers |
+| V-G2 | WIP and status | one active sprint/work item unless explicit independent parallelism is recorded; `PROJECT_STATUS.md` matches repository/artifacts |
+| V-G3 | Completion dimensions | code-, run-, and research-completion are stated separately; no result is inferred from code completion |
+| V-G4 | Training closure | every logical experiment has a concise ledger row; every attempt has an append-only event plus immutable metrics/summary/verdict/checkpoint-disposition artifacts, including failures |
+| V-G5 | Phase transition | every mandatory sprint gate links evidence; claims are `SUPPORTED`, `NOT_SUPPORTED`, or `INCONCLUSIVE`; owner/reviewer transition is recorded |
+
+## 3. Future unit/integration checks
 
 | Component | Required check |
 |---|---|
@@ -28,7 +38,7 @@
 | Metrics | fixture values match hand/scikit-learn/native-evaluator results; bootstrap resamples videos, not frames |
 | Provenance writer | run cannot finalize with missing config/code/data/annotation/checkpoint digest |
 
-## 3. Claim-to-check mapping
+## 4. Claim-to-check mapping
 
 | Proposed claim | Required validation | Green condition |
 |---|---|---|
@@ -40,7 +50,7 @@
 | ROI preprocessing helps | same classifier/config on full frame versus stock-teacher ROI | downstream macro-F1 improves consistently; detector mAP is not inferred |
 | External generalization | frozen mapping/protocol using dataset-native metric | separate table, no UCF metric comparison, license and domain limitations disclosed |
 
-## 4. Localization metric guard
+## 5. Localization metric guard
 
 No mAP may be reported unless predictions are compared with independent published annotations. Teacher-generated boxes/masks cannot validate that teacher or its descendants. If future detector work is promoted:
 
@@ -50,7 +60,7 @@ No mAP may be reported unless predictions are compared with independent publishe
 
 Every custom module requires stock baseline, one-module rows, combined row, three seeds where feasible, params/FLOPs/latency, and task-compatible labels.
 
-## 5. Statistical and reporting rules
+## 6. Statistical, run-closure, and reporting rules
 
 - Headline classification rows: seeds `{0,1,2}`, mean±std, and source-video-clustered 95% CI.
 - Pre-register primary metric, tail classes, sampling cap, early stopping, and model-selection rule from validation only.
@@ -58,8 +68,16 @@ Every custom module requires stock baseline, one-module rows, combined row, thre
 - A test-set-only improvement discovered after repeated tuning is exploratory, not confirmatory.
 - Trace every paper number to a result artifact; blanks remain blank until a run exists.
 - Full research rows may not be replaced by calibration/smoke results or speed-driven reduced-data/model runs.
+- Experiment closure follows `PROJECT_CONTROL.md`; objective verdict vocabulary and concise history follow `TRAINING_LOG.md`.
+- Every full headline experiment registers its objective, control, one material change, primary metric/gate, validation selection rule, and seeds before execution.
+- Reconcile actual runtime, peak memory, storage, stop reason, checkpoint disposition, and failures against the pre-run record before declaring run-complete.
+- `GOOD` means a preregistered gate passed; `GOOD_ENOUGH`, `BAD`, and `INCONCLUSIVE` remain valid completed research outcomes. `INVALID` evidence cannot support a claim.
 
-## 6. Comparison hygiene
+## 7. Mandatory stop checks
+
+Stop the affected work and record a blocker on source-video leakage, official-interval mapping ambiguity, teacher/pseudo-label contamination of ground truth, missing provenance/digests, hand/native metric disagreement, license uncertainty, irreproducible deterministic fixtures, unsafe resource behavior, or unapproved material scope change. Continue only independent safe work.
+
+## 8. Comparison hygiene
 
 - Dwivedi 98.87 is not directly comparable; its exact class count remains unverified from the accessible primary source, so do not repeat “3-class.”
 - Zaidi 90.14 is a six-category custom task, not the UCF 14-label protocol.

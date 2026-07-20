@@ -1,6 +1,6 @@
 # Requirements — SHAR
 
-> v2.0 · 2026-07-19 · FR = functional, NFR = non-functional, DR = data.
+> v3.0 · 2026-07-20 · FR = functional, NFR = non-functional, DR = data.
 
 ## Functional requirements
 
@@ -8,7 +8,7 @@
 - **FR-2 Split integrity:** all train/validation partitions are grouped by source video and approximately stratified by class. No source video may span partitions.
 - **FR-3 UCF evaluation views:** produce (a) the headline official-interval-derived event-only test view and (b) a separately named inherited-label full-directory noisy-proxy view. Frames outside official intervals in anomalous test videos are excluded from the headline view.
 - **FR-4 Noise injection:** Gaussian, salt-and-pepper, speckle, and low-light transformations are parameterized and reproducible from a cryptographic filepath/content digest plus global seed.
-- **FR-5 Denoisers:** expose median, Gaussian blur, bilateral, NLM, ESVDAE, and one pinned pretrained modern restoration baseline through a uniform interface.
+- **FR-5 Denoisers:** expose median, Gaussian blur, bilateral, NLM, a reproducible denoising-VAE control, any separately justified ESVDAE component, and one pinned pretrained modern restoration baseline through a uniform interface. The ESVDAE name/claim remains blocked until its exact objective is registered.
 - **FR-6 RESULT 1 metrics:** PSNR and SSIM use the uncorrupted frame as reference; downstream accuracy and macro-F1 compare noisy versus denoised inputs under a frozen evaluation protocol.
 - **FR-7 ROI evidence:** use a pinned stock detector for deterministic ROI proposals and measure its value only through downstream full-frame-versus-ROI classification. Optional localization metrics require independent UCF-Crime2Local, COCO, or AVA annotations.
 - **FR-8 Pseudo-label boundary:** model-generated UCF labels may be used only as deterministic ROI proposals or a separately ablated auxiliary training signal. They must carry `label_source=teacher` and never enter ground-truth evaluation files.
@@ -18,6 +18,8 @@
 - **FR-12 Explainability:** generate a fixed, provenance-recorded gallery of correct and incorrect classifications. Qualitative review is not a quantitative success criterion.
 - **FR-13 Experiment provenance:** every run records config digest, code revision, seed, package/model versions, dataset manifest digest, annotation version, hardware, and metric artifact paths.
 - **FR-14 License gate:** no external dataset enters a run or release until its media and annotation access/license terms and redistribution constraints are recorded.
+- **FR-15 Execution control:** every work item is attached to one active roadmap sprint with governing requirement/decision/validation IDs, prerequisites, explicit non-goals, artifacts, DoD, blockers, and a live status update. Code-, run-, and research-completion are reported separately.
+- **FR-16 Training history:** every pilot/full logical experiment and any decision-changing smoke/calibration has one concise append-preserving `TRAINING_LOG.md` row linked to an immutable append-only attempt stream and machine artifacts. Failed, aborted, invalid, neutral, and negative attempts are retained; verbose epoch telemetry stays outside Markdown.
 
 ## Non-functional requirements
 
@@ -29,13 +31,14 @@
 - **NFR-6 Terminology:** use “C2PSA,” “weak/noisy video-label-inherited frames,” and “official-interval-derived event-only evaluation.” Do not call interval labels clean ground truth.
 - **NFR-7 No manual-annotation dependency:** the core success path relies only on existing annotations; manual review may be optional qualitative inspection, never an exit gate.
 - **NFR-8 Pre-run honesty:** before a run expected to exceed 30 minutes, provide a measured throughput-based wall-time range, completion window, storage estimate, peak unified-memory range, and fallback uncertainties as specified in `COMPUTE_POLICY.md`; re-estimate if the first full epoch differs by >20%.
+- **NFR-9 Gate integrity:** sprint/phase advancement requires linked verification for every mandatory DoD item. A positive result is never an exit requirement; evaluated claims end as `SUPPORTED`, `NOT_SUPPORTED`, or `INCONCLUSIVE`.
 
 ## Data requirements
 
 - **DR-1 Resolved:** the local Kaggle UCF mirror contains 64×64 images; verified totals are 1,266,345 train and 111,308 test images.
 - **DR-2:** acquire and checksum official UCF temporal annotations before the classification baseline; verify filename/frame-index alignment with known examples.
-- **DR-3:** original-resolution UCF videos are required only for compatible Stage 2/ROI experiments and only if access terms are recorded. Never upsample 64×64 images and imply recovered detail.
-- **DR-4:** acquire UCF-Crime2Local annotations for the core surveillance localization benchmark; record its six-class scope and split.
+- **DR-3:** original-resolution UCF videos are required only for activated compatible ROI experiments and only if access terms are recorded. Never upsample 64×64 images and imply recovered detail.
+- **DR-4:** UCF-Crime2Local is conditional: acquire and record its six-class scope/split before reporting localization metrics or reviving custom-detector work. It does not block the core stock-ROI downstream-classification study.
 - **DR-5:** CUHK Avenue remains binary anomaly evaluation only. Its masks may not be reported as SHAR instance-segmentation ground truth.
 - **DR-6:** AVA, XD-Violence, MSAD, RareAnom, COCO, and all future data require a task/ontology mapping and license record in `DATA_SPEC.md` before use.
 - **DR-7:** VALU and FS-UCF-Crime remain watchlist sources until their complete annotation packages are publicly obtainable and verified.

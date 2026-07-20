@@ -1,21 +1,23 @@
 # AI agent guide — SHAR
 
-> v2.0 · 2026-07-19 · Read root `CLAUDE.md` and `docs/00_README.md` first.
+> v3.0 · 2026-07-20 · Read root `CLAUDE.md`, `docs/00_README.md`, and `docs/PROJECT_STATUS.md` first.
 
 ## Ground rules
 
-1. **Authority:** PRD → REQUIREMENTS → DATA_SPEC → ARCHITECTURE → PHASE_PLAN → VALIDATION_PLAN. Record resolutions in `DECISIONS.md` and evidence in `EVIDENCE_REGISTER.md`.
+1. **Authority and control:** follow the complete order in `00_README.md`; work only on the active sprint in `PROJECT_STATUS.md` under `PROJECT_CONTROL.md`. Record resolutions in `DECISIONS.md` and changed evidence in `EVIDENCE_REGISTER.md`.
 2. **Source quality:** primary paper/official code/official annotations/direct measurement > official metadata > reputable review > Reddit anecdote. Reddit never proves equations, novelty, labels, or majority consensus.
 3. **Local-paper honesty:** `papers/` currently contains ten PDFs and zero JSON extraction files. Never cite a nonexistent JSON or say a missing paper was locally full-read.
 4. **Label honesty:** video-label-inherited UCF frames and teacher ROIs are not frame-level ground truth. Official intervals are useful but not clean/exhaustive.
 5. **Task separation:** 14-label accuracy/F1, VAD AUC/AP, COCO mAP, AVA Frame-mAP, and UCF-Crime2Local localization metrics are not interchangeable.
 6. **No manual-label dependency:** core phases use existing annotations. Do not add a human annotation gate without a new owner decision.
-7. **No implementation before Phase 0:** data mapping, access/license, provenance, and unresolved-equation gates must be green.
+7. **Phase 0 boundary:** data/provenance/mapping/environment scaffolding, tests, and calibration are allowed. Research training, headline experiments, and benefit claims wait for the core Phase 0 exit gate.
 8. **Ablation discipline:** one material change per row; three seeds for headline results; report mean, variability, and video-clustered confidence intervals.
 9. **No forced wins:** negative or neutral results remain visible. If gain ≤ instability, the claim fails.
 10. **Terminology:** C2PSA, official-interval-derived event-only, weak/noisy video-label-inherited frames, and SEMSCNN-inspired 2-D multiscale-SE head.
-11. **Memory continuity:** after a significant milestone, write a concise project memory and one `MEMORY.md` index line pointing to the authoritative project document instead of duplicating it.
+11. **Continuity:** update `PROJECT_STATUS.md` before pause/handoff. When platform project memory is available and authorized, add one concise index pointer to the authoritative document; memory never replaces repository state.
 12. **Mac quality-first:** primary hardware is Apple M5 Pro with 48 GB unified memory. Follow `COMPUTE_POLICY.md`; use representative MPS calibration to report ETA before long runs and never silently shrink research runs for speed.
+13. **Training ledger:** open/close one concise row per pilot/full logical experiment and material calibration in `TRAINING_LOG.md`; append every individual attempt immutably and preserve failures/negative results without dumping epoch logs into Markdown.
+14. **Completion honesty:** report code-complete, run-complete, and research-complete separately. `DONE` requires linked verification, not an implementation assertion.
 
 ## Source pointers
 
@@ -33,6 +35,6 @@
 
 MSDAM, ASFF/Gaussian fusion, detector Slide Loss, custom segmentation, and YOLO26 comparison are research notes only. Do not implement them unless a new dated decision promotes the work with independent annotations and metrics.
 
-## Definition of done for a future experiment
+## Definition of done enforcement
 
-Config and manifest frozen; source/checkpoint/version digests recorded; relevant validation checks green; three headline seeds complete; metrics trace to immutable artifacts; negative results retained; claims updated; license constraints respected; milestone memory points back to the authoritative doc.
+The canonical work-item, sprint, experiment, phase, and project DoDs are in `PROJECT_CONTROL.md`; sprint-specific artifacts/checks are in `PHASE_PLAN.md`. Three seeds apply to registered headline/full comparisons, not routine smoke tests. No training milestone is done until its immutable artifacts, estimate-versus-actual reconciliation, verdict, claim impact, next action, and concise ledger entry are closed.

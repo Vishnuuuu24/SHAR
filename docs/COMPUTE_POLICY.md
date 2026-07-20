@@ -1,6 +1,6 @@
 # Compute and run policy — SHAR
 
-> v1.0 · 2026-07-19 · Primary machine: MacBook Pro, Apple M5 Pro, 48 GB unified memory.
+> v2.0 · 2026-07-20 · Primary machine: MacBook Pro, Apple M5 Pro, 48 GB unified memory.
 
 ## 1. Quality-first rule
 
@@ -26,7 +26,11 @@ Estimate from measured steady-state batches after warm-up:
 
 Use an honest range, not a single optimistic number. Re-estimate after the first full epoch if actual pace differs by more than 20%.
 
-## 3. Use the Mac effectively
+## 3. Required post-run reconciliation
+
+Before a run is marked complete, record actual wall time, peak memory, storage growth, throughput, fallback/thermal events, stop reason, best/resumable checkpoint disposition, and deviation from the pre-run estimate. Explain deviations above 20%. Link the immutable run summary and close the concise `TRAINING_LOG.md` entry in the same session; never paste epoch telemetry into the ledger.
+
+## 4. Use the Mac effectively
 
 - Prefer PyTorch’s `mps` backend and verify that tensors/model actually remain on MPS.
 - Record every CPU fallback or unsupported operation; a fallback that materially changes ETA must trigger a revised estimate.
@@ -38,12 +42,12 @@ Use an honest range, not a single optimistic number. Re-estimate after the first
 - Prevent sleep during an approved long run using a standard macOS keep-awake mechanism; do not disable thermal protections.
 - Close avoidable memory-heavy applications when the user agrees, but never terminate user work without permission.
 
-## 4. What is and is not downscaling
+## 5. What is and is not downscaling
 
 Allowed before a full run: tiny shape/unit tests, a short representative throughput calibration, one-class/one-batch loader checks, and a brief overfit diagnostic. These establish correctness and ETA.
 
 Not allowed as a headline substitute: fewer training videos/frames, lower resolution, fewer seeds, a smaller model, fewer planned epochs, or incomplete test evaluation chosen only to save time. Any scientifically motivated sampling design requires an explicit new decision and must remain separate from the full-data claim.
 
-## 5. Mac versus external accelerator
+## 6. Mac versus external accelerator
 
 The M5 Pro/48 GB Mac is the primary environment for data processing, baseline development, MPS-compatible training, denoising, classification, and evaluation. If an operation is CUDA-only or a full matrix would take impractically long, report that before starting; do not silently change the study. External NVIDIA compute is an optional execution target only after exact environment parity and owner approval.

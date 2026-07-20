@@ -1,6 +1,6 @@
 # Research decisions — SHAR
 
-> v2.0 · 2026-07-19 · Decisions from the Word-plan, local-paper, dataset, current-web, and Reddit sanity audit.
+> v3.0 · 2026-07-20 · Research and governance decisions; effective scope remains synchronized in higher-authority documents.
 
 | ID | Decision | Reason and consequence |
 |---|---|---|
@@ -20,3 +20,8 @@
 | D-14 | Keep YOLO11 as the stock ROI teacher; use an optional frozen YOLO26 like-for-like row only if labeled detector work is revived. | YOLO26 is the current official Ultralytics generation. YOLO12 uses the API but is community-driven, lacks official pretrained segmentation weights, and has documented stability/resource cautions. |
 | D-15 | Primary sources govern; Reddit is a documented sanity check only. | Reddit has useful practitioner warnings but no representative consensus for paper equations, dataset truth, or novelty. Claims are never accepted because “most Reddit users agree.” |
 | D-16 | Make the MacBook Pro M5 Pro/48 GB the primary quality-first execution target. | Use MPS with explicit fallback logging, full intended research settings, resumable runs, and measured pre-run time/storage/memory ranges. Calibration tests are allowed, but silent speed-driven downscaling is not. |
+| D-17 | Adopt a four-part execution-control system: `PHASE_PLAN`, `PROJECT_CONTROL`, `PROJECT_STATUS`, and `TRAINING_LOG`. | Stable roadmap, operating rules, live state, and growing run history change at different rates; separating them prevents stale status and duplicated scientific authority. |
+| D-18 | Permit Phase-0 validation/foundation implementation while keeping research training gated. | Phase 0 requires mapping, provenance, environment, tests, and compute calibration tooling; prohibiting all code made its own exit gate impossible. |
+| D-19 | Make original-resolution UCF and UCF-Crime2Local conditional rather than core blockers. | Original media is required only for activated high-resolution ROI work; independent localization annotations are required only for mAP/custom-detector work. The core stock-ROI study uses downstream classification. |
+| D-20 | Maintain one concise append-preserving training index linked to immutable append-only attempt artifacts. | Logical-experiment rows may advance through their lifecycle but are never deleted; every attempt—including failures and negative/invalid outcomes—remains reviewable without copying epoch telemetry into Markdown. |
+| D-21 | Separate code-complete, run-complete, and research-complete; completion does not require a positive result. | This prevents implementation or execution from being mistaken for evidence. Evaluated claims end as supported, not supported, or inconclusive. |

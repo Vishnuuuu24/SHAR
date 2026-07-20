@@ -1,6 +1,6 @@
 # SHAR documentation map
 
-> v2.0 · 2026-07-19 · Research specification only; no model implementation has started.
+> v3.0 · 2026-07-20 · Canonical map for research authority, execution control, and live state.
 
 ## Authority order
 
@@ -8,25 +8,32 @@
 2. `REQUIREMENTS.md` — testable functional, data, and non-functional requirements.
 3. `DATA_SPEC.md` — label semantics, datasets, splits, provenance, and metrics.
 4. `ARCHITECTURE.md` — design hypotheses and required ablations.
-5. `PHASE_PLAN.md` — build order and exit gates.
-6. `VALIDATION_PLAN.md` — checks that can support or reject each claim.
-7. `RISKS.md` — reviewer objections, failure modes, and scope cuts.
-8. `DECISIONS.md` — dated decisions made after the full source audit.
-9. `EVIDENCE_REGISTER.md` — claim-by-claim evidence and source status.
-10. `COMPUTE_POLICY.md` — M5 Pro/48 GB quality-first run and pre-run estimate rules.
-11. `TECH_STACK.md` and `AGENTS.md` — future implementation environment and builder rules.
+5. `PHASE_PLAN.md` — canonical phase/sprint roadmap, dependencies, artifacts, and exit gates.
+6. `PROJECT_CONTROL.md` — readiness, WIP, change control, blockers, layered DoDs, and transition rules.
+7. `VALIDATION_PLAN.md` — checks that can support or reject each claim.
+8. `RISKS.md` — reviewer objections, failure modes, and scope cuts.
+9. `DECISIONS.md` — dated research and governance decision audit trail.
+10. `EVIDENCE_REGISTER.md` — claim-by-claim evidence and source status.
+11. `COMPUTE_POLICY.md` — M5 Pro/48 GB quality-first run and pre/post-run estimate rules.
+12. `PROJECT_STATUS.md` — sole live current-phase/sprint/blocker/resume pointer; it cannot change research scope.
+13. `TRAINING_LOG.md` — concise operational training index; immutable artifacts remain the result evidence.
+14. `TECH_STACK.md` and `AGENTS.md` — implementation environment and builder enforcement rules.
 
-If documents conflict, use the higher item and update the lower item before implementation. The preserved `SHAR_Research_Plan.docx` is historical input rather than current authority.
+If documents conflict, use the higher item and synchronize every affected lower document before continuing. `DECISIONS.md` records why a resolution occurred but becomes effective only after the governing documents are updated. The preserved `SHAR_Research_Plan.docx` is historical input rather than current authority.
+
+## Execution entry
+
+After this map, read `AGENTS.md` and `PROJECT_STATUS.md`. Execute only the active sprint in `PHASE_PLAN.md` under `PROJECT_CONTROL.md`. Validation/data/provenance scaffolding is allowed in Phase 0; research training and headline experiments remain blocked until the core Phase 0 exit gate is green.
 
 ## Current research position
 
 - The local Kaggle mirror is verified at 64×64. It contains 1,266,345 train and 111,308 test images, but anomalous frames inherit a source-video class and are not frame-level event ground truth.
 - The primary 14-label result will use weak/noisy training labels and an official-interval-derived, event-only test protocol. The original UCF intervals are useful but imperfect, so the wording must remain exact.
-- No manual annotation is required. Independent published annotations are used for evaluation: UCF-Crime2Local for surveillance boxes, COCO for masks, and optionally AVA v2.2 for movie action localization.
+- No manual annotation is required. Independent published annotations may be used conditionally in their native tasks: UCF-Crime2Local for surveillance boxes, COCO for masks, and AVA v2.2 for movie action localization.
 - Pseudo-labels are optional ROI proposals or training auxiliaries only. They cannot be used as evaluation ground truth.
 - YOLO11 remains the pinned stock ROI teacher. Custom detector modules are deferred; YOLO26 is an optional current official comparison only if independently labeled detector work is revived.
 - The SEMSCNN-inspired 2-D visual head is a core, outcome-gated hypothesis. Gaussian fusion, detector Slide Loss, and shallow MSDAM placement are deferred research notes until independent localization labels and a new owner decision justify the added work.
 
 ## Immediate attention gates
 
-Before code is written, acquire and checksum: official UCF temporal annotations, original-resolution UCF videos if their access terms permit, and UCF-Crime2Local annotations. Record license/access terms for every external dataset. VALU and FS-UCF-Crime are watchlist items until their promised complete annotations are actually released and usable.
+Official UCF temporal annotations are the immediate core external dependency for real interval mapping and the headline evaluation. Original-resolution UCF videos are conditional on original-resolution ROI work; UCF-Crime2Local is conditional on localization metrics or revived custom-detector work. Record access/license terms before use. VALU and FS-UCF-Crime remain watchlist items until their complete annotation packages are obtainable and verified.

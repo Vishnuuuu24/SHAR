@@ -4,18 +4,18 @@
 >
 > Owners: Priyodip, Likith, Vishnu, Abijith
 >
-> Updated: 2026-07-19
+> Updated: 2026-07-20
 >
-> Status: research specification complete; implementation has not started.
+> Live status: always read `docs/PROJECT_STATUS.md`; do not maintain dynamic project state here.
 
 ## Start every session here
 
-1. Read `docs/00_README.md`, then `docs/AGENTS.md`.
+1. Read `docs/00_README.md`, `docs/AGENTS.md`, then the one-screen `docs/PROJECT_STATUS.md`.
 2. Use the authority order in `docs/00_README.md`; consult `docs/DECISIONS.md` and `docs/EVIDENCE_REGISTER.md` before repeating or changing a research claim.
 3. Check the current repository state and relevant files. Do not assume an older chat, the historical Word plan, or this file is newer than the audited documents.
-4. Do not implement models until the Phase 0 data, provenance, access/license, and compute-readiness gates in `docs/PHASE_PLAN.md` are green.
+4. Work only on the active sprint under `docs/PROJECT_CONTROL.md`. Phase-0 inventory, mapping, provenance, environment, test, and calibration tooling is allowed; research model training/headline experiments wait for the core Phase 0 gate.
 
-The Markdown documents under `docs/` are the current, decision-complete research specification. `SHAR_Research_Plan.docx` and the original proposal terminology are preserved historical inputs, not current implementation authority. If this file conflicts with a higher-authority research document, stop, resolve the conflict, and update both the decision and evidence registers.
+The Markdown documents under `docs/` are the governing specification, with unresolved items explicitly gated. `SHAR_Research_Plan.docx` and the original proposal terminology are preserved historical inputs, not current implementation authority. If this file conflicts with a higher-authority research document, stop, resolve the conflict, update the decision register, and update the evidence register when supporting evidence changed.
 
 ## Project purpose
 
@@ -39,6 +39,8 @@ The faculty framing remains:
 8. **Claim gate:** a proposed component is not “beneficial,” “novel,” or “SOTA” until its mapped validation succeeds and the claim survives variance, compute-cost, task, and source checks.
 9. **Reproducibility:** record config, code revision, data/annotation/checkpoint digests, package versions, seed, hardware, metrics, and artifact paths for every research run.
 10. **Git boundary:** the previous commit/push authorization was one-time and is exhausted. Do not commit, push, force-push, create a PR, or change remotes; Git publishing belongs to the user.
+11. **Execution control:** keep one active sprint/work item, satisfy its Definition of Ready and DoD, and update `PROJECT_STATUS.md` before advancing or pausing.
+12. **Training history:** every pilot/full logical experiment—and any material smoke/calibration—must be opened and closed in `docs/TRAINING_LOG.md`; every individual attempt is appended immutably to its machine-readable attempt stream. Failed, invalid, neutral, and negative history is never erased.
 
 ## Current verified data facts
 
@@ -92,6 +94,7 @@ Primary machine: **MacBook Pro, Apple M5 Pro, 48 GB unified memory**.
 
 Before a change:
 
+- read the active sprint, blockers, exact next action, and DoD in `PROJECT_STATUS.md`/`PHASE_PLAN.md`;
 - identify the governing requirement, decision, evidence, and validation gate;
 - inspect related documents/configuration instead of changing a single file in isolation;
 - distinguish a direct source fact, project design decision, hypothesis, and future watch item.
@@ -106,10 +109,12 @@ During future implementation:
 
 At completion:
 
+- distinguish code-complete, run-complete, and research-complete;
 - run the checks mapped in `docs/VALIDATION_PLAN.md`;
+- update `docs/PROJECT_STATUS.md`; close any training attempt in `docs/TRAINING_LOG.md` without pasting per-epoch logs;
 - update `docs/DECISIONS.md` for a changed decision and `docs/EVIDENCE_REGISTER.md` for changed evidence;
 - trace every reported number to an immutable result artifact;
-- record significant milestones in the platform’s agent memory with a concise note and one index entry pointing to the authoritative project document instead of duplicating it.
+- when platform project memory is available and authorized, record significant milestones with one concise index pointer to the authoritative project document instead of duplicating it.
 
 ## Repository map
 
@@ -118,6 +123,8 @@ SHAR/
   CLAUDE.md                 # this persistent entry point
   SHAR_Research_Plan.docx   # preserved historical synthesis
   docs/                     # authoritative research and execution specification
+    PROJECT_STATUS.md       # sole live resume pointer
+    TRAINING_LOG.md         # concise training history; raw artifacts live under results/
   papers/                   # ten local PDFs; no JSON extractions currently
   Datasets/                 # local-only, ignored by Git
 ```

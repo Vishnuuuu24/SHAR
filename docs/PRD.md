@@ -1,6 +1,6 @@
 # PRD — SHAR: Suspicious Human Activity Recognition
 
-> Product requirements · v2.0 · 2026-07-19 · Owners: Priyodip, Likith, Vishnu, Abijith
+> Product requirements · v2.1 · 2026-07-20 · Owners: Priyodip, Likith, Vishnu, Abijith
 
 ## 1. Problem statement
 
@@ -25,7 +25,7 @@ The defensible gap is a reproducible, provenance-aware study of 14-label weak/no
 
 | ID | Criterion | Green condition |
 |---|---|---|
-| S1 | Reproducible 14-label baselines | ≥3 model families, 3 seeds, video-grouped split, provenance-complete manifests, macro/per-class F1 with video-clustered 95% CIs |
+| S1 | Reproducible 14-label baselines/controls | Three preregistered architecture rows (GAP+linear, same-feature MLP, temporal CNN-LSTM), 3 seeds, video-grouped split, provenance-complete manifests, macro/per-class F1 with video-clustered 95% CIs |
 | S2 | RESULT 1 matrix | ≥5 denoisers × ≥3 degradation families; PSNR, SSIM, and downstream macro-F1 delta logged |
 | S3 | Honest ROI study | Stock-detector ROIs are provenance-recorded; UCF full-frame versus ROI macro-F1 is measured; any optional mAP uses independent published annotations |
 | S4 | RESULT 2 label honesty | Headline uses event-only official intervals; full-directory inherited-label score is named noisy-proxy sensitivity only |
@@ -33,6 +33,8 @@ The defensible gap is a reproducible, provenance-aware study of 14-label weak/no
 | S6 | Reproducibility package | Exact package/model pins, manifests, annotation versions, seeds, configs, and metric artifacts are shareable subject to dataset licenses |
 
 Success never means forcing a module to win. A neutral or negative result is valid when the protocol is sound.
+
+Execution progress is governed by `PHASE_PLAN.md`, `PROJECT_CONTROL.md`, and the live `PROJECT_STATUS.md`. Training evidence is indexed concisely in `TRAINING_LOG.md`; no status or ledger entry can weaken these success criteria.
 
 ## 5. Claimable contributions
 

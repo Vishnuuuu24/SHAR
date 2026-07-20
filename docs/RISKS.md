@@ -1,6 +1,6 @@
 # Risks and reviewer objections — SHAR
 
-> v2.0 · 2026-07-19
+> v3.0 · 2026-07-20
 
 ## 1. Reviewer-objection table
 
@@ -34,6 +34,11 @@
 | MPS operator gaps or silent CPU fallback | Medium / high | compatibility smoke test, device/fallback logging, measured ETA revision; never hide fallback |
 | Long full-data runs on the Mac | High / medium | quality-first schedule, resumable best checkpoints, pre-run throughput/storage estimate, re-estimate after first epoch; request external compute rather than silently downscale |
 | Unified-memory pressure/swap | Medium / high | calibrate largest stable batch with OS headroom, monitor memory pressure, close apps only with user approval |
+| Scope creep or gate bypass | Medium / high | one active sprint/work item, Definition of Ready, dated material-change decision, and evidence-linked transition under `PROJECT_CONTROL.md` |
+| Stale live status after pause/compaction | Medium / high | `PROJECT_STATUS.md` is the sole resume pointer and must record last verification, blockers, and exact next action before handoff |
+| Cherry-picking or lost failed runs | Medium / high | immutable run directories plus append-only concise `TRAINING_LOG.md`; retain bad, aborted, OOM, neutral, and invalid attempts |
+| Training ledger bloats context | Medium / medium | one concise logical-experiment row; raw epoch/batch telemetry and curves stay under `results/<experiment-id>/` |
+| Code completion mistaken for evidence | Medium / high | report code-, run-, and research-complete separately; a claim changes only after mapped validation |
 
 ## 3. Deferred-detector risks
 
@@ -46,3 +51,7 @@
 ## 4. Scope cuts
 
 Cut optional external datasets and corruption families in the order listed in `PHASE_PLAN.md`. Custom detector work is already deferred. Never cut provenance, grouped splits, interval-derived evaluation, three headline seeds, macro/per-class metrics, or honest negative reporting.
+
+## 5. Escalation triggers
+
+Immediately stop and record the affected blocker for leakage, annotation ambiguity, ground-truth contamination, missing provenance, metric disagreement, license uncertainty, non-reproducibility, unsafe resource behavior, or a material scientific change without approval. Do not label the whole project blocked while an independent roadmap sprint remains safely actionable.
