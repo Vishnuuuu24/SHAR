@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "closed_at": "2026-07-20",
+  "sprint": "P1C",
+  "work_item": "P1C-CODE-W1",
+  "verdict": "PASS_WITH_COMPATIBILITY_BLOCKER",
+  "checks": {
+    "resnet50_spatial_c5": "PASS",
+    "gap_linear_14_logits": "PASS",
+    "same_c5_mlp_14_logits": "PASS",
+    "gap_vector_spatial_reshape_rejection": "PASS",
+    "source_grouped_cnn_lstm_14_logits": "PASS",
+    "finite_mps_frame_gradients": "PASS",
+    "finite_mps_temporal_gradients_warn_only": "PASS",
+    "strict_deterministic_mps_temporal_backward": "BLOCKED",
+    "cpu_fallback": "PROHIBITED_AND_NOT_USED",
+    "unit_tests": "PASS"
+  },
+  "unit_test_count": 33,
+  "valid_code_smoke": "results/p1c/code-smoke-36ca24c17218b4a0/smoke.json",
+  "valid_code_smoke_sha256": "523e66eac32ee9e827a7cbb6fc0a45acfa72da9dbe88f1075af3ddcda12a4ae3",
+  "failed_attempt": "results/p1c/failed-smoke-20260720-strict-mps.json",
+  "architecture_config": "configs/p1c_architecture_freeze.yaml",
+  "completion": {
+    "code_complete": true,
+    "run_complete": false,
+    "research_complete": false
+  },
+  "scope_assertions": {
+    "pretrained_weights_downloaded": false,
+    "real_data_used": false,
+    "model_training": false,
+    "headline_evaluation": false,
+    "benefit_claim": false
+  },
+  "blockers": ["B-001", "B-006"],
+  "next": "Acquire official UCF temporal annotations for P0B/P1B and approve the temporal full-run determinism policy before any P1C execution."
+}

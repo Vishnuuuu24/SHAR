@@ -1,0 +1,1 @@
+{"attempt_id": "fixture-1", "hardware": {"device": "fixture-only"}, "reason": "P1A fixture-only framework verification; no training", "seed": 0, "started_at": "2026-07-20T06:12:42.291284+00:00", "status": "COMPLETED"}

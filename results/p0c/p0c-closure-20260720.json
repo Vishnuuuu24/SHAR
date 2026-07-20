@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "closed_at": "2026-07-20",
+  "sprint": "P0C",
+  "verdict": "PASS",
+  "checks": {
+    "V-D7": "PASS",
+    "V-D8": "PASS",
+    "fresh_environment": "PASS",
+    "provenance_writer": "PASS",
+    "unit_tests": "PASS"
+  },
+  "verification": "results/p0c/verification-20260720.json",
+  "verification_sha256": "21f5abd62a17f20821eeb45612044f2805de53efc920cb0937aa7b655869981c",
+  "environment_lock": "requirements/p0c-lock.txt",
+  "environment_lock_sha256": "6506fb87087bbfd2395a682967b913989744833f1424ec6c87e8cc089a961eb6",
+  "environment_report": "results/p0c/environment-20260720.json",
+  "fresh_environment_report": "results/p0c/fresh-environment-20260720.json",
+  "calibration": "results/p0c/calibration-8f89fbbe07fad434/calibration.json",
+  "device": "mps",
+  "cpu_fallback_allowed": false,
+  "calibration_images_per_second_median": 928.8962032356216,
+  "completion": {
+    "code_complete": true,
+    "run_complete": false,
+    "research_complete": false
+  },
+  "next_sprint": "P1A",
+  "remaining_blockers": ["B-001"]
+}

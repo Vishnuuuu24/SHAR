@@ -1,6 +1,6 @@
 # P0A work item — data inventory and contract freeze
 
-> Started: 2026-07-20 · State: `BLOCKED` on B-005 after code/data verification
+> Started: 2026-07-20 · Closed: 2026-07-20 · State: `DONE`
 
 ## Control packet
 
@@ -13,7 +13,7 @@
 - **Artifacts:** `data/registry/`, `data/schemas/`, `results/p0a/`, and this work-item record.
 - **Verification:** standard-library unit tests plus the full content-addressed acceptance inventory; machine verdicts map to V-D1/V-D5/V-D6.
 - **DoD:** every checkbox below is binary and evidence-linked.
-- **Next action:** implement and test the inventory/contracts, then run the full local acceptance scan.
+- **Next action:** follow the live blocker/action state in `PROJECT_STATUS.md`; P0A is closed.
 
 ## Definition of done
 
@@ -34,6 +34,8 @@
 
 - Inventory: `../results/p0a/inventory-57f3a29b43a7d2e6/inventory_summary.json`
 - Reproduction: `../results/p0a/reproduction-57f3a29b43a7d2e6.json`
-- Machine verdicts: `../results/p0a/inventory-57f3a29b43a7d2e6/verification.json`
-- `V-D1`: `PASS`; `V-D5`: `PASS`; `V-D6`: `BLOCKED` by B-005.
-- P0A is code-complete but not `DONE`. Owners must provide the exact acquisition source, terms/license evidence, acceptance date, and accepter for the local UCF Kaggle media/folder labels and CUHK Avenue media/masks.
+- Historical scan-time machine verdicts: `../results/p0a/inventory-57f3a29b43a7d2e6/verification.json` (retained with V-D6 blocked before owner confirmation)
+- Post-confirmation access verification: `../results/p0a/access-verification-20260720.json`
+- Closure: `../results/p0a/p0a-closure-20260720.json`
+- `V-D1`: `PASS`; `V-D5`: `PASS`; `V-D6`: `PASS` only in the linked post-confirmation artifact after the owner confirmed direct acquisition sources and accepted conservative non-commercial/no-redistribution restrictions.
+- P0A is `DONE`. Official UCF temporal annotations remain B-001 and block P0B real-data completion, not P0C.

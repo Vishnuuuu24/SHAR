@@ -1,0 +1,21 @@
+{
+  "annotation_version": "fixture-v1",
+  "code_revision": "HEAD=da540da9aabb9071497574c0af978751c067f3f5;source_bundle_sha256=71b0a9cbca20ee2e288e9e5c1015f62c7c73aa765d67f8bea4cf57102f2d2920;worktree_dirty=true",
+  "config_digest": "3d323889836733a511de667c0c913e123e9ba5f856d0c70b185848b67131df8a",
+  "dataset_manifest_digest": "dd0f247663168618584ec59d199d026091d388612d42acced434a40e417c7670",
+  "environment_digest": "6506fb87087bbfd2395a682967b913989744833f1424ec6c87e8cc089a961eb6",
+  "hardware": {
+    "device": "fixture-only; no model execution"
+  },
+  "metric_artifact_paths": [
+    "aggregate.json",
+    "verdict.json"
+  ],
+  "package_versions": {
+    "PyYAML": "6.0.3",
+    "python": "3.12.13"
+  },
+  "run_id": "p1b-view-smoke-dd0f2476-71b0a9cb",
+  "run_kind": "smoke",
+  "seed": 0
+}

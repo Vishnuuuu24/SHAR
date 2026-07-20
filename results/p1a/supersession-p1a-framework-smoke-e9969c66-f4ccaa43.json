@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "created_at": "2026-07-20",
+  "invalid_artifact": "results/p1a/p1a-framework-smoke-e9969c66-f4ccaa43",
+  "status": "INVALID",
+  "reason": "Audit found that grouped splitting accepted outer-Test rows and the attempt lifecycle omitted required closure fields.",
+  "replacement_artifact": "results/p1a/p1a-framework-smoke-e9969c66-a40be623",
+  "replacement_aggregate_sha256": "f853f0746ac70bad07b4fd496d63b68460b5badf58450de42808364e05b45b80"
+}

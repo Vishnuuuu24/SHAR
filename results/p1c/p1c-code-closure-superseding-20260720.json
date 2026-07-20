@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "sprint": "P1C",
+  "work_item": "P1C-CODE-W1",
+  "created_at": "2026-07-20",
+  "supersedes": "results/p1c/p1c-code-closure-20260720.json",
+  "valid_code_smoke": "results/p1c/p1c-code-smoke-4b15b908-bfa53af0",
+  "valid_code_smoke_aggregate_sha256": "db823bae299284fd5cd713783b2e97aa5baf5e75fbbde4a61080b86a21f6c6d5",
+  "checks": {
+    "complete_source_identity": "PASS",
+    "governed_attempt_fields": "PASS",
+    "lifecycle_closure": "PASS",
+    "mps_no_cpu_fallback": "PASS",
+    "finite_frame_and_temporal_gradients": "PASS",
+    "strict_mps_temporal_determinism": "BLOCKED",
+    "full_test_suite_42_tests": "PASS"
+  },
+  "completion": {
+    "code_complete": true,
+    "run_complete": false,
+    "research_complete": false
+  },
+  "blockers": ["B-001", "B-006"],
+  "verdict": "PASS_WITH_COMPATIBILITY_BLOCKER"
+}

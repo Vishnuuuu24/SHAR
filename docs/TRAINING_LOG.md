@@ -4,7 +4,7 @@
 
 ## Current training state
 
-**No training runs have started. No model result or “best model” exists.**
+**No research training runs have started. No model result or “best model” exists. Material calibration/code-smoke attempts are recorded below and are not research results.**
 
 | Task | Best valid full experiment | Primary result | Gate assessment | Artifact |
 |---|---|---|---|---|
@@ -21,6 +21,10 @@ One row represents one logical experiment/configuration and its registered seed 
 | Experiment ID | Date | Sprint / kind | Status | Control → one change | Seeds/attempts / hardware | Primary outcome | Verdict / claim state / reason | Improvement / next action | Immutable artifact |
 |---|---|---|---|---|---|---|---|---|---|
 | — | — | — | — | — | — | No runs yet | `PENDING` / `NOT_APPLICABLE` | Start only after the applicable readiness and compute gates pass. | — |
+| P0C-MPS-CAL-001 | 2026-07-20 | P0C / calibration | `COMPLETED` | Environment import → synthetic ResNet50 MPS training path | s0:1✓ / M5 Pro MPS | 928.90 images/s median at B64, 64×64 FP32 | `GOOD_ENOUGH` / `NOT_APPLICABLE` / compute-readiness path passed | Use only to prove the ETA method; recalibrate each real experiment. | `results/p0c/calibration-8f89fbbe07fad434/` |
+| P1A-FRAMEWORK-SMOKE-001 | 2026-07-20 | P1A / fixture smoke | `COMPLETED` | Initial framework → strict outer-Train grouping and governed lifecycle | 1×→2×→3✓ / fixture-only | Split/leakage, metrics, provenance and closure checks pass | `GOOD_ENOUGH` / `NOT_APPLICABLE` / two audited artifacts retained invalid | Use the valid third artifact for P1A code evidence. | `results/p1a/p1a-framework-smoke-e9969c66-a40be623/` |
+| P1B-VIEW-SMOKE-001 | 2026-07-20 | P1B / fixture smoke | `COMPLETED` | Frozen membership rules → provenance-separated deterministic UCF-only views | 1×→2×→3×→4✓ / fixture-only | Event-only/noisy-proxy fixture membership and gates pass | `GOOD_ENOUGH` / `NOT_APPLICABLE` / no real UCF view exists | Complete P0B after B-001, then generate real manifests/views. | `results/p1b/p1b-view-smoke-dd0f2476-81037629/` |
+| P1C-CODE-SMOKE-001 | 2026-07-20 | P1C / code smoke | `COMPLETED` | Three control shapes → MPS gradients/determinism compatibility | s0:1×→2✓ / M5 Pro MPS | 14-logit shapes and finite gradients; strict temporal determinism unsupported | `GOOD_ENOUGH` / `NOT_APPLICABLE` / code passes, full temporal policy owner-gated | Resolve B-006 before temporal full run; no CPU fallback occurred. | `results/p1c/p1c-code-smoke-4b15b908-bfa53af0/` |
 
 ## Status lifecycle
 

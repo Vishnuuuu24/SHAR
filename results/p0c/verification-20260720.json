@@ -1,0 +1,49 @@
+{
+  "artifacts": {
+    "calibration": {
+      "path": "results/p0c/calibration-8f89fbbe07fad434/calibration.json",
+      "sha256": "4ef329e1ae6147044f6e1a0d8743247919c7b34d4788c5de4a83ed0dbd1f91ff"
+    },
+    "environment": {
+      "path": "results/p0c/environment-20260720.json",
+      "sha256": "7571611c00354b6392c317f0de1513cfb637e99bc0ddc5b2b918d5faed5a10b2"
+    },
+    "fresh_environment": {
+      "path": "results/p0c/fresh-environment-20260720.json",
+      "sha256": "5a49a8657701b5b6c26d2e67b6ca9184136380e8411d414fdaafbc9657f8c3c4"
+    }
+  },
+  "checks": {
+    "V-D7": {
+      "fixture_digest": "7528e7dcc70742ec2c9707aff3ea449ae859f90be95f8cf8beced26f96b5ea8a",
+      "fresh_process_match": true,
+      "serial_parallel_match": true,
+      "verdict": "PASS"
+    },
+    "V-D8": {
+      "cpu_fallback_allowed": false,
+      "median_images_per_second": 928.8962032356216,
+      "mps_selected": "mps",
+      "verdict": "PASS"
+    },
+    "provenance_writer": {
+      "complete_fixture_accepted": true,
+      "missing_fixture_refused": true,
+      "verdict": "PASS"
+    },
+    "unit_tests": {
+      "returncode": 0,
+      "summary_tail": "\n----------------------------------------------------------------------\nRan 19 tests in 1.499s\n\nOK",
+      "verdict": "PASS"
+    }
+  },
+  "created_at_utc": "2026-07-20T06:06:24.031296+00:00",
+  "kind": "P0C closure verification; not a research result",
+  "overall_verdict": "PASS",
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "benefit_claim": false,
+    "headline_evaluation": false,
+    "research_training": false
+  }
+}

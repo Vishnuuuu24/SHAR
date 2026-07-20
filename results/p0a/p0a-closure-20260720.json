@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "closed_at": "2026-07-20",
+  "sprint": "P0A",
+  "verdict": "PASS",
+  "checks": {
+    "V-D1": "PASS",
+    "V-D5": "PASS",
+    "V-D6": "PASS"
+  },
+  "inventory_artifact": "results/p0a/inventory-57f3a29b43a7d2e6",
+  "inventory_digest": "57f3a29b43a7d2e6f88470edad75d810203bfa5c5978f8fc60dbb524a15da52a",
+  "reproduction_artifact": "results/p0a/reproduction-57f3a29b43a7d2e6.json",
+  "owner_confirmation": "docs/data_access_evidence/2026-07-20-owner-confirmation.json",
+  "owner_confirmation_sha256": "e78972f2d3ff0ddbbbd752308021d3557786466160db12de51c3f4fcd7315f00",
+  "dataset_access_registry": "data/registry/dataset_access.json",
+  "dataset_access_registry_sha256": "f920643de0f65f3a36635db0f5a26179a1ccee6c876b22531cba584daee034bb",
+  "approved_use": "Internal non-commercial academic research",
+  "release_restriction": "No raw UCF or Avenue media/annotations; only reviewed aggregate and permitted manifest artifacts.",
+  "privacy": "The owner's Kaggle account email is intentionally not stored in repository artifacts.",
+  "completion": {
+    "code_complete": true,
+    "run_complete": false,
+    "research_complete": false
+  },
+  "next_sprint": "P0C",
+  "remaining_blockers": ["B-001"]
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "P0C project-wheel packaging verification",
+  "created_at": "2026-07-20",
+  "failed_verifier_attempt": {
+    "path": "results/p0c/fresh-environment-project-20260720.json",
+    "sha256": "126b4fc20932f38d03913b5e0c70cb35d0313f6661eb08c980cbc93afb819f93",
+    "status": "INVALID",
+    "reason": "The verifier incorrectly counted the intentionally installed local wheel URL as an unexpected locked dependency."
+  },
+  "verified_attempt": {
+    "path": "results/p0c/fresh-environment-project-verified-20260720.json",
+    "sha256": "2f3c7d2518adf8ecc980294dc8e3ae3a1c059e8bc274ee02ab0317b9b0b58abc",
+    "status": "PASS"
+  },
+  "checks": {
+    "exact_dependency_lock": "PASS",
+    "project_wheel_build": "PASS",
+    "project_wheel_install_outside_checkout": "PASS",
+    "core_data_eval_models_imports": "PASS",
+    "wheel_membership": "PASS",
+    "mps_available": "PASS"
+  },
+  "verdict": "PASS"
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "recorded_at": "2026-07-20",
+  "artifact": "results/p1a/p1a-framework-smoke-e9969c667917",
+  "status": "INVALID",
+  "claim_state": "NOT_APPLICABLE",
+  "reason": "The smoke captured Git HEAD but not the dirty worktree's actual source bundle, so its code revision was incomplete.",
+  "disposition": "Artifact retained immutably as failed provenance evidence; replacement smoke must include a source-bundle SHA-256.",
+  "replacement": "results/p1a/p1a-framework-smoke-e9969c66-f4ccaa43"
+}

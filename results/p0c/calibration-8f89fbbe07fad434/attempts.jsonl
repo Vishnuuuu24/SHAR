@@ -1,0 +1,1 @@
+{"attempt_id":"p0c-calibration-1","seed":0,"started_at":"2026-07-20T06:03:57.244229+00:00","finished_at":"2026-07-20T06:04:03.686453+00:00","status":"COMPLETED","reason":"Synthetic ResNet50 MPS compute-readiness calibration; no research training","hardware":{"device":"mps","cpu_fallback_allowed":false},"artifact":"calibration.json"}

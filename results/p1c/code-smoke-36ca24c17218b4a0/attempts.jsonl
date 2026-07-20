@@ -1,0 +1,2 @@
+{"attempt_id":"p1c-code-smoke-strict-mps-1","seed":0,"status":"FAILED","reason":"CNN-LSTM backward rejected because scatter_reduce_mps has no strict deterministic implementation","hardware":{"device":"mps","cpu_fallback_allowed":false},"artifact":"../failed-smoke-20260720-strict-mps.json"}
+{"attempt_id":"p1c-code-smoke-warn-only-mps-2","seed":0,"status":"COMPLETED","reason":"Explicit warn-only characterization retained MPS placement and finite gradients; full-run protocol remains owner-gated","hardware":{"device":"mps","cpu_fallback_allowed":false},"artifact":"smoke.json"}

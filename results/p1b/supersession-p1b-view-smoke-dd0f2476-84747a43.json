@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "created_at": "2026-07-20",
+  "invalid_artifact": "results/p1b/p1b-view-smoke-dd0f2476-84747a43",
+  "status": "INVALID",
+  "reason": "Source-frame uniqueness still included path/digest and the production UCF dataset ID was caller-selected rather than frozen.",
+  "replacement_artifact": "results/p1b/p1b-view-smoke-dd0f2476-81037629",
+  "replacement_aggregate_sha256": "9e0acede11634706f4920d4fd8223c34df0f998e5a74ffe4e898acdba631622e"
+}

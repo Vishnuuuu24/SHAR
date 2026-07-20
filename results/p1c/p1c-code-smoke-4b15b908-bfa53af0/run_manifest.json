@@ -1,0 +1,25 @@
+{
+  "annotation_version": "not-applicable-fixture",
+  "code_revision": "HEAD=da540da9aabb9071497574c0af978751c067f3f5;source_bundle_sha256=bfa53af0891b0543ceaf9ea3751bc2033249efc890509a4bcb00a97946694153;worktree_dirty=true",
+  "config_digest": "8219dd1bea0a079689315fe865774e5df22c8fd87ef594068c37ba17b920a4d2",
+  "dataset_manifest_digest": "4b15b908479f8eb62b1d7f04feea3966d38704487f7fcbf6759992959d681c66",
+  "environment_digest": "6506fb87087bbfd2395a682967b913989744833f1424ec6c87e8cc089a961eb6",
+  "hardware": {
+    "cpu_fallback_allowed": false,
+    "mps_available": true,
+    "mps_built": true,
+    "mps_fallback_environment": null,
+    "selected": "mps"
+  },
+  "metric_artifact_paths": [
+    "aggregate.json",
+    "verdict.json"
+  ],
+  "package_versions": {
+    "torch": "2.13.0",
+    "torchvision": "0.28.0"
+  },
+  "run_id": "p1c-code-smoke-4b15b908-bfa53af0",
+  "run_kind": "code_smoke",
+  "seed": 0
+}

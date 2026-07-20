@@ -1,0 +1,86 @@
+{
+  "config": {
+    "batch_size": 64,
+    "classes": 14,
+    "input_shape": [
+      64,
+      3,
+      64,
+      64
+    ],
+    "measure_steps": 20,
+    "model": "torchvision.models.resnet50(weights=None) with 14-logit linear head",
+    "optimizer": "SGD(lr=0.01, momentum=0)",
+    "precision": "float32",
+    "seed": 0,
+    "warmup_steps": 5
+  },
+  "config_sha256": "f635e4b52bb21555bd96d51936ca97d489fb090f4296b3e78d34f9119f168e1f",
+  "determinism": {
+    "deterministic_algorithms": true,
+    "python_hash_seed": "not_runtime_mutable",
+    "seed": 0,
+    "warn_only": false
+  },
+  "device": {
+    "cpu_fallback_allowed": false,
+    "mps_available": true,
+    "mps_built": true,
+    "mps_fallback_environment": null,
+    "selected": "mps"
+  },
+  "environment_lock_sha256": "6506fb87087bbfd2395a682967b913989744833f1424ec6c87e8cc089a961eb6",
+  "estimate_method": {
+    "example_only_not_a_run_estimate": {
+      "batches": 1000,
+      "seconds_high": 93.01362165012961,
+      "seconds_low": 79.2338258501104
+    },
+    "formula": "remaining_batches * measured_median_step_seconds * overhead_factor",
+    "recommended_overhead_factor_range": [
+      1.15,
+      1.35
+    ],
+    "required_reestimate_threshold": "first full epoch differs by more than 20 percent"
+  },
+  "finished_at_utc": "2026-07-20T06:04:03.686453+00:00",
+  "kind": "P0C synthetic MPS calibration; not a training or research result",
+  "measurements": {
+    "images_per_second_median": 928.8962032356216,
+    "loss_first": 2.6876258850097656,
+    "loss_last": 2.494833469390869,
+    "max_step_seconds": 0.07617879199915478,
+    "median_step_seconds": 0.068898979000096,
+    "min_step_seconds": 0.06765470800019102,
+    "mps_memory_after": {
+      "current_allocated_memory": 217395712,
+      "driver_allocated_memory": 1263321088,
+      "recommended_max_memory": 40200896512
+    },
+    "mps_memory_before": {
+      "current_allocated_memory": 97519872,
+      "driver_allocated_memory": 134709248,
+      "recommended_max_memory": 40200896512
+    },
+    "p90_step_seconds": 0.07513525000013033,
+    "process_rss_after_bytes": 615743488,
+    "process_rss_before_bytes": 493584384
+  },
+  "model": {
+    "estimated_model_plus_sgd_state_bytes": 188293744,
+    "parameter_bytes_float32": 94146872,
+    "parameters": 23536718
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "checkpoint_saved": false,
+    "headline_result": false,
+    "research_training": false,
+    "uses_synthetic_inputs": true
+  },
+  "started_at_utc": "2026-07-20T06:03:57.244229+00:00",
+  "torch": "2.13.0",
+  "torchvision": "0.28.0",
+  "verdict": "PASS"
+}

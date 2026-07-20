@@ -1,0 +1,87 @@
+{
+  "class_counts": {
+    "Abuse": {
+      "train": 1,
+      "validation": 1
+    },
+    "Normal": {
+      "train": 1,
+      "validation": 1
+    }
+  },
+  "kind": "P1A fixture smoke; not a research result",
+  "manifest_digest": "e9969c667917308f52ce66c7fdba5b0101dcef073b3d300a1c05c0b7e4e8c313",
+  "manifest_rows": 4,
+  "metrics_fixture": {
+    "accuracy": 0.75,
+    "confusion_matrix": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "labels": [
+      "Abuse",
+      "Normal"
+    ],
+    "macro_f1": 0.7333333333333334,
+    "macro_precision": 0.8333333333333333,
+    "macro_recall": 0.75,
+    "per_class": {
+      "Abuse": {
+        "f1": 0.6666666666666666,
+        "precision": 1.0,
+        "recall": 0.5,
+        "support": 2
+      },
+      "Normal": {
+        "f1": 0.8,
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "support": 2
+      }
+    },
+    "video_clustered_macro_f1_ci": {
+      "cluster_count": 4,
+      "estimate": 0.7333333333333334,
+      "iterations": 200,
+      "lower_95": 0.2,
+      "resampling_unit": "source_video_id",
+      "seed": 0,
+      "upper_95": 1.0
+    }
+  },
+  "sampler_indices": [
+    0,
+    3
+  ],
+  "scope_assertions": {
+    "headline_evaluation": false,
+    "interval_mapping": false,
+    "model_training": false,
+    "real_ucf_manifest": false
+  },
+  "source_bundle_paths": [
+    "core/provenance.py",
+    "core/run_lifecycle.py",
+    "data/contracts.py",
+    "data/grouping.py",
+    "data/manifest.py",
+    "eval/metrics.py",
+    "scripts/smoke_p1a.py"
+  ],
+  "source_bundle_sha256": "a40be623975e72ef7c248cb075cad235ffd5a3d94b0039659fb9f3231f5d01f6",
+  "train_indices": [
+    0,
+    3
+  ],
+  "validation_indices": [
+    1,
+    2
+  ],
+  "zero_group_leakage": true
+}

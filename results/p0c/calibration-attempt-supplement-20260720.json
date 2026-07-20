@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "Governance supplement for immutable pre-lifecycle P0C calibration attempt",
+  "created_at": "2026-07-20",
+  "attempt_stream": "results/p0c/calibration-8f89fbbe07fad434/attempts.jsonl",
+  "attempt_id": "p0c-calibration-1",
+  "parent_checkpoint": null,
+  "artifact": "results/p0c/calibration-8f89fbbe07fad434/calibration.json",
+  "artifact_digest": "4ef329e1ae6147044f6e1a0d8743247919c7b34d4788c5de4a83ed0dbd1f91ff",
+  "runtime_seconds": 6.442224,
+  "peak_memory_bytes": 1263321088,
+  "storage_bytes": 2647,
+  "stop_reason": "configured synthetic calibration steps completed",
+  "checkpoint_disposition": "not applicable; no checkpoint saved",
+  "status": "COMPLETED",
+  "verdict": "GOOD_ENOUGH",
+  "claim_state": "NOT_APPLICABLE",
+  "note": "The original attempt stream is retained unchanged; this sidecar supplies fields introduced by the later governed lifecycle."
+}

@@ -1,0 +1,26 @@
+schema_version: 1.0.0
+status: CODE_ONLY_NOT_EXPERIMENT_READY
+num_classes: 14
+backbone:
+  family: torchvision_resnet50
+  feature: layer4_C5_pre_GAP
+  out_channels: 2048
+  weights: OWNER_SELECTION_AND_CHECKPOINT_DIGEST_REQUIRED_BEFORE_FULL_RUN
+controls:
+  gap_linear:
+    path: C5_to_GAP_to_linear
+  same_c5_mlp:
+    path: C5_to_GAP_to_MLP
+    hidden_dim: OWNER_PREREGISTRATION_REQUIRED
+    dropout: OWNER_PREREGISTRATION_REQUIRED
+  cnn_lstm:
+    grouping: source_video_id
+    projection_dim: OWNER_PREREGISTRATION_REQUIRED
+    hidden_dim: OWNER_PREREGISTRATION_REQUIRED
+    num_layers: OWNER_PREREGISTRATION_REQUIRED
+    dropout: OWNER_PREREGISTRATION_REQUIRED
+blocked_full_run_inputs:
+  - P1B frozen real manifest digest
+  - official temporal annotations and event-only view
+  - exact pretrained weight enum and checksum
+  - full training/selection/early-stop configuration

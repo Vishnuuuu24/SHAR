@@ -1,0 +1,14 @@
+schema_version: 1.0.0
+manifest_schema: data/schemas/frame_manifest_row.schema.json
+dataset_roots:
+  ucf_crime_kaggle_frames: Datasets/UCF Crime Dataset Kaggle
+  cuhk_avenue: Datasets/CUHK Avenue
+validation:
+  fraction: 0.10
+  seed: 0
+  grouping_key: source_video_id
+metrics:
+  primary: macro_f1
+  clustered_ci_iterations: 1000
+  clustered_ci_seed: 0
+artifact_root: results

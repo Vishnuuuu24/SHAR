@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "Post-owner-confirmation P0A access verification",
+  "created_at": "2026-07-20",
+  "historical_inventory_verification": {
+    "path": "results/p0a/inventory-57f3a29b43a7d2e6/verification.json",
+    "sha256": "444ed72fd0306abf6a2b4b3d49afdf1a0469127fe69b5a0468518d7c9813a8ce",
+    "verdict_at_scan_time": "BLOCKED",
+    "retained_immutably": true
+  },
+  "owner_confirmation": {
+    "path": "docs/data_access_evidence/2026-07-20-owner-confirmation.json",
+    "sha256": "e78972f2d3ff0ddbbbd752308021d3557786466160db12de51c3f4fcd7315f00"
+  },
+  "dataset_access_registry": {
+    "path": "data/registry/dataset_access.json",
+    "sha256": "f920643de0f65f3a36635db0f5a26179a1ccee6c876b22531cba584daee034bb"
+  },
+  "checks": {
+    "V-D1": "PASS_FROM_IMMUTABLE_INVENTORY",
+    "V-D5": "PASS_FROM_IMMUTABLE_INVENTORY",
+    "V-D6": "PASS_AFTER_OWNER_CONFIRMATION"
+  },
+  "approved_use": "Internal non-commercial academic research",
+  "release_restriction": "No raw UCF or Avenue media or annotations",
+  "privacy": "Authenticated account access was confirmed; the account email is intentionally not stored.",
+  "verdict": "PASS"
+}

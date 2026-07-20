@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "confirmed_at": "2026-07-20",
+  "confirmed_by": "Vishnu",
+  "privacy": "The Kaggle account email was confirmed in the private task conversation and is intentionally not stored in the repository.",
+  "ucf_crime_kaggle_frames": {
+    "source_url": "https://www.kaggle.com/datasets/odins0n/ucf-crime-dataset",
+    "access_method": "Direct download using the owner's authenticated Kaggle account",
+    "terms_basis": "Owner-confirmed direct Kaggle acquisition; mirror metadata reports CC0, while third-party source-footage rights remain qualified.",
+    "approved_project_use": "Internal non-commercial academic research",
+    "redistribution": "Raw frames and source-video-identifying detailed inventories are not redistributed."
+  },
+  "cuhk_avenue": {
+    "source_url": "https://www.cse.cuhk.edu.hk/~leojia/projects/detectabnormal/dataset.html",
+    "access_method": "Direct public download without login or account acceptance flow",
+    "terms_basis": "Official public download page plus the local accompanying code's non-commercial-use notice; no broader standalone redistribution license was found.",
+    "approved_project_use": "Internal non-commercial academic research",
+    "redistribution": "Raw videos, volumes, and masks are not redistributed."
+  },
+  "decision": "The project may use both local datasets internally for non-commercial academic research. Release remains aggregate/manifests-only subject to filename and source-footage review."
+}

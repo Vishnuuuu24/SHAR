@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "closed_at": "2026-07-20",
+  "sprint": "P1A",
+  "verdict": "PASS",
+  "checks": {
+    "strict_manifest_loader": "PASS",
+    "configured_roots_and_digest_validation": "PASS",
+    "source_grouped_split_zero_leakage": "PASS",
+    "grouped_sampler": "PASS",
+    "hand_classification_metrics": "PASS",
+    "video_clustered_bootstrap": "PASS",
+    "immutable_run_lifecycle": "PASS",
+    "incomplete_provenance_refusal": "PASS",
+    "unit_tests": "PASS"
+  },
+  "unit_test_count": 28,
+  "valid_smoke": "results/p1a/p1a-framework-smoke-e9969c66-f4ccaa43",
+  "valid_smoke_manifest_sha256": "fa807100005b91e5544e8f438dfe466bd05da4cdf6522a5bc783b92b1c406dc7",
+  "valid_smoke_aggregate_sha256": "6a7493a5308c10134a614fd43aeeec28e2714232b85e5f7e67a2dbff677bf988",
+  "valid_smoke_verdict_sha256": "5a722157660d6e49dc633fb62bdd0013f9908a14284a78d8064a3d915c0724a0",
+  "invalid_smoke_retained": "results/p1a/p1a-framework-smoke-e9969c667917",
+  "invalid_smoke_supersession": "results/p1a/supersession-p1a-framework-smoke-e9969c667917.json",
+  "completion": {
+    "code_complete": true,
+    "run_complete": false,
+    "research_complete": false
+  },
+  "scope_assertions": {
+    "real_ucf_manifest": false,
+    "official_interval_mapping": false,
+    "model_training": false,
+    "headline_evaluation": false
+  },
+  "next": "P1B real completion remains blocked by B-001; P1C architecture code may proceed under its explicit code-only prerequisite."
+}

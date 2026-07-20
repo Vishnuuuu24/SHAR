@@ -1,0 +1,13 @@
+{
+  "checkpoint_disposition": "not applicable; no model execution",
+  "claim_state": "NOT_APPLICABLE",
+  "next_action": "Acquire/register official UCF temporal annotations and complete P0B before real P1B manifests.",
+  "peak_memory_bytes": 0,
+  "reason": "Fixture membership rules passed; this is not P1B real-data completion.",
+  "runtime_seconds": 0.000144,
+  "status": "COMPLETED",
+  "stop_reason": "fixture checks completed",
+  "storage_bytes": 0,
+  "summary_artifact_digest": "fc9087283432ab7ae16e6d3ce43548f502b95da5dfb25f8fdae724124e07942f",
+  "verdict": "GOOD_ENOUGH"
+}

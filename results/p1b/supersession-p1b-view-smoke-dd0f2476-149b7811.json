@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "created_at": "2026-07-20",
+  "invalid_artifact": "results/p1b/p1b-view-smoke-dd0f2476-149b7811",
+  "status": "INVALID",
+  "reason": "The source-bundle digest omitted the lifecycle, provenance, config, and environment-lock inputs.",
+  "replacement_artifact": "results/p1b/p1b-view-smoke-dd0f2476-71b0a9cb",
+  "replacement_aggregate_sha256": "fc9087283432ab7ae16e6d3ce43548f502b95da5dfb25f8fdae724124e07942f"
+}

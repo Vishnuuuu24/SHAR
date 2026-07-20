@@ -1,0 +1,5 @@
+filepath,source_dataset,source_video_id,source_frame_index,label,label_scope,label_source,annotation_version,inside_official_interval,split,file_digest
+files/abuse-video-1.txt,fixture,AbuseVideo1,0,Abuse,video_inherited,fixture_folder,fixture-v1,,train,c74b2e258d9321657f867463399cfa6105c90fec3345e94753c1ea414c235680
+files/abuse-video-2.txt,fixture,AbuseVideo2,0,Abuse,video_inherited,fixture_folder,fixture-v1,,train,12d02a7b44c56c4f3a0b43d04e11148296b630f2109bbce7d48d561f1af9667b
+files/normal-video-1.txt,fixture,NormalVideo1,0,Normal,video_inherited,fixture_folder,fixture-v1,,train,10fff5804be99b31fd80fcf885ab60eef1821eae9443c7b2d0238c2e65005244
+files/normal-video-2.txt,fixture,NormalVideo2,0,Normal,video_inherited,fixture_folder,fixture-v1,,train,30985595cb2c3cd83c4eed675905700a0d3c241b994dcf8a5628a3f3b468dd35

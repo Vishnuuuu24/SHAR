@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "recorded_at": "2026-07-20",
+  "kind": "P1C fixture-only architecture smoke failure; not a research result",
+  "device": "mps",
+  "cpu_fallback_allowed": false,
+  "stage": "CNN-LSTM temporal backward under torch.use_deterministic_algorithms(True, warn_only=False)",
+  "status": "FAILED",
+  "error_type": "RuntimeError",
+  "error": "scatter_reduce_mps does not have a deterministic implementation",
+  "impact": "Frame controls completed strict MPS gradients, but the temporal baseline cannot claim strict deterministic MPS compatibility.",
+  "disposition": "Retained. Characterize explicit warn-only MPS execution without CPU fallback; require a recorded full-run protocol decision before temporal training."
+}

@@ -1,0 +1,16 @@
+schema_version: 1.0.0
+status: FIXTURE_CODE_ONLY_REAL_DATA_BLOCKED
+source_dataset: ucf_crime_kaggle_frames
+input_manifest: owner_required_after_p0b
+views:
+  event_only:
+    name: official-interval-derived event-only 14-label evaluation
+    anomalous_membership: inside_official_interval_is_true
+    normal_membership: all_official_normal_test_video_frames
+  noisy_proxy:
+    name: full-directory inherited-label noisy proxy
+    membership: all_kaggle_test_folder_frames
+gates:
+  unresolved_anomalous_interval: hard_error
+  missing_headline_class: blocks_claim
+  real_completion_requires: B-001_and_P0B

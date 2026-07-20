@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "created_at": "2026-07-20",
+  "invalid_artifacts": [
+    {
+      "path": "results/p1c/code-smoke-36ca24c17218b4a0",
+      "reason": "Source identity omitted behavior-affecting device and reproducibility modules and attempt records lacked closure fields."
+    },
+    {
+      "path": "results/p1c/code-smoke-c99bc9e62fcea27b",
+      "sha256": "3540a1f7860eae7d8afd995843d55e45edbfc501c4e8e5162f254506e6235363",
+      "reason": "Source identity was corrected, but the artifact did not use the governed lifecycle or include a complete closure verdict."
+    }
+  ],
+  "status": "INVALID",
+  "replacement_artifact": "results/p1c/p1c-code-smoke-4b15b908-bfa53af0",
+  "replacement_aggregate_sha256": "db823bae299284fd5cd713783b2e97aa5baf5e75fbbde4a61080b86a21f6c6d5"
+}

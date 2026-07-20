@@ -1,0 +1,13 @@
+{
+  "checkpoint_disposition": "not applicable; no training checkpoint produced",
+  "claim_state": "NOT_APPLICABLE",
+  "next_action": "Resolve B-006 before any temporal full run.",
+  "peak_memory_bytes": 304889856,
+  "reason": "Architecture fixture checks completed; strict MPS temporal determinism remains a compatibility blocker.",
+  "runtime_seconds": 0.825194,
+  "status": "COMPLETED",
+  "stop_reason": "fixture checks completed",
+  "storage_bytes": 2833,
+  "summary_artifact_digest": "db823bae299284fd5cd713783b2e97aa5baf5e75fbbde4a61080b86a21f6c6d5",
+  "verdict": "GOOD_ENOUGH"
+}

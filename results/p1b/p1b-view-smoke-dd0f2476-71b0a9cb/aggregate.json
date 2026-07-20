@@ -1,0 +1,99 @@
+{
+  "excluded_by_reason_counts": {
+    "outside_official_interval": 13
+  },
+  "fixture_only": true,
+  "folder_mirror_versions": [
+    "folder-fixture-v1"
+  ],
+  "headline_claim_blocked": false,
+  "kind": "P1B evaluation-view membership report",
+  "membership_rule_version": "ucf-event-only-v1",
+  "missing_headline_labels": [],
+  "official_annotation_digest": "b6fa8b0265ff1562eeea36ca862e99478962308d28fbd1d6bd5d26e0bcb3d126",
+  "official_annotation_version": "official-fixture-v1",
+  "ready_for_real_evaluation": false,
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "headline_evaluation": false,
+    "model_training": false,
+    "official_interval_mapping": false,
+    "real_ucf_manifest": false
+  },
+  "source_bundle_paths": [
+    "core/provenance.py",
+    "core/run_lifecycle.py",
+    "data/contracts.py",
+    "data/manifest.py",
+    "data/views.py",
+    "scripts/smoke_p1b_views.py",
+    "configs/p1b_views.yaml",
+    "requirements/p0c-lock.txt"
+  ],
+  "source_bundle_sha256": "71b0a9cbca20ee2e288e9e5c1015f62c7c73aa765d67f8bea4cf57102f2d2920",
+  "source_dataset": [
+    "fixture_ucf"
+  ],
+  "source_manifest_sha256": "aff34bcf2ff854a6b9e12e452a8f4fbfdf41ab599e048ef760e021334e888a0c",
+  "test_input_row_count": 27,
+  "traceability_fields": [
+    "filepath",
+    "source_dataset",
+    "source_video_id",
+    "source_frame_index",
+    "label",
+    "label_scope",
+    "label_source",
+    "annotation_version",
+    "inside_official_interval",
+    "split",
+    "file_digest"
+  ],
+  "unresolved_count": 0,
+  "views": {
+    "event_only": {
+      "class_counts": {
+        "Abuse": 1,
+        "Arrest": 1,
+        "Arson": 1,
+        "Assault": 1,
+        "Burglary": 1,
+        "Explosion": 1,
+        "Fighting": 1,
+        "Normal": 1,
+        "RoadAccidents": 1,
+        "Robbery": 1,
+        "Shooting": 1,
+        "Shoplifting": 1,
+        "Stealing": 1,
+        "Vandalism": 1
+      },
+      "manifest_digest": "2ae1fcb78c11b70c7a9be0814657e434c0f9c15df348a64dc43a195e91cc35e9",
+      "name": "official-interval-derived event-only 14-label evaluation",
+      "row_count": 14,
+      "source_video_count": 14
+    },
+    "noisy_proxy": {
+      "class_counts": {
+        "Abuse": 2,
+        "Arrest": 2,
+        "Arson": 2,
+        "Assault": 2,
+        "Burglary": 2,
+        "Explosion": 2,
+        "Fighting": 2,
+        "Normal": 1,
+        "RoadAccidents": 2,
+        "Robbery": 2,
+        "Shooting": 2,
+        "Shoplifting": 2,
+        "Stealing": 2,
+        "Vandalism": 2
+      },
+      "manifest_digest": "aff34bcf2ff854a6b9e12e452a8f4fbfdf41ab599e048ef760e021334e888a0c",
+      "name": "full-directory inherited-label noisy proxy",
+      "row_count": 27,
+      "source_video_count": 14
+    }
+  }
+}

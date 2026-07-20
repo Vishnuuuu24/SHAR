@@ -1,0 +1,78 @@
+{
+  "checks": {
+    "c5_is_spatial": true,
+    "cpu_fallback_allowed": false,
+    "frame_gradients_finite": true,
+    "frame_heads_14_logits": true,
+    "frame_heads_receive_same_c5": true,
+    "temporal_14_logits": true,
+    "temporal_gradients_finite": true,
+    "temporal_strict_determinism": false,
+    "temporal_warn_only_mps_execution": true
+  },
+  "compatibility": {
+    "full_run_decision_required": true,
+    "temporal_strict_determinism_error": "scatter_reduce_mps does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+    "warn_only_warnings": [
+      "scatter_reduce_mps does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True, warn_only=True)'. You can file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/Context.cpp:190.)"
+    ]
+  },
+  "created_at_utc": "2026-07-20T06:17:53.343919+00:00",
+  "device": {
+    "cpu_fallback_allowed": false,
+    "mps_available": true,
+    "mps_built": true,
+    "mps_fallback_environment": null,
+    "selected": "mps"
+  },
+  "fixture_choices_not_experiment_freeze": {
+    "dropout": 0.0,
+    "mlp_hidden_dim": 64,
+    "temporal_hidden_dim": 64,
+    "temporal_layers": 1,
+    "temporal_projection_dim": 64,
+    "weights": null
+  },
+  "kind": "P1C architecture code smoke; not a training or research result",
+  "parameter_counts": {
+    "backbone": 23508032,
+    "gap_linear_head": 28686,
+    "same_c5_mlp_head_fixture": 132046,
+    "temporal_fixture_including_shared_backbone": 23673358
+  },
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "headline_evaluation": false,
+    "model_training": false,
+    "pretrained_weights_downloaded": false,
+    "real_data_used": false,
+    "research_claim": false
+  },
+  "shapes": {
+    "c5": [
+      2,
+      2048,
+      2,
+      2
+    ],
+    "gap_linear_logits": [
+      2,
+      14
+    ],
+    "same_c5_mlp_logits": [
+      2,
+      14
+    ],
+    "temporal_logits": [
+      1,
+      14
+    ]
+  },
+  "source_bundle_sha256": "36ca24c17218b4a03eae27c4cdd389ac3dfedb34e2d1708734a179d2363144df",
+  "source_paths": [
+    "models/classifiers.py",
+    "scripts/smoke_p1c_models.py",
+    "configs/p1c_architecture_freeze.yaml"
+  ],
+  "verdict": "PASS_WITH_COMPATIBILITY_BLOCKER"
+}
