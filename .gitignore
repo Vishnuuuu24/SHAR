@@ -16,3 +16,7 @@ __pycache__/
 # summaries and verification artifacts remain eligible for version control.
 /results/p0a/inventory-*/inventory_files.csv.gz
 /results/p0a/.inventory-tmp-*/
+AF-YOLO_Asymptotic_Feature_Extraction_and_Fusion_for_Aerial_Object_Detection.zip
+SHAR/
+SHAR_Dataset/
+.agents/
