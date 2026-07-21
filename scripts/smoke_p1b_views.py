@@ -129,6 +129,7 @@ def main() -> int:
             "hardware": {"device": "fixture-only"},
             "parent_checkpoint": None,
             "artifact_digest": artifact_digest(aggregate),
+            "artifact_path": "aggregate.json",
         }
     )
     lifecycle.finalize(

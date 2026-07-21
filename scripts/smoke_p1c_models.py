@@ -217,6 +217,7 @@ def main() -> int:
             "hardware": device_report.to_dict(),
             "parent_checkpoint": None,
             "artifact_digest": artifact_digest(report),
+            "artifact_path": "aggregate.json",
         },
         {
             "attempt_id": "warn-only-mps-1",
@@ -228,6 +229,7 @@ def main() -> int:
             "hardware": device_report.to_dict(),
             "parent_checkpoint": None,
             "artifact_digest": artifact_digest(report),
+            "artifact_path": "aggregate.json",
         },
     ]
     for attempt in attempts:

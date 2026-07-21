@@ -1,0 +1,123 @@
+schema_version: 1.0.0
+status: CODE_SCAFFOLD_ONLY_BLOCKED_BY_B_007
+decision: D-23
+work_item: P2A-CODE-W1
+
+approval:
+  state: NOT_APPROVED
+  owner: owner_required
+  approved_at: owner_required
+  decision_record: owner_required
+
+fixture_contract_not_experiment_freeze:
+  color: RGB
+  layout: HWC
+  dtype: float32
+  range: [0.0, 1.0]
+
+experiment_image_contract:
+  color: owner_required
+  layout: owner_required
+  dtype: owner_required
+  range: owner_required
+  clipping_point: owner_required
+  quantization_point: owner_required
+  border_mode: owner_required
+
+degradations:
+  identity:
+    levels: [none]
+  gaussian:
+    sigma_8bit_levels: [10, 25, 50]
+    mean_8bit: owner_required
+    sampling_unit: owner_required
+    clipping: owner_required
+  salt_and_pepper:
+    density_levels: [0.02, 0.05, 0.10]
+    salt_probability_given_corruption: owner_required
+    salt_value: owner_required
+    pepper_value: owner_required
+    density_mode:
+      owner_selection: owner_required
+      implemented_capabilities: [bernoulli]
+    sampling_unit: owner_required
+    clipping: owner_required
+  speckle:
+    variance_levels: [0.02, 0.05]
+    gaussian_mean: owner_required
+    model:
+      owner_selection: owner_required
+      implemented_capabilities: [x_times_one_plus_gaussian]
+    sampling_unit: owner_required
+    clipping: owner_required
+  low_light:
+    gamma: 2.2
+    gaussian_sigma_8bit: 15
+    gaussian_mean_8bit: owner_required
+    operation_order: owner_required
+    clipping_sequence:
+      owner_selection: owner_required
+      implemented_capabilities: [clip_after_each_stage]
+    noise_sampling_unit: owner_required
+    clipping: owner_required
+
+classical_restoration:
+  identity:
+    parameters: {}
+  median:
+    kernel_size: owner_required
+    border_policy:
+      owner_selection: owner_required
+      implemented_capabilities: [opencv_median_fixed_replicate]
+  gaussian_blur:
+    kernel_size: owner_required
+    sigma_x: owner_required
+    sigma_y: owner_required
+    border_type: owner_required
+  bilateral:
+    diameter: owner_required
+    sigma_color: owner_required
+    sigma_space: owner_required
+    border_type: owner_required
+  nlm:
+    h_luminance: owner_required
+    h_color: owner_required
+    template_window_size: owner_required
+    search_window_size: owner_required
+    quantization:
+      owner_selection: owner_required
+      implemented_capabilities: [round_to_nearest_uint8]
+    color_boundary:
+      owner_selection: owner_required
+      implemented_capabilities: [rgb_to_bgr_for_opencv_nlm]
+    border_policy:
+      owner_selection: owner_required
+      implemented_capabilities: [opencv_nlm_library_fixed]
+  output_policy:
+    owner_selection: owner_required
+    implemented_capabilities: [clip_0_1, reject_out_of_range]
+
+image_quality:
+  psnr:
+    data_range: owner_required
+  ssim:
+    data_range: owner_required
+    channel_axis: owner_required
+    win_size: owner_required
+    gaussian_weights: owner_required
+    sigma: owner_required
+    use_sample_covariance: owner_required
+    k1: owner_required
+    k2: owner_required
+
+gates:
+  code_closure_requires: B-007
+  real_or_full_execution_requires:
+    - P1C_run_complete
+    - frozen_phase_1_classifier
+    - B-001_resolved
+  prohibited:
+    - real_dataset_execution
+    - P2B_or_P2C_execution
+    - benefit_or_native_noise_claim
+    - entropy_specific_ESVDAE

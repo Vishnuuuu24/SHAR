@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "recorded_at": "2026-07-20",
+  "status": "INVALID",
+  "invalid_artifact": "results/p2a/p2a-scaffold-smoke-28a73d01-8f502497",
+  "reason": "The second scaffold smoke predated explicit low-light clipping-stage provenance, terminal attempt artifact-path binding, authenticated replacement-closure validation, and the nontrivial independent SSIM fixture.",
+  "replacement_artifact": "results/p2a/p2a-scaffold-smoke-7a155e42-ce6758b2",
+  "replacement_aggregate_sha256": "426390f847838d2651701c224a9b9a386cdffcf4f1bd3c71c9a062fdbe985b30"
+}

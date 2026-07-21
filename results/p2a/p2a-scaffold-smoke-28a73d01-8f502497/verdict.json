@@ -1,0 +1,13 @@
+{
+  "checkpoint_disposition": "not applicable; no model training",
+  "claim_state": "NOT_APPLICABLE",
+  "next_action": "Owner must resolve B-007 before P2A code closure or real execution.",
+  "peak_memory_bytes": 385662976,
+  "reason": "Synthetic interfaces passed their fixture matrix; no experiment claim was evaluated.",
+  "runtime_seconds": 0.120998,
+  "status": "COMPLETED",
+  "stop_reason": "synthetic fixture matrix completed",
+  "storage_bytes": 33588,
+  "summary_artifact_digest": "c842e074362d5c9d908b81db6379d3287551ae19e7b3c70abd103361cea0a466",
+  "verdict": "GOOD_ENOUGH"
+}

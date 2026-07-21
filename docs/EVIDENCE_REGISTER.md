@@ -1,6 +1,6 @@
 # Evidence register — SHAR
 
-> v2.0 · 2026-07-19 · Status: `verified`, `qualified`, `rejected`, or `watch`.
+> v2.1 · 2026-07-20 · Status: `verified`, `qualified`, `rejected`, or `watch`.
 
 ## Evidence policy
 
@@ -27,6 +27,7 @@ Technical validity requires a primary paper, official dataset/model page, offici
 | Slide Loss has one unambiguous exact formula and fixes rare-class imbalance | rejected | [YOLO-FaceV2 paper](https://arxiv.org/abs/2208.02019) and [upstream code](https://raw.githubusercontent.com/Krasjet-Yu/YOLO-FaceV2/master/utils/loss.py) disagree on the middle weight (`exp(1-μ)` versus `exp(μ)`); code uses batch/layer mean IoU clamped ≥0.2, no EMA. Local `2509.21696v1.pdf`, pp. 5–6 has no class-frequency term and worse Slide-only mAP. | Reddit is not evidence for the loss mechanism. Core Slide work is removed. |
 | SEMSCNN is a copyable 2-D image classifier | rejected | [University of Essex accepted manuscript](https://repository.essex.ac.uk/39499/) confirms 1-D EEG/SSVEP temporal design | 2-D SHAR version must be called an adaptation and ablated. |
 | Python `hash(filepath)` is stable across runs | rejected | [Python data model documentation](https://docs.python.org/3/reference/datamodel.html#object.__hash__) describes hash randomization | Use a cryptographic digest; no community vote required. |
+| The P2A OpenCV/scikit-image environment is exactly reproducible on the project Python 3.12 setup | verified | Direct fresh-environment measurement in `results/p2a/fresh-environment-p2a-v3-20260720.json`; official [opencv-python-headless release history](https://pypi.org/project/opencv-python-headless/) and [scikit-image 0.26.0 package page](https://pypi.org/project/scikit-image/) | Package availability is direct/official evidence only; it does not validate experiment conventions or restoration benefit. |
 | YOLO26 is the current official comparison candidate | verified | [Ultralytics model index](https://docs.ultralytics.com/models/) and [YOLO26 docs](https://docs.ultralytics.com/models/yolo26/) | Current-state claim must be rechecked at implementation freeze. |
 
 ## Local paper coverage

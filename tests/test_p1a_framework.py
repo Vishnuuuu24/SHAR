@@ -153,6 +153,7 @@ class RunLifecycleTests(unittest.TestCase):
                     "hardware": {"device": "fixture"},
                     "parent_checkpoint": None,
                     "artifact_digest": artifact_digest(aggregate),
+                    "artifact_path": "aggregate.json",
                 }
             )
             lifecycle.finalize(
@@ -183,6 +184,7 @@ class RunLifecycleTests(unittest.TestCase):
                         "hardware": {},
                         "parent_checkpoint": None,
                         "artifact_digest": "a" * 64,
+                        "artifact_path": "aggregate.json",
                     }
                 )
 
@@ -205,6 +207,7 @@ class RunLifecycleTests(unittest.TestCase):
                     "hardware": {},
                     "parent_checkpoint": None,
                     "artifact_digest": None,
+                    "artifact_path": None,
                 }
             )
             with self.assertRaisesRegex(ValueError, "RUNNING"):
@@ -240,6 +243,7 @@ class RunLifecycleTests(unittest.TestCase):
                     "hardware": {},
                     "parent_checkpoint": None,
                     "artifact_digest": artifact_digest(aggregate),
+                    "artifact_path": "aggregate.json",
                 }
             )
             verdict = {
@@ -257,6 +261,93 @@ class RunLifecycleTests(unittest.TestCase):
             }
             with self.assertRaisesRegex(ValueError, "status/verdict"):
                 lifecycle.finalize(aggregate, verdict)
+
+    def test_running_attempt_can_append_final_transition(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            aggregate = {"metric": 1.0}
+            lifecycle = RunLifecycle.create(Path(temporary), "transition", provenance("transition"))
+            common = {
+                "attempt_id": "a1",
+                "seed": 0,
+                "started_at": "2026-07-20T00:00:00Z",
+                "reason": "fixture",
+                "hardware": {},
+                "parent_checkpoint": None,
+            }
+            lifecycle.append_attempt(
+                {
+                    **common,
+                    "status": "RUNNING",
+                    "finished_at": None,
+                    "artifact_digest": None,
+                    "artifact_path": None,
+                }
+            )
+            lifecycle.append_attempt(
+                {
+                    **common,
+                    "status": "COMPLETED",
+                    "finished_at": "2026-07-20T00:00:01Z",
+                    "artifact_digest": artifact_digest(aggregate),
+                    "artifact_path": "aggregate.json",
+                }
+            )
+            events = lifecycle.attempts_path.read_text(encoding="utf-8").splitlines()
+            self.assertEqual(len(events), 2)
+            verdict = {
+                "status": "COMPLETED",
+                "verdict": "GOOD_ENOUGH",
+                "claim_state": "NOT_APPLICABLE",
+                "reason": "fixture",
+                "next_action": "none",
+                "runtime_seconds": 1,
+                "peak_memory_bytes": 0,
+                "storage_bytes": 0,
+                "stop_reason": "completed",
+                "checkpoint_disposition": "not applicable",
+                "summary_artifact_digest": artifact_digest(aggregate),
+            }
+            lifecycle.finalize(aggregate, verdict)
+            self.assertTrue(lifecycle.complete_marker.exists())
+
+    def test_finalize_recovers_matching_partial_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            aggregate = {"metric": 1.0}
+            lifecycle = RunLifecycle.create(Path(temporary), "recovery", provenance("recovery"))
+            lifecycle.append_attempt(
+                {
+                    "attempt_id": "a1",
+                    "seed": 0,
+                    "status": "COMPLETED",
+                    "started_at": "2026-07-20T00:00:00Z",
+                    "finished_at": "2026-07-20T00:00:01Z",
+                    "reason": "fixture",
+                    "hardware": {},
+                    "parent_checkpoint": None,
+                    "artifact_digest": artifact_digest(aggregate),
+                    "artifact_path": "aggregate.json",
+                }
+            )
+            (lifecycle.run_directory / "aggregate.json").write_bytes(
+                (json.dumps(aggregate, indent=2, sort_keys=True) + "\n").encode("utf-8")
+            )
+            lifecycle.finalize(
+                aggregate,
+                {
+                    "status": "COMPLETED",
+                    "verdict": "GOOD_ENOUGH",
+                    "claim_state": "NOT_APPLICABLE",
+                    "reason": "fixture",
+                    "next_action": "none",
+                    "runtime_seconds": 1,
+                    "peak_memory_bytes": 0,
+                    "storage_bytes": 0,
+                    "stop_reason": "completed",
+                    "checkpoint_disposition": "not applicable",
+                    "summary_artifact_digest": artifact_digest(aggregate),
+                },
+            )
+            self.assertTrue(lifecycle.complete_marker.exists())
 
 
 if __name__ == "__main__":

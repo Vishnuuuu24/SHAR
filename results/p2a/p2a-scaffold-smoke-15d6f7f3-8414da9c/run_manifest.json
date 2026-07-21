@@ -1,0 +1,22 @@
+{
+  "annotation_version": "not-applicable-synthetic-fixture",
+  "code_revision": "HEAD=dc689c1fb8a36b49cb988d6da51936081a243392;source_bundle_sha256=8414da9c95ded1057c869adaf4500bf4e9daa42916e85ccb2d2052a5442b4d70;worktree_dirty=true",
+  "config_digest": "0639871dcbd1272057dac7f5096612d3a77f3e21e98bdc2511d81ece48db08d5",
+  "dataset_manifest_digest": "15d6f7f32d843ec3d32400cd545a54e98d6c9ca2f941455c2c446378f6d47bfb",
+  "environment_digest": "ae29c4c0fa13f559146d6d58dcc9529bc06211b357dd6d504cec22bf96ab8a2e",
+  "hardware": {
+    "device": "CPU; synthetic fixture only"
+  },
+  "metric_artifact_paths": [
+    "aggregate.json",
+    "verdict.json"
+  ],
+  "package_versions": {
+    "numpy": "2.5.1",
+    "opencv-python-headless": "4.13.0.92",
+    "scikit-image": "0.26.0"
+  },
+  "run_id": "p2a-scaffold-smoke-15d6f7f3-8414da9c",
+  "run_kind": "code_smoke",
+  "seed": 0
+}

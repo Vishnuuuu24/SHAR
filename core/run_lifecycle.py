@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
+import tempfile
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from core.provenance import finalize_provenance, validate_provenance
@@ -21,6 +23,7 @@ ATTEMPT_FIELDS = {
     "hardware",
     "parent_checkpoint",
     "artifact_digest",
+    "artifact_path",
 }
 FINAL_STATUSES = {"COMPLETED", "FAILED", "ABORTED", "INVALID"}
 SHA256_LENGTH = 64
@@ -51,9 +54,26 @@ def artifact_payload(value: dict[str, Any]) -> bytes:
 
 
 def artifact_digest(value: dict[str, Any]) -> str:
-    import hashlib
-
     return hashlib.sha256(artifact_payload(value)).hexdigest()
+
+
+def _atomic_write_or_verify(path: Path, payload: bytes) -> None:
+    """Write one closure component atomically, or verify a recoverable partial write."""
+    if path.exists():
+        if path.read_bytes() != payload:
+            raise FileExistsError(f"existing final artifact differs: {path}")
+        return
+    descriptor, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except Exception:
+        temporary.unlink(missing_ok=True)
+        raise
 
 
 class RunLifecycle:
@@ -100,21 +120,44 @@ class RunLifecycle:
         if attempt["parent_checkpoint"] is not None and not isinstance(attempt["parent_checkpoint"], str):
             raise ValueError("attempt parent_checkpoint must be null or a string")
         if attempt["status"] == "RUNNING":
-            if attempt["finished_at"] is not None or attempt["artifact_digest"] is not None:
-                raise ValueError("RUNNING attempt cannot have finish time or artifact digest")
+            if (
+                attempt["finished_at"] is not None
+                or attempt["artifact_digest"] is not None
+                or attempt["artifact_path"] is not None
+            ):
+                raise ValueError("RUNNING attempt cannot have finish time or artifact reference")
         else:
             if not isinstance(attempt["finished_at"], str) or not attempt["finished_at"]:
                 raise ValueError("final attempt requires finished_at")
             digest = attempt["artifact_digest"]
             if not isinstance(digest, str) or len(digest) != SHA256_LENGTH:
                 raise ValueError("final attempt requires a SHA-256 artifact_digest")
-        existing_ids = {
-            json.loads(line)["attempt_id"]
+            artifact_path = attempt["artifact_path"]
+            if not isinstance(artifact_path, str) or not artifact_path:
+                raise ValueError("final attempt requires artifact_path")
+            pure = PurePosixPath(artifact_path)
+            if (
+                pure.is_absolute()
+                or ".." in pure.parts
+                or "\\" in artifact_path
+                or pure.as_posix() != artifact_path
+            ):
+                raise ValueError("artifact_path must be a canonical relative POSIX path")
+        existing_events = [
+            json.loads(line)
             for line in self.attempts_path.read_text(encoding="utf-8").splitlines()
             if line
-        }
-        if attempt["attempt_id"] in existing_ids:
-            raise ValueError(f"duplicate attempt_id: {attempt['attempt_id']}")
+        ]
+        latest_by_id: dict[str, dict[str, Any]] = {}
+        for event in existing_events:
+            latest_by_id[event["attempt_id"]] = event
+        previous = latest_by_id.get(attempt["attempt_id"])
+        if previous is not None:
+            if previous["status"] != "RUNNING" or attempt["status"] == "RUNNING":
+                raise ValueError(f"attempt_id is already final: {attempt['attempt_id']}")
+            for field in ("seed", "started_at", "parent_checkpoint"):
+                if attempt[field] != previous[field]:
+                    raise ValueError(f"attempt transition changed immutable field: {field}")
         payload = json.dumps(attempt, sort_keys=True) + "\n"
         descriptor = os.open(self.attempts_path, os.O_WRONLY | os.O_APPEND)
         try:
@@ -125,14 +168,17 @@ class RunLifecycle:
 
     def finalize(self, aggregate: dict[str, Any], verdict: dict[str, Any]) -> None:
         self._assert_mutable()
-        attempts = [
+        attempt_events = [
             json.loads(line)
             for line in self.attempts_path.read_text(encoding="utf-8").splitlines()
             if line
         ]
-        if not attempts:
+        if not attempt_events:
             raise ValueError("cannot finalize a run with no attempts")
-        if any(attempt["status"] == "RUNNING" for attempt in attempts):
+        latest_attempts: dict[str, dict[str, Any]] = {}
+        for event in attempt_events:
+            latest_attempts[event["attempt_id"]] = event
+        if any(attempt["status"] == "RUNNING" for attempt in latest_attempts.values()):
             raise ValueError("cannot finalize while an attempt is RUNNING")
         missing = FINAL_VERDICT_FIELDS - set(verdict)
         if missing:
@@ -154,11 +200,37 @@ class RunLifecycle:
         if verdict["summary_artifact_digest"] != aggregate_digest:
             raise ValueError("summary_artifact_digest does not match aggregate.json")
         for name, value in (("aggregate.json", aggregate), ("verdict.json", verdict)):
-            path = self.run_directory / name
-            if path.exists():
-                raise FileExistsError(f"final artifact exists: {path}")
-            path.write_bytes(artifact_payload(value))
-        self.complete_marker.write_text(
-            json.dumps({"completed_at": datetime.now(timezone.utc).isoformat()}, sort_keys=True) + "\n",
-            encoding="utf-8",
+            _atomic_write_or_verify(self.run_directory / name, artifact_payload(value))
+        for attempt in latest_attempts.values():
+            artifact_path = self.run_directory / attempt["artifact_path"]
+            if not artifact_path.is_file():
+                raise ValueError(f"attempt artifact does not exist: {attempt['artifact_path']}")
+            actual_digest = hashlib.sha256(artifact_path.read_bytes()).hexdigest()
+            if actual_digest != attempt["artifact_digest"]:
+                raise ValueError(
+                    f"attempt artifact digest mismatch: {attempt['attempt_id']}"
+                )
+        closure_names = (
+            "run_manifest.json",
+            "attempts.jsonl",
+            "aggregate.json",
+            "verdict.json",
+        )
+        closure_digests = {
+            name: hashlib.sha256((self.run_directory / name).read_bytes()).hexdigest()
+            for name in closure_names
+        }
+        _atomic_write_or_verify(
+            self.complete_marker,
+            (
+                json.dumps(
+                    {
+                        "schema_version": "2.0.0",
+                        "completed_at": datetime.now(timezone.utc).isoformat(),
+                        "files_sha256": closure_digests,
+                    },
+                    sort_keys=True,
+                )
+                + "\n"
+            ).encode("utf-8"),
         )

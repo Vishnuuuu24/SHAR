@@ -1,0 +1,1097 @@
+{
+  "blocker": "B-007 owner convention freeze remains required before P2A code closure or real execution",
+  "checks": {
+    "all_outputs_float32_hwc_rgb": true,
+    "all_outputs_in_unit_interval": true,
+    "all_registered_degradations_exercised": true,
+    "all_registered_restorations_exercised": true,
+    "complete_matrix": true
+  },
+  "fixture_choices_not_experiment_freeze": {
+    "degradations": {
+      "clipping": "clip_0_1",
+      "gaussian_mean_8bit": 0.0,
+      "gaussian_sampling_unit": "element",
+      "low_light_gaussian_mean_8bit": 0.0,
+      "low_light_noise_sampling_unit": "element",
+      "low_light_operation_order": "gamma_then_gaussian",
+      "pepper_value": 0.0,
+      "salt_pepper_density_mode": "bernoulli",
+      "salt_pepper_sampling_unit": "pixel_shared_channels",
+      "salt_probability_given_corruption": 0.5,
+      "salt_value": 1.0,
+      "speckle_gaussian_mean": 0.0,
+      "speckle_model": "x_times_one_plus_gaussian",
+      "speckle_sampling_unit": "element"
+    },
+    "image": "deterministic-16x16-rgb-gradient-v1",
+    "metrics": {
+      "channel_axis": -1,
+      "data_range": 1.0,
+      "gaussian_weights": true,
+      "k1": 0.01,
+      "k2": 0.03,
+      "sigma": 1.5,
+      "use_sample_covariance": false,
+      "win_size": 7
+    },
+    "restorations": {
+      "bilateral": {
+        "border_type": 4,
+        "diameter": 3,
+        "sigma_color": 0.1,
+        "sigma_space": 1.0
+      },
+      "gaussian_blur": {
+        "border_type": 4,
+        "kernel_size": [
+          3,
+          3
+        ],
+        "sigma_x": 0.8,
+        "sigma_y": 0.8
+      },
+      "identity": {},
+      "median": {
+        "border_policy": "opencv_median_fixed_replicate",
+        "kernel_size": 3
+      },
+      "nlm": {
+        "border_policy": "opencv_nlm_library_fixed",
+        "color_boundary": "rgb_to_bgr_for_opencv_nlm",
+        "h_color": 3.0,
+        "h_luminance": 3.0,
+        "quantization": "round_to_nearest_uint8",
+        "search_window_size": 7,
+        "template_window_size": 3
+      }
+    }
+  },
+  "kind": "P2A synthetic fixture interface smoke; not an experiment or research result",
+  "matrix": [
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": null,
+        "psnr_state": "positive_infinity_exact_match",
+        "ssim": 1.0
+      },
+      "output_sha256": "ab34259f930845fd004477dc44f827d44bdbe58b7bbc8fed782d746dbacf4f12",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:identity:{}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 55.38573336518094,
+        "psnr_state": "finite",
+        "ssim": 0.9999979138374329
+      },
+      "output_sha256": "938dd125cbbd2a5445759e9a0cf240f02cda8ea1204758621e8a5ba512afb79d",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:identity:{}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 39.7561884436159,
+        "psnr_state": "finite",
+        "ssim": 0.9994840621948242
+      },
+      "output_sha256": "8e0fee05d3235c8e0ba76b9ca37faff3202ac998c1b4d5ed807e5329ab6c2e4c",
+      "range": [
+        0.03186590597033501,
+        0.9681341052055359
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:identity:{}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 43.869093446635105,
+        "psnr_state": "finite",
+        "ssim": 0.9998006820678711
+      },
+      "output_sha256": "390878db9ec6bf7d4e25cc4a72ea3584ed27d237f2c0bb246aea463d94867be5",
+      "range": [
+        0.019846340641379356,
+        0.9801536798477173
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:identity:{}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 41.954686195809536,
+        "psnr_state": "finite",
+        "ssim": 0.9988685250282288
+      },
+      "output_sha256": "62d95612ec26f9e154cdc7cba30cb33176388a8a2149bd6284609a89c1a16388",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:identity:{}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 28.18471553436367,
+        "psnr_state": "finite",
+        "ssim": 0.9134587645530701
+      },
+      "output_sha256": "45d7b115612cdd92350808726de7dadd980587d569f1881112c9b555f10054be",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":10.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 32.9268447220908,
+        "psnr_state": "finite",
+        "ssim": 0.977384626865387
+      },
+      "output_sha256": "e811236864ec08c23f5a0ed5838d041a8ef1faa13abcdc81a23f0c9ec5302374",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":10.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 33.65940371289299,
+        "psnr_state": "finite",
+        "ssim": 0.9854245185852051
+      },
+      "output_sha256": "9d65c63099274f06d21de47d6b1f2b243c56351ab959e76cd490037e0f84531e",
+      "range": [
+        0.02214808017015457,
+        0.9853172302246094
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":10.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 29.745520686373222,
+        "psnr_state": "finite",
+        "ssim": 0.9406042695045471
+      },
+      "output_sha256": "c510a1900ee5b351450e7c2f4c066b718eea1361487ce2ebb0f89d006369f1a3",
+      "range": [
+        0.004378368146717548,
+        1.0
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":10.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 29.248745233665762,
+        "psnr_state": "finite",
+        "ssim": 0.9337410926818848
+      },
+      "output_sha256": "1b68874e06544114521cbe38dd2e68f225faf3b1248401fd3c0bad32c65325cf",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":10.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 20.30048851682196,
+        "psnr_state": "finite",
+        "ssim": 0.6360300183296204
+      },
+      "output_sha256": "aa10103ce19fd5c3e4f1a103cc7ce496e816555fed45651f21688f9c546bdc02",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":25.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 26.622310701390038,
+        "psnr_state": "finite",
+        "ssim": 0.911048173904419
+      },
+      "output_sha256": "b0e886133ff1c4d3fb22a74efabe9757af68bd6cf2b5b373e6bfc6dcb414eeab",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":25.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 27.75095261823224,
+        "psnr_state": "finite",
+        "ssim": 0.9264926314353943
+      },
+      "output_sha256": "e9705efee353ac6e479046a057bc35208984c436e1ed05afaed973f0524add73",
+      "range": [
+        0.0032875954639166594,
+        0.985832929611206
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":25.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 20.531595475906357,
+        "psnr_state": "finite",
+        "ssim": 0.6477451324462891
+      },
+      "output_sha256": "abcd1eebafe904f7c29f1105372699595a9be67eb634b3e3def09cf7a48e7c67",
+      "range": [
+        7.696052080063964e-07,
+        0.9999997615814209
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":25.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 20.35108203778615,
+        "psnr_state": "finite",
+        "ssim": 0.6362900733947754
+      },
+      "output_sha256": "da27e31b25bff9a28e87255cef68ac303297cb9dce63cfe7b588b29c65070e87",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":25.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 15.093929785485813,
+        "psnr_state": "finite",
+        "ssim": 0.3355359733104706
+      },
+      "output_sha256": "fe810775ac8041e00d8dd4ff522c7aa93517270df1509c8c0e6be81c9279feff",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":50.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 21.59316549947315,
+        "psnr_state": "finite",
+        "ssim": 0.7568316459655762
+      },
+      "output_sha256": "cc3df68c8228e8e3afb44757c97a43bac5342f9d3c9714bab922ecf2809a8e71",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":50.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 22.814609496854064,
+        "psnr_state": "finite",
+        "ssim": 0.8020637035369873
+      },
+      "output_sha256": "5b4cd1875dcdeabeabad214b3bbfcd46abe36c9df530449214f148b7876c980b",
+      "range": [
+        0.02784009277820587,
+        0.998146116733551
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":50.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 15.11742275635983,
+        "psnr_state": "finite",
+        "ssim": 0.3364020884037018
+      },
+      "output_sha256": "9d4ea9a36e257e210a5b2c2d6097a02533b0954014d7fb29d221a9bb4558db80",
+      "range": [
+        3.628367555956446e-32,
+        1.0
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":50.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 15.102583539488775,
+        "psnr_state": "finite",
+        "ssim": 0.335639089345932
+      },
+      "output_sha256": "9f9d344f62d043acc418e8dba9678ebd4d2fa20a1e959023c552580700b316d5",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:gaussian:{\"clipping\":\"clip_0_1\",\"mean_8bit\":0.0,\"sampling_unit\":\"element\",\"sigma_8bit\":50.0}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 18.255033895766896,
+        "psnr_state": "finite",
+        "ssim": 0.6720016598701477
+      },
+      "output_sha256": "5a4c89c498068ab150ad4d7ad173516eb45163c0add5c5e7afc86e29c710b661",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.02,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 41.96150999034103,
+        "psnr_state": "finite",
+        "ssim": 0.9959484934806824
+      },
+      "output_sha256": "9df52e6bed6a3d02c9ca276c0502962d49d2bbf36f334cacb605ff037845e18a",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.02,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 25.423936898596196,
+        "psnr_state": "finite",
+        "ssim": 0.8785325884819031
+      },
+      "output_sha256": "ff83ee4a4228a4f6a3703f5478690bceb69b4cdb77b14bfc4b5f3208dca0917f",
+      "range": [
+        0.03186590597033501,
+        0.9681341052055359
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.02,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 18.241393555335716,
+        "psnr_state": "finite",
+        "ssim": 0.6712162494659424
+      },
+      "output_sha256": "596b70b2d052f3571e241ca92e23cc5cf48d6ab71282c3f03160f3dd2713f7db",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.02,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 18.2956506411711,
+        "psnr_state": "finite",
+        "ssim": 0.6726930737495422
+      },
+      "output_sha256": "916aa498ec2af9ff381ed00a519aa17c3419d47d62a855b75010babde06976a7",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.02,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 17.69270269881723,
+        "psnr_state": "finite",
+        "ssim": 0.6992054581642151
+      },
+      "output_sha256": "85f3a4093ddac18ccfd0493e276220396dd4cc017e9d96c0f17f8006393d7ba0",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.05,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 38.061799023761594,
+        "psnr_state": "finite",
+        "ssim": 0.9972807765007019
+      },
+      "output_sha256": "0f154f32459b2234dd8b221c9becef8ee0262a5bc68ff8765ee022b28f2987e4",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.05,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 25.545530804438222,
+        "psnr_state": "finite",
+        "ssim": 0.9140321612358093
+      },
+      "output_sha256": "8cef2b682a243578516f7826fce98b829c986dba106a27b55ce5fd6d194aeb08",
+      "range": [
+        0.03186590597033501,
+        0.9681341052055359
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.05,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 17.680686432659016,
+        "psnr_state": "finite",
+        "ssim": 0.6981717944145203
+      },
+      "output_sha256": "1e921e3265200fb7f96c19fa64903a383299d980555cf21b9dd8fd031b486e66",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.05,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 17.711728674706457,
+        "psnr_state": "finite",
+        "ssim": 0.7000660300254822
+      },
+      "output_sha256": "7527b88f3180f23ad712ecfa21c5bd9a201c4aa8135676e644e68d5d0a022dc4",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.05,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 16.047322669203517,
+        "psnr_state": "finite",
+        "ssim": 0.4134615659713745
+      },
+      "output_sha256": "045d6988d03fe7019e496c2f4ab816fd4899bd3de15ea5f05aca5a5024092969",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.1,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 38.352823537319296,
+        "psnr_state": "finite",
+        "ssim": 0.9972026944160461
+      },
+      "output_sha256": "a89bce3710dd47737a84dc7ed3fa173635bc980e60b47ad65da8c17def6b27a8",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.1,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 24.20897368983247,
+        "psnr_state": "finite",
+        "ssim": 0.8200355172157288
+      },
+      "output_sha256": "26e70a78adeb2150b761f9df5d7dcce6dfa79889619999a3909f28f561ecf7a2",
+      "range": [
+        0.015231537632644176,
+        0.9847684502601624
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.1,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 16.03966449183606,
+        "psnr_state": "finite",
+        "ssim": 0.4123920500278473
+      },
+      "output_sha256": "98308ac6c2f79363d3519d716f4df5b42154ca38d5a651ec708b21f4ecd51dab",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.1,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 16.150378685407578,
+        "psnr_state": "finite",
+        "ssim": 0.4215838611125946
+      },
+      "output_sha256": "5e34b7d017252635c9660457cedd57f4f61d52b5d56b6dc2112b1e91f13e3eb2",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:salt_and_pepper:{\"clipping\":\"clip_0_1\",\"density\":0.1,\"density_mode\":\"bernoulli\",\"pepper_value\":0.0,\"salt_probability_given_corruption\":0.5,\"salt_value\":1.0,\"sampling_unit\":\"pixel_shared_channels\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 22.187839821614496,
+        "psnr_state": "finite",
+        "ssim": 0.7546248435974121
+      },
+      "output_sha256": "67776fbc790a53458742d07f57556adf33c9fb8ded9f6c99e6589e5baca7a912",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.02}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 27.727210967513102,
+        "psnr_state": "finite",
+        "ssim": 0.9418647885322571
+      },
+      "output_sha256": "c8f296e8928d5787312bc0101751a8e2aefdadd33f1f3db5e5d7ddadec0d00ad",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.02}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 28.30981710138449,
+        "psnr_state": "finite",
+        "ssim": 0.9555115699768066
+      },
+      "output_sha256": "a394a48f60d347f0101f3cf6a148b4f56a90f205a19595b3b136f492a6f6e12e",
+      "range": [
+        0.025626877322793007,
+        0.9875433444976807
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.02}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 22.568662083041207,
+        "psnr_state": "finite",
+        "ssim": 0.7746585011482239
+      },
+      "output_sha256": "66c85fd0bef0a0a7755817a1ba9ae2fb808e3174486c75fe6c6acc99d156df36",
+      "range": [
+        8.112242358038202e-05,
+        0.9999984502792358
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.02}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 22.162843425312793,
+        "psnr_state": "finite",
+        "ssim": 0.7553337216377258
+      },
+      "output_sha256": "03e2e17130814378496143cad12f3540ffc7524435b0efc1c855a146c6a8d5ff",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.02}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 19.112443941639313,
+        "psnr_state": "finite",
+        "ssim": 0.6130508184432983
+      },
+      "output_sha256": "63e322dc49d15b22e0ba3237ecd49afe6771b2ef5d517a9cf4a97d32756eebe3",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.05}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 24.61813401232717,
+        "psnr_state": "finite",
+        "ssim": 0.8872902989387512
+      },
+      "output_sha256": "d48532898b63ad789700c7a6a2eae27ed179b8214480aa3bb480abc5e0a329a6",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.05}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 25.92590960884894,
+        "psnr_state": "finite",
+        "ssim": 0.9130614399909973
+      },
+      "output_sha256": "4fbd8b795f0fda7a91ddf4d8c5301b810195f5f40bba477e0d0005a75321a9d3",
+      "range": [
+        0.024433128535747528,
+        0.9858572483062744
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.05}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 19.261816364937705,
+        "psnr_state": "finite",
+        "ssim": 0.6243706345558167
+      },
+      "output_sha256": "e58eeff0398f05193725ca4fdc4d2ba95b2f70cba1ad71438f8a3d75a005ba35",
+      "range": [
+        2.4407375426305222e-11,
+        1.0
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.05}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 19.12489959401561,
+        "psnr_state": "finite",
+        "ssim": 0.6119828820228577
+      },
+      "output_sha256": "9e1e3eef0014f96c308393e102410cbf7f79c33e493a1e24eb7039a6260da9e3",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:speckle:{\"clipping\":\"clip_0_1\",\"gaussian_mean\":0.0,\"model\":\"x_times_one_plus_gaussian\",\"sampling_unit\":\"element\",\"variance\":0.05}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 13.358620224539472,
+        "psnr_state": "finite",
+        "ssim": 0.5555434823036194
+      },
+      "output_sha256": "78941d1ef7d6f001ca1ae742b459a2a1ad136813860d8ca5d29b6662c6499f7a",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "identity",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:low_light:{\"clipping\":\"clip_0_1\",\"gamma\":2.2,\"gaussian_mean_8bit\":0.0,\"gaussian_sigma_8bit\":15.0,\"noise_sampling_unit\":\"element\",\"operation_order\":\"gamma_then_gaussian\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 13.56764719453825,
+        "psnr_state": "finite",
+        "ssim": 0.6538096070289612
+      },
+      "output_sha256": "f558f2a380954de478c50c8098bba109252163f8d4834380b44f6d21b3df70b2",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "restoration_method": "median",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:low_light:{\"clipping\":\"clip_0_1\",\"gamma\":2.2,\"gaussian_mean_8bit\":0.0,\"gaussian_sigma_8bit\":15.0,\"noise_sampling_unit\":\"element\",\"operation_order\":\"gamma_then_gaussian\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 13.607593959909325,
+        "psnr_state": "finite",
+        "ssim": 0.6644731163978577
+      },
+      "output_sha256": "99a92257d80962544ee8e4bf9e9750a54f3c4d5add453a7ce11e8e3161b53c7e",
+      "range": [
+        0.0,
+        0.9488221406936646
+      ],
+      "restoration_method": "gaussian_blur",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:low_light:{\"clipping\":\"clip_0_1\",\"gamma\":2.2,\"gaussian_mean_8bit\":0.0,\"gaussian_sigma_8bit\":15.0,\"noise_sampling_unit\":\"element\",\"operation_order\":\"gamma_then_gaussian\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 13.415685200310312,
+        "psnr_state": "finite",
+        "ssim": 0.5762031078338623
+      },
+      "output_sha256": "776351b3c9b78e08a07c3ffd7abfc562cad0ebe4a62c99c4baea051732cbd195",
+      "range": [
+        0.0,
+        0.9996744394302368
+      ],
+      "restoration_method": "bilateral",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:low_light:{\"clipping\":\"clip_0_1\",\"gamma\":2.2,\"gaussian_mean_8bit\":0.0,\"gaussian_sigma_8bit\":15.0,\"noise_sampling_unit\":\"element\",\"operation_order\":\"gamma_then_gaussian\"}"
+    },
+    {
+      "dtype": "float32",
+      "metrics": {
+        "psnr": 13.31960144058003,
+        "psnr_state": "finite",
+        "ssim": 0.553100049495697
+      },
+      "output_sha256": "da0500ba13691fd93c566cde270fff9e8f8da8232055059052b4b80be9e99124",
+      "range": [
+        0.0,
+        0.9960784316062927
+      ],
+      "restoration_method": "nlm",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "transform_id": "shar:p2a-fixture-v1:low_light:{\"clipping\":\"clip_0_1\",\"gamma\":2.2,\"gaussian_mean_8bit\":0.0,\"gaussian_sigma_8bit\":15.0,\"noise_sampling_unit\":\"element\",\"operation_order\":\"gamma_then_gaussian\"}"
+    }
+  ],
+  "matrix_entry_count": 50,
+  "registered_degradation_count": 10,
+  "registered_restoration_count": 5,
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "dataset_mapping_validated": false,
+    "experiment_conventions_frozen": false,
+    "model_training": false,
+    "real_data_used": false,
+    "research_claim": false,
+    "restoration_benefit_claim": false
+  },
+  "source_bundle_sha256": "8f5024979b8d2a3ba76e5e6c7cb5fede23768bc2a66a55ea057884dabb34e752",
+  "source_paths": [
+    "core/provenance.py",
+    "core/reproducibility.py",
+    "core/run_lifecycle.py",
+    "data/degradations.py",
+    "eval/image_quality.py",
+    "models/restoration.py",
+    "scripts/smoke_p2a_scaffold.py",
+    "configs/p2a_scaffold.yaml",
+    "requirements/p0c-lock.txt"
+  ]
+}
