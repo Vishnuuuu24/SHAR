@@ -16,6 +16,12 @@ __pycache__/
 # summaries and verification artifacts remain eligible for version control.
 /results/p0a/inventory-*/inventory_files.csv.gz
 /results/p0a/.inventory-tmp-*/
+# Real-data P1B manifests include licensed frame filenames and stay local.
+/results/p1b/p1b-real-views-*/
+/results/p1b/p1b-grouped-train-validation-*/
+# Local faculty-preview renders contain licensed source-frame derivatives and
+# must never be committed or published through this repository.
+/results/faculty_progress/
 AF-YOLO_Asymptotic_Feature_Extraction_and_Fusion_for_Aerial_Object_Detection.zip
 SHAR/
 SHAR_Dataset/

@@ -1,0 +1,58 @@
+schema_version: 1.0.0
+kind: faculty_progress_visual_pack
+decision: D-25
+run_class: faculty_preview
+status: PRESENTATION_ONLY_NOT_RESEARCH_EVIDENCE
+
+video_root: Datasets/UCF Crime Official/raw/UCF_Crimes
+official_annotation_text: Datasets/UCF Crime Official/annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate/Temporal_Anomaly_Annotation.txt
+output_root: results/faculty_progress/ucf-temporal-preview-v1
+display_width: 960
+global_seed: 20260724
+
+scope_assertions:
+  training_performed: false
+  learned_model_rendered: false
+  metric_or_benefit_claim_made: false
+  pixel_or_instance_mask_rendered: false
+  raw_redistribution_authorized: false
+
+examples:
+  - id: example_01_abuse
+    video_relative_path: Videos/Abuse/Abuse028_x264.mp4
+    expected_label: Abuse
+    expected_source_video_id: Abuse028_x264
+    expected_frame_index: 230
+    expected_interval: [165, 240]
+  - id: example_02_road_accidents
+    video_relative_path: Videos/RoadAccidents/RoadAccidents016_x264.mp4
+    expected_label: RoadAccidents
+    expected_source_video_id: RoadAccidents016_x264
+    expected_frame_index: 710
+    expected_interval: [530, 720]
+  - id: example_03_robbery
+    video_relative_path: Videos/Robbery/Robbery137_x264.mp4
+    expected_label: Robbery
+    expected_source_video_id: Robbery137_x264
+    expected_frame_index: 1430
+    expected_interval: [135, 1950]
+
+# Explicit fixture values for presentation only. They are deliberately not
+# copied into configs/p2a_scaffold.yaml and do not resolve B-007.
+preview_noise:
+  family: gaussian
+  sigma_8bit: 25.0
+  mean_8bit: 0.0
+  sampling_unit: element
+  clipping: clip_0_1
+
+preview_restoration:
+  output_policy: clip_0_1
+  median:
+    kernel_size: 3
+    border_policy: opencv_median_fixed_replicate
+  bilateral:
+    diameter: 3
+    sigma_color: 0.1
+    sigma_space: 1.0
+    border_type: reflect_101

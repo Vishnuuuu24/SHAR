@@ -1,7 +1,10 @@
 schema_version: 1.0.0
-status: FIXTURE_CODE_ONLY_REAL_DATA_BLOCKED
+status: REAL_DATA_MATERIALIZATION_READY
 source_dataset: ucf_crime_kaggle_frames
-input_manifest: owner_required_after_p0b
+inventory_csv_gz: results/p0a/inventory-57f3a29b43a7d2e6/inventory_files.csv.gz
+p0b_mapping_report: results/p0b/p0b-mapping-20260724.json
+official_annotation_text: Datasets/UCF Crime Official/annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate/Temporal_Anomaly_Annotation.txt
+annotation_version: UCF-Crime official Temporal_Anomaly_Annotation TXT release
 views:
   event_only:
     name: official-interval-derived event-only 14-label evaluation
@@ -13,4 +16,18 @@ views:
 gates:
   unresolved_anomalous_interval: hard_error
   missing_headline_class: blocks_claim
-  real_completion_requires: B-001_and_P0B
+  real_completion_requires: resolved_B-001_and_verified_P0B
+train_validation:
+  policy:
+    fraction: 0.10
+    seed: 0
+    grouping_key: source_video_id
+  registration:
+    decision_id: D-26
+    owner_direction: Vishnu_2026-07-24_proceed
+    policy_source: configs/p1a_framework.yaml
+    constraints:
+      - outer_train_only
+      - no_frame_random_split
+      - no_test_guided_tuning
+      - retain_at_least_one_train_source_video_per_class

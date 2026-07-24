@@ -3,7 +3,9 @@ from __future__ import annotations
 import unittest
 
 from data.manifest import ManifestRow
+from data.train_validation import build_ucf_grouped_train_validation
 from data.views import (
+    CANONICAL_UCF_LABELS,
     EVENT_ONLY_VIEW_NAME,
     NOISY_PROXY_VIEW_NAME,
     build_ucf_evaluation_views,
@@ -147,6 +149,43 @@ class EvaluationViewTests(unittest.TestCase):
     def test_fixture_source_requires_explicit_override(self) -> None:
         with self.assertRaisesRegex(ValueError, "allow_fixture_source"):
             build_ucf_noisy_proxy_view([row("N-0", "Normal", None)], source_dataset="fixture_ucf")
+
+
+class TrainValidationManifestTests(unittest.TestCase):
+    def _train_row(self, name: str, label: str, frame: int) -> ManifestRow:
+        fixture = row(name, label, None, split="train", frame=frame)
+        return ManifestRow(
+            **{
+                **fixture.to_dict(),
+                "source_dataset": "ucf_crime_kaggle_frames",
+                "source_video_id": name.rsplit("-", 1)[0],
+            }
+        )
+
+    def test_allocation_is_deterministic_and_has_zero_group_overlap(self) -> None:
+        rows = [
+            self._train_row(f"{label.lower()}-a-0", label, 0)
+            for label in CANONICAL_UCF_LABELS
+        ] + [
+            self._train_row(f"{label.lower()}-b-0", label, 0)
+            for label in CANONICAL_UCF_LABELS
+        ]
+        first = build_ucf_grouped_train_validation(rows, validation_fraction=0.5, seed=0)
+        second = build_ucf_grouped_train_validation(rows, validation_fraction=0.5, seed=0)
+        self.assertEqual(first, second)
+        self.assertEqual(first.report["source_video_overlap_count"], 0)
+        self.assertEqual(len(first.train) + len(first.validation), len(rows))
+        self.assertEqual({item.split for item in first.validation}, {"validation"})
+        self.assertEqual({item.inside_official_interval for item in first.train}, {None})
+
+    def test_allocation_refuses_test_rows_and_non_ucf_sources(self) -> None:
+        test_row = self._train_row("abuse-a-0", "Abuse", 0)
+        test_row = ManifestRow(**{**test_row.to_dict(), "split": "test"})
+        with self.assertRaisesRegex(ValueError, "outer-Train"):
+            build_ucf_grouped_train_validation([test_row], validation_fraction=0.1, seed=0)
+        external = ManifestRow(**{**self._train_row("abuse-a-0", "Abuse", 0).to_dict(), "source_dataset": "external"})
+        with self.assertRaisesRegex(ValueError, "requires UCF"):
+            build_ucf_grouped_train_validation([external], validation_fraction=0.1, seed=0)
 
 
 if __name__ == "__main__":

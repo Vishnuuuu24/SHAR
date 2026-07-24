@@ -136,6 +136,11 @@ This separation allows infrastructure work before training without pretending th
 - `calibration`: representative throughput/memory measurement for an ETA; not research evidence.
 - `pilot`: protocol debugging or preregistration refinement using non-test data; not a headline substitute.
 - `full`: frozen research protocol eligible for the mapped claim checks.
+- `faculty_preview`: deterministic local visual communication of predeclared examples and named pipeline stages. It is neither training nor a benchmark/pilot result, may not tune choices after viewing outputs, and must retain source/parameter/provenance metadata.
+
+### Faculty-preview update rule
+
+At every valid work-item closure, the implementer must decide whether its new artifact adds a renderable, provenance-preserving stage for the three D-25 examples. If yes, create a new immutable local version under `results/faculty_progress/`, add the stage and its exact artifact/config/checkpoint identity, visually inspect it, and update `FACULTY_PROGRESS_VISUAL_PACK.md` plus `PROJECT_STATUS.md`. If no, record the reason and next renderable gate in `PROJECT_STATUS.md`. Never overwrite a pack, substitute a trained result before its gate, or use a visual update as evidence of a research claim.
 
 Three seeds are mandatory only for registered headline/full comparisons unless another higher-authority requirement says otherwise.
 

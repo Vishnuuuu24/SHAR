@@ -17,6 +17,10 @@
 | MSAD | 720 videos, 14 scenarios, detailed human/non-human anomalies | Preferred modern cross-scenario VAD generalization if access is approved | Native official evaluation | Access approval and non-redistribution constraints recorded before use. |
 | RareAnom | 2,200 videos, 17 rare anomaly types, temporal annotations | Optional rare/open-set generalization and related work | Native annotations only | Verify dataset media license and access before download/use. |
 
+## Faculty visual-progress examples
+
+`FACULTY_PROGRESS_VISUAL_PACK.md` governs three fixed, event-inside stills extracted locally from 320×240 official UCF videos under the narrow D-25 presentation authorization. They are local presentation derivatives, not additional training/evaluation samples and do not activate original-resolution ROI research. The UCF annotation shown in the pack is a temporal interval and must never be drawn or described as a pixel/instance mask. Any later mask/box visualization requires an independently eligible annotation source and its native task/evaluator.
+
 Watch only: VALU, FS-UCF-Crime, HIVAU-70K, Pistachio, and other promised 2026 releases. A paper or placeholder record is not an available dataset.
 
 ## 2. Verified local facts

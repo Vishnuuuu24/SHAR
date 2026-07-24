@@ -17,7 +17,8 @@
 11. `COMPUTE_POLICY.md` — M5 Pro/48 GB quality-first run and pre/post-run estimate rules.
 12. `PROJECT_STATUS.md` — sole live current-phase/sprint/blocker/resume pointer; it cannot change research scope.
 13. `TRAINING_LOG.md` — concise operational training index; immutable artifacts remain the result evidence.
-14. `TECH_STACK.md` and `AGENTS.md` — implementation environment and builder enforcement rules.
+14. `FACULTY_PROGRESS_VISUAL_PACK.md` — controlled local visual-progress pack for faculty review and later figure candidacy; it is not research evidence.
+15. `TECH_STACK.md` and `AGENTS.md` — implementation environment and builder enforcement rules.
 
 If documents conflict, use the higher item and synchronize every affected lower document before continuing. `DECISIONS.md` records why a resolution occurred but becomes effective only after the governing documents are updated. The preserved `SHAR_Research_Plan.docx` is historical input rather than current authority.
 

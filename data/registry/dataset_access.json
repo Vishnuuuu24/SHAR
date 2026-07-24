@@ -77,7 +77,7 @@
           "citation_requirements": "Official UCF-Crime dataset and paper.",
           "gate_status": "present_local_pending_terms_and_scope_activation",
           "blocker_id": "B-002",
-          "notes": "1950 MP4 files are locally present. Owner confirms authenticated Kaggle acquisition, but the exact listing/release, terms, and package completeness remain unverified; this is not a core blocker unless original-resolution ROI work is activated. Never upsample 64x64 frames and imply recovered detail."
+          "notes": "1950 MP4 files are locally present. Owner confirms authenticated Kaggle acquisition, but the exact listing/release, terms, and package completeness remain unverified; this is not a core blocker unless original-resolution ROI work is activated. D-25 permits extraction of three local-only 320x240 stills for a faculty progress preview; it does not authorize ROI research, a model run, or redistribution. Never upsample 64x64 frames and imply recovered detail."
         },
         {
           "component_id": "ucf_official_temporal_annotations",
