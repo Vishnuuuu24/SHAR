@@ -109,6 +109,18 @@ class RegisteredContractTests(unittest.TestCase):
         with self.assertRaises(TypeError):
             low_light_spec(gamma=2.2, gaussian_sigma_8bit=15)  # type: ignore[call-arg]
 
+    def test_low_light_rejects_non_numeric_registered_values_cleanly(self) -> None:
+        with self.assertRaisesRegex(TypeError, "gamma must be numeric"):
+            low_light_spec(
+                gamma="2.2",  # type: ignore[arg-type]
+                gaussian_sigma_8bit=15,
+                gaussian_mean_8bit=0.0,
+                operation_order="gamma_then_gaussian",
+                clipping_sequence="clip_after_each_stage",
+                noise_sampling_unit="element",
+                clipping="clip_0_1",
+            )
+
     def test_unregistered_levels_and_unknown_algorithms_are_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "one of"):
             gaussian_spec(

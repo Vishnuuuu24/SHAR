@@ -334,9 +334,11 @@ def low_light_spec(
     noise_sampling_unit: SamplingUnit,
     clipping: ClippingPolicy,
 ) -> DegradationSpec:
-    if float(gamma) != REGISTERED_LOW_LIGHT["gamma"]:
+    checked_gamma = _finite_number(gamma, "gamma")
+    if checked_gamma != REGISTERED_LOW_LIGHT["gamma"]:
         raise ValueError(f"gamma must equal {REGISTERED_LOW_LIGHT['gamma']}")
-    if float(gaussian_sigma_8bit) != REGISTERED_LOW_LIGHT["gaussian_sigma_8bit"]:
+    checked_sigma = _finite_number(gaussian_sigma_8bit, "gaussian_sigma_8bit")
+    if checked_sigma != REGISTERED_LOW_LIGHT["gaussian_sigma_8bit"]:
         raise ValueError(
             "gaussian_sigma_8bit must equal "
             f"{REGISTERED_LOW_LIGHT['gaussian_sigma_8bit']}"
@@ -348,8 +350,8 @@ def low_light_spec(
     return DegradationSpec(
         "low_light",
         {
-            "gamma": float(gamma),
-            "gaussian_sigma_8bit": float(gaussian_sigma_8bit),
+            "gamma": checked_gamma,
+            "gaussian_sigma_8bit": checked_sigma,
             "gaussian_mean_8bit": _finite_number(
                 gaussian_mean_8bit, "gaussian_mean_8bit"
             ),

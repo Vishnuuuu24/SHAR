@@ -77,6 +77,11 @@ class TemporalControlTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "lengths"):
             self.model(clips, torch.tensor([3, 0]), ["a", "b"])
 
+    def test_temporal_model_rejects_non_integral_lengths_before_gather(self) -> None:
+        clips = torch.randn(2, 3, 3, 16, 16)
+        with self.assertRaisesRegex(TypeError, "integer dtype"):
+            self.model(clips, torch.tensor([3.0, 2.0]), ["a", "b"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -9,7 +9,7 @@
 - **Objective:** create a reproducible content inventory of the local data and freeze the access, provenance, task, label, split, metric, and manifest contracts.
 - **In scope:** local content checksums and aggregate distributions; separate media/annotation access records; dataset roles and gates; task contract; manifest schema; fixture and real-data verification.
 - **Non-goals:** interval parsing or source-video reconstruction (P0B), environment/model foundation (P0C/P1A), training, headline evaluation, and benefit claims.
-- **Dependencies/blockers:** local data is present; B-001 blocks later real interval mapping. Unknown local acquisition/license evidence must remain explicit and may block affected use or release.
+- **Dependencies/blockers:** this historical P0A work item is complete. Its later B-001 temporal-annotation gate is resolved by the verified Kaggle mirror and owner-recorded internal non-commercial/no-raw-redistribution authorization; unknown acquisition/license evidence still blocks every affected component.
 - **Artifacts:** `data/registry/`, `data/schemas/`, `results/p0a/`, and this work-item record.
 - **Verification:** standard-library unit tests plus the full content-addressed acceptance inventory; machine verdicts map to V-D1/V-D5/V-D6.
 - **DoD:** every checkbox below is binary and evidence-linked.
@@ -38,4 +38,4 @@
 - Post-confirmation access verification: `../results/p0a/access-verification-20260720.json`
 - Closure: `../results/p0a/p0a-closure-20260720.json`
 - `V-D1`: `PASS`; `V-D5`: `PASS`; `V-D6`: `PASS` only in the linked post-confirmation artifact after the owner confirmed direct acquisition sources and accepted conservative non-commercial/no-redistribution restrictions.
-- P0A is `DONE`. Official UCF temporal annotations remain B-001 and block P0B real-data completion, not P0C.
+- P0A is `DONE`. The later P0B mapping and B-001 closure are complete for the temporal-annotation path; original videos and other conditional packages remain independently gated.

@@ -9,11 +9,11 @@
 - **Objective:** implement and shape/gradient-test the three mandatory control architectures without starting real-data training.
 - **In scope:** ResNet50 C5 extractor with GAP+linear; same-C5 MLP control; source-grouped CNN-LSTM temporal baseline; 14-logit and gradient tests; parameter reports; fixture-only MPS smoke.
 - **Non-goals:** pretrained checkpoint download/freeze, training recipe invention, real manifest runs, three-seed headline execution, checkpoint selection, or benefit claims.
-- **Dependencies/blockers:** P1A code-complete. P1B/B-001 blocks full P1C runs, not architecture code.
+- **Dependencies/blockers:** P1A/P0B are complete and B-001 is resolved for manifest construction. P1B real-manifest materialization and B-006 still block full P1C runs, not architecture code.
 - **Artifacts:** `models/`, tests, and fixture-only `results/p1c/` verification.
 - **Verification:** identical C5 spatial input reaches both frame heads; outputs are 14 logits; no GAP-vector spatial reshape; temporal batches retain source-group semantics; finite gradients on tested device.
 - **DoD:** code/tests pass and status states code-complete separately from run/research completion.
-- **Next action:** add and register the official UCF temporal annotations, then resolve B-006 by approving either logged MPS `warn_only` repeatability evidence or ETA-calibrated strict CPU execution.
+- **Next action:** wait for P1B real manifests, then resolve B-006 by approving either logged MPS `warn_only` repeatability evidence or ETA-calibrated strict CPU execution.
 
 ## Verification
 

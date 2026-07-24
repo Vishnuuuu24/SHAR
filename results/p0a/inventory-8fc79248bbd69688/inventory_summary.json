@@ -1,0 +1,95 @@
+{
+  "combined_content_tree_sha256": "8fc79248bbd6968897b80c7a36b63fd6873955a6190f3a7ed6111691c9f40d38",
+  "config_path": "data/registry/local_inventory.json",
+  "config_sha256": "66e2150168d6b3f39ebd18cd9748e68e41a9c2ec0d60b0d050ad02fbfc3afdc6",
+  "datasets": [
+    {
+      "component_counts": {
+        "ucf_official_annotation_support": 1,
+        "ucf_official_source_media": 1961,
+        "ucf_official_temporal_intervals_matlab": 290,
+        "ucf_official_temporal_intervals_text": 1
+      },
+      "content_tree_sha256": "769f2b5eebb0ca828866ec8658e72d49f5a561bcf222ed155f6b360400eb3994",
+      "dataset_id": "ucf_crime_official",
+      "error_count": 3,
+      "errors": [
+        {
+          "error": "ValueError: missing ISO base media ftyp box",
+          "relative_path": "raw/UCF_Crimes/Videos/Arrest/Arrest050_x264.mp4"
+        },
+        {
+          "error": "ValueError: missing ISO base media ftyp box",
+          "relative_path": "raw/UCF_Crimes/Videos/Assault/Assault017_x264.mp4"
+        },
+        {
+          "error": "ValueError: missing ISO base media ftyp box",
+          "relative_path": "raw/UCF_Crimes/Videos/Robbery/Robbery077_x264.mp4"
+        }
+      ],
+      "expectation_issues": [
+        "3 files failed content inspection"
+      ],
+      "extension_counts": {
+        ".docx": 1,
+        ".mat": 290,
+        ".mp4": 1950,
+        ".txt": 12
+      },
+      "file_count": 2253,
+      "group_counts": {
+        "annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Matlab_formate": 290,
+        "annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/ReadMe.docx": 1,
+        "annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate": 1,
+        "raw/UCF_Crimes/Action_Regnition_splits": 9,
+        "raw/UCF_Crimes/Anomaly_Detection_splits": 2,
+        "raw/UCF_Crimes/Videos": 1950
+      },
+      "ok_count": 2250,
+      "prefix_counts": {},
+      "prefix_extension_counts": {},
+      "resolution_counts": {},
+      "root": "Datasets/UCF Crime Official",
+      "total_bytes": 104744176600
+    },
+    {
+      "component_counts": {
+        "ucf_crime2local_annotations": 104
+      },
+      "content_tree_sha256": "2892ce1abc7ef2884e04c9a518b513fb41ce9c6d663d741d02598896f53c4b96",
+      "dataset_id": "ucf_crime2local",
+      "error_count": 0,
+      "errors": [],
+      "expectation_issues": [],
+      "extension_counts": {
+        "": 1,
+        ".txt": 103
+      },
+      "file_count": 104,
+      "group_counts": {
+        "annotations/extracted/UCFCrime2Local/README": 1,
+        "annotations/extracted/UCFCrime2Local/Test_split_AD.txt": 1,
+        "annotations/extracted/UCFCrime2Local/Train_split_AD.txt": 1,
+        "annotations/extracted/UCFCrime2Local/Txt annotations": 100,
+        "annotations/extracted/UCFCrime2Local/Videos_from_UCFCrime.txt": 1
+      },
+      "ok_count": 104,
+      "prefix_counts": {},
+      "prefix_extension_counts": {},
+      "resolution_counts": {},
+      "root": "Datasets/UCF-Crime2Local",
+      "total_bytes": 4460938
+    }
+  ],
+  "elapsed_seconds": 8.788,
+  "finished_at_utc": "2026-07-24T04:08:43.637173+00:00",
+  "git": {
+    "revision": "6b066d12b394a8de09a6f4f415c5f16b5131594c",
+    "worktree_status": "M core/run_lifecycle.py\n M data/contracts.py\n M data/degradations.py\n M data/grouping.py\n M data/inventory.py\n M data/registry/dataset_access.json\n M data/registry/local_inventory.json\n M docs/00_README.md\n M docs/DATA_SPEC.md\n M docs/PROJECT_STATUS.md\n M models/classifiers.py\n M scripts/inventory_data.py\n M tests/test_p0a_contracts.py\n M tests/test_p1a_framework.py\n M tests/test_p1c_models.py\n M tests/test_p2a_degradations.py\n?? configs/p0b_mapping.yaml\n?? data/ucf_intervals.py\n?? docs/P0A_DATA_INTAKE_ADDENDUM.md\n?? scripts/verify_p0b_mapping.py\n?? tests/test_p0b_mapping.py"
+  },
+  "kind": "P0A local content inventory; not a training or research result",
+  "scanner_sha256": "86e552dd21e3be93a2dfbab1329fee7a8a46ebc528646d548887ef06a7d11586",
+  "schema_version": "1.0.0",
+  "started_at_utc": "2026-07-24T04:08:34.849484+00:00",
+  "workers": 8
+}

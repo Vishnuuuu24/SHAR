@@ -22,17 +22,42 @@ def main() -> int:
     parser.add_argument("--output-root", type=Path)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--calibrate-files", type=int, default=0)
+    parser.add_argument(
+        "--dataset",
+        action="append",
+        dest="dataset_ids",
+        help="Dataset ID to inventory; repeat to select multiple optional datasets.",
+    )
+    parser.add_argument(
+        "--include-optional",
+        action="store_true",
+        help="Include opt-in dataset roots in addition to the historical default scope.",
+    )
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
     config = (args.config or repo_root / "data/registry/local_inventory.json").resolve()
     if args.workers < 1:
         parser.error("--workers must be at least 1")
     if args.calibrate_files:
-        result = calibrate(repo_root, config, args.calibrate_files, args.workers)
+        result = calibrate(
+            repo_root,
+            config,
+            args.calibrate_files,
+            args.workers,
+            args.dataset_ids,
+            args.include_optional,
+        )
         print(json.dumps(result, indent=2, sort_keys=True))
         return 0 if result["ok_files"] == result["sample_files"] else 1
     output_root = (args.output_root or repo_root / "results/p0a").resolve()
-    artifact = build_inventory(repo_root, config, output_root, args.workers)
+    artifact = build_inventory(
+        repo_root,
+        config,
+        output_root,
+        args.workers,
+        args.dataset_ids,
+        args.include_optional,
+    )
     print(artifact)
     return 0
 

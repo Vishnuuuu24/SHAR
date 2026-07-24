@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "owner-authorized UCF-Crime access verification; not a research result",
+  "verified_at": "2026-07-24",
+  "component_id": "ucf_official_temporal_annotations",
+  "kaggle_listing": "https://www.kaggle.com/datasets/minmints/ufc-crime-full-dataset",
+  "kaggle_listing_version": "Version 1",
+  "listing_package_size": "104.89 GB",
+  "local_package_root": "Datasets/UCF Crime Official",
+  "local_inventory_artifact": "results/p0a/inventory-ed66e4a2034c0585",
+  "local_annotation_text": "Datasets/UCF Crime Official/annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate/Temporal_Anomaly_Annotation.txt",
+  "local_annotation_text_sha256": "3b9542413f2ed9e94f73bf0488c151b3d7d595a8d2ad30f524e9243a2ae2a17c",
+  "package_match_basis": [
+    "The Kaggle listing exposes the UCF_Crimes layout and Temporal_Anomaly_Annotation_for_Testing_Videos text release.",
+    "The local package has the matching UCF_Crimes layout, 1950 source-video containers, the text-format release, 290 MATLAB interval files, and a successful full frame-to-interval mapping."
+  ],
+  "owner_approval_statement": "Owner authorizes use of the verified Kaggle mirror for internal non-commercial SHAR research; raw media, annotations, and derived crops may not be redistributed; upstream footage rights remain qualified.",
+  "owner_approval_statement_sha256": "0e26796388c8dd482a8c341ab120ee29de7bd492ea6833bad23476c7530d430c",
+  "email_handling": "The authenticated account email was supplied by the owner but is intentionally not stored in this repository.",
+  "eligibility": "eligible_internal_noncommercial_research_no_raw_redistribution",
+  "scope_assertions": {
+    "raw_redistribution_authorized": false,
+    "research_run_performed": false,
+    "headline_evaluation_performed": false,
+    "claim_made": false
+  }
+}

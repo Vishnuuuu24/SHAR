@@ -108,6 +108,14 @@ class GroupingTests(unittest.TestCase):
         for values in positions.values():
             self.assertEqual(values, list(range(min(values), max(values) + 1)))
 
+    def test_source_grouped_sampler_rejects_invalid_or_duplicate_indices(self) -> None:
+        with self.assertRaisesRegex(ValueError, "duplicates"):
+            SourceGroupedSampler(self.rows, [0, 0])
+        with self.assertRaisesRegex(IndexError, "outside rows"):
+            SourceGroupedSampler(self.rows, [-1])
+        with self.assertRaisesRegex(TypeError, "integers"):
+            SourceGroupedSampler(self.rows, [True])  # type: ignore[list-item]
+
 
 class MetricTests(unittest.TestCase):
     def test_hand_calculated_multiclass_metrics(self) -> None:
@@ -138,6 +146,30 @@ class MetricTests(unittest.TestCase):
 
 
 class RunLifecycleTests(unittest.TestCase):
+    def test_lifecycle_rejects_escaping_run_ids_and_unregistered_attempt_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for run_id in ("../escape", "/absolute", "nested\\escape", "."):
+                with self.subTest(run_id=run_id), self.assertRaisesRegex(ValueError, "canonical relative"):
+                    RunLifecycle.create(root, run_id, provenance(run_id))
+
+            lifecycle = RunLifecycle.create(root, "strict-attempt", provenance("strict-attempt"))
+            attempt = {
+                "attempt_id": "a1",
+                "seed": 0,
+                "status": "RUNNING",
+                "started_at": "2026-07-20T00:00:00Z",
+                "finished_at": None,
+                "reason": "fixture",
+                "hardware": {},
+                "parent_checkpoint": None,
+                "artifact_digest": None,
+                "artifact_path": None,
+                "unregistered": True,
+            }
+            with self.assertRaisesRegex(ValueError, "unregistered"):
+                lifecycle.append_attempt(attempt)
+
     def test_lifecycle_is_append_preserving_and_immutable(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             lifecycle = RunLifecycle.create(Path(temporary), "fixture-run", provenance("fixture-run"))

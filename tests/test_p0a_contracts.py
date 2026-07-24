@@ -16,7 +16,15 @@ from data.contracts import (
     validate_manifest_schema,
     validate_task_contract,
 )
-from data.inventory import PNG_SIGNATURE, build_inventory, inspect_bounded, iter_file_items
+from data.inventory import (
+    FileItem,
+    PNG_SIGNATURE,
+    build_inventory,
+    inspect_bounded,
+    inspect_file,
+    iter_file_items,
+    select_datasets,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -57,6 +65,21 @@ class InventoryTests(unittest.TestCase):
             record = self._scan(root)[0]
             self.assertEqual(record.status, "error")
             self.assertIn("IHDR", record.error)
+
+    def test_mislabeled_avi_container_is_accepted_only_when_the_config_explicitly_allows_it(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path = root / "legacy.mp4"
+            path.write_bytes(b"RIFF" + b"\x00" * 4 + b"AVI " + b"\x00" * 32)
+            item = FileItem(
+                dataset_id="fixture",
+                component_id="fixture_media",
+                root=root,
+                path=path,
+                relative_path="legacy.mp4",
+                readability_check="mp4_or_avi",
+            )
+            self.assertEqual(inspect_file(item).status, "ok")
 
     def test_symlink_is_not_followed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -103,12 +126,125 @@ class InventoryTests(unittest.TestCase):
             artifact = build_inventory(root, config_path, root / "results/p0a", workers=2)
             verification = load_json(artifact / "verification.json")
             self.assertEqual(verification["checks"]["V-D1"]["verdict"], "PASS")
+            self.assertEqual(verification["checks"]["V-D6"]["verdict"], "PASS")
+            self.assertEqual(verification["checks"]["V-D6"]["pending_core_license_evidence"], [])
+            self.assertIn(
+                "coco_2017/coco_media",
+                verification["checks"]["V-D6"]["pending_noncore_license_evidence"],
+            )
             self.assertFalse(verification["scope_assertions"]["training_performed"])
             self.assertTrue((artifact / "inventory_files.csv.gz").is_file())
             self.assertEqual(build_inventory(root, config_path, root / "results/p0a", workers=2), artifact)
             reproduction = load_json(root / "results/p0a" / f"reproduction-{artifact.name.removeprefix('inventory-')}.json")
             self.assertEqual(reproduction["verdict"], "PASS")
             self.assertTrue(reproduction["byte_identical_detailed_inventory"])
+
+    def test_optional_dataset_inventory_has_format_aware_checks_and_is_content_addressed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(REPO_ROOT / "data", root / "data")
+            ucf_root = root / "Datasets/UCF"
+            (ucf_root / "Train/Abuse").mkdir(parents=True)
+            (ucf_root / "Train/Abuse/a.png").write_bytes(fake_png(64, 64, b"a"))
+            official_root = root / "Datasets/Official"
+            (official_root / "annotations").mkdir(parents=True)
+            (official_root / "raw").mkdir()
+            (official_root / "annotations/valid.json").write_text('{"interval": [1, 2]}', encoding="utf-8")
+            (official_root / "annotations/bad.json").write_text("not json", encoding="utf-8")
+            (official_root / "annotations/range.mat").write_bytes(b"MATLAB 5.0 MAT-file".ljust(126, b" ") + b"IM")
+            (official_root / "raw/clip.avi").write_bytes(b"RIFF\x00\x00\x00\x00AVI ")
+            config = {
+                "schema_version": "test",
+                "ignored_names": [".DS_Store"],
+                "ignored_prefixes": ["._"],
+                "datasets": [
+                    {
+                        "dataset_id": "ucf_crime_kaggle_frames",
+                        "root": "Datasets/UCF",
+                        "include_extensions": [".png"],
+                        "component_rules": [{"prefix": "Train", "component_id": "fixture_train"}],
+                        "expectations": {"total_files": 1},
+                    },
+                    {
+                        "dataset_id": "official_annotations",
+                        "enabled_by_default": False,
+                        "root": "Datasets/Official",
+                        "include_extensions": [],
+                        "readability_checks": {".json": "json", ".mat": "mat", ".avi": "avi"},
+                        "component_rules": [
+                            {"prefix": "annotations", "component_id": "official_intervals"},
+                            {"prefix": "raw", "component_id": "official_media"},
+                        ],
+                        "expectations": {},
+                    },
+                ],
+            }
+            config_path = root / "data/registry/local_inventory.json"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+
+            self.assertEqual(
+                [dataset["dataset_id"] for dataset in select_datasets(config)],
+                ["ucf_crime_kaggle_frames"],
+            )
+            self.assertEqual(
+                [dataset["dataset_id"] for dataset in select_datasets(config, ["official_annotations"])],
+                ["official_annotations"],
+            )
+            artifact = build_inventory(
+                root,
+                config_path,
+                root / "results/p0a",
+                workers=2,
+                dataset_ids=["ucf_crime_kaggle_frames", "official_annotations"],
+            )
+            summary = load_json(artifact / "inventory_summary.json")
+            official = next(item for item in summary["datasets"] if item["dataset_id"] == "official_annotations")
+            self.assertEqual(official["component_counts"], {"official_intervals": 3, "official_media": 1})
+            self.assertEqual(official["error_count"], 1)
+            self.assertEqual(official["errors"][0]["relative_path"], "annotations/bad.json")
+            self.assertIn("JSONDecodeError", official["errors"][0]["error"])
+            self.assertEqual(build_inventory(
+                root,
+                config_path,
+                root / "results/p0a",
+                workers=2,
+                dataset_ids=["ucf_crime_kaggle_frames", "official_annotations"],
+            ), artifact)
+            reproduction = load_json(root / "results/p0a" / f"reproduction-{artifact.name.removeprefix('inventory-')}.json")
+            self.assertEqual(reproduction["verdict"], "PASS")
+
+    def test_optional_only_inventory_marks_ucf_check_not_evaluated(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(REPO_ROOT / "data", root / "data")
+            (root / "Datasets/Only").mkdir(parents=True)
+            (root / "Datasets/Only/annotations.json").write_text("{}", encoding="utf-8")
+            config = {
+                "schema_version": "test",
+                "datasets": [
+                    {
+                        "dataset_id": "external_only",
+                        "enabled_by_default": False,
+                        "root": "Datasets/Only",
+                        "include_extensions": [],
+                        "readability_checks": {".json": "json"},
+                        "component_rules": [],
+                        "expectations": {},
+                    }
+                ],
+            }
+            config_path = root / "data/registry/local_inventory.json"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+            artifact = build_inventory(
+                root,
+                config_path,
+                root / "results/p0a",
+                workers=1,
+                dataset_ids=["external_only"],
+            )
+            verification = load_json(artifact / "verification.json")
+            self.assertEqual(verification["checks"]["V-D1"]["verdict"], "BLOCKED")
+            self.assertIn("not selected", verification["checks"]["V-D1"]["issues"][0])
 
 
 class ContractTests(unittest.TestCase):
@@ -182,6 +318,12 @@ class ContractTests(unittest.TestCase):
         broken["datasets"][0] = dict(broken["datasets"][0])
         broken["datasets"][0]["components"] = [broken["datasets"][0]["components"][0]]
         self.assertTrue(validate_access_registry(broken))
+
+    def test_registry_validator_reports_malformed_records_without_crashing(self) -> None:
+        malformed = {"datasets": ["not-an-object", {"dataset_id": "broken", "components": "nope"}]}
+        issues = validate_access_registry(malformed)
+        self.assertIn("each dataset record must be an object", issues)
+        self.assertIn("broken components must be a list", issues)
 
 
 if __name__ == "__main__":

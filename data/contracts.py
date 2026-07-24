@@ -143,6 +143,7 @@ def validate_access_registry(registry: dict[str, Any]) -> list[str]:
         "cuhk_avenue",
         "coco_2017",
         "ava_v2_2",
+        "cuva",
         "xd_violence",
         "msad",
         "rareanom",
@@ -175,6 +176,9 @@ def validate_access_registry(registry: dict[str, Any]) -> list[str]:
     }
 
     for dataset in datasets:
+        if not isinstance(dataset, dict):
+            issues.append("each dataset record must be an object")
+            continue
         dataset_id = dataset.get("dataset_id")
         if not isinstance(dataset_id, str) or not dataset_id:
             issues.append("dataset_id must be non-empty")
@@ -183,6 +187,12 @@ def validate_access_registry(registry: dict[str, Any]) -> list[str]:
             issues.append(f"duplicate dataset_id: {dataset_id}")
         seen_dataset_ids.add(dataset_id)
         components = dataset.get("components", [])
+        if not isinstance(components, list):
+            issues.append(f"{dataset_id} components must be a list")
+            continue
+        if any(not isinstance(component, dict) for component in components):
+            issues.append(f"{dataset_id} components must contain only objects")
+            continue
         types = {component.get("component_type") for component in components}
         if types != COMPONENT_TYPES:
             issues.append(f"{dataset_id} must keep separate media and annotation records")
@@ -191,9 +201,11 @@ def validate_access_registry(registry: dict[str, Any]) -> list[str]:
             component_id = component.get("component_id")
             if missing:
                 issues.append(f"{dataset_id}/{component_id} missing fields: {sorted(missing)}")
-            if component_id in seen_component_ids:
+            if not isinstance(component_id, str) or not component_id:
+                issues.append(f"{dataset_id} component_id must be a non-empty string")
+            elif component_id in seen_component_ids:
                 issues.append(f"duplicate component_id: {component_id}")
-            if isinstance(component_id, str):
+            else:
                 seen_component_ids.add(component_id)
             if component.get("component_type") not in COMPONENT_TYPES:
                 issues.append(f"{dataset_id}/{component_id} has invalid component_type")
@@ -213,10 +225,21 @@ def validate_access_registry(registry: dict[str, Any]) -> list[str]:
     if missing_datasets:
         issues.append(f"registry is missing planned/watch datasets: {sorted(missing_datasets)}")
 
-    official = next((item for item in datasets if item.get("dataset_id") == "ucf_crime_official"), None)
+    official = next(
+        (
+            item
+            for item in datasets
+            if isinstance(item, dict) and item.get("dataset_id") == "ucf_crime_official"
+        ),
+        None,
+    )
     if official:
-        roles = {component["component_type"]: component["role"] for component in official["components"]}
+        components = official.get("components")
+        if not isinstance(components, list) or any(not isinstance(component, dict) for component in components):
+            return issues
+        roles = {
+            component.get("component_type"): component.get("role") for component in components
+        }
         if roles != {"media": "conditional", "annotations": "core"}:
             issues.append("official UCF media must be conditional while temporal annotations are core")
     return issues
-

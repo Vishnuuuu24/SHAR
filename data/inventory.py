@@ -13,6 +13,7 @@ import struct
 import subprocess
 import tempfile
 import time
+import zipfile
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
@@ -51,6 +52,7 @@ class FileItem:
     path: Path
     relative_path: str
     prohibited_symlink: bool = False
+    readability_check: str = "none"
 
 
 @dataclass(frozen=True)
@@ -74,7 +76,7 @@ def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> tuple[str, bytes, 
     with path.open("rb") as handle:
         while chunk := handle.read(chunk_size):
             if not first:
-                first = chunk[:32]
+                first = chunk[:4096]
             digest.update(chunk)
             size += len(chunk)
     return digest.hexdigest(), first, size
@@ -84,6 +86,81 @@ def png_dimensions(header: bytes) -> tuple[int, int] | None:
     if len(header) < 24 or header[:8] != PNG_SIGNATURE or header[12:16] != b"IHDR":
         return None
     return struct.unpack(">II", header[16:24])
+
+
+def _readability_check_for(dataset: dict[str, Any], extension: str) -> str:
+    """Return an explicitly configured content check, preserving legacy defaults."""
+    configured = dataset.get("readability_checks", {})
+    return str(configured.get(extension, "png" if extension == ".png" else "none"))
+
+
+def _inspect_readability(path: Path, header: bytes, check: str) -> tuple[int | None, int | None]:
+    """Perform a deterministic, format-appropriate readability check.
+
+    Checks are opt-in except for the legacy PNG IHDR validation.  Video checks
+    intentionally validate the container signature rather than decoding frames:
+    decoder availability is host-dependent and must not make a content-addressed
+    inventory non-reproducible.
+    """
+    if check == "none":
+        return None, None
+    if check == "png":
+        dimensions = png_dimensions(header)
+        if dimensions is None:
+            raise ValueError("invalid PNG signature or IHDR")
+        return dimensions
+    if check == "image":
+        from PIL import Image
+
+        with Image.open(path) as image:
+            dimensions = image.size
+            image.verify()
+        return dimensions
+    if check == "json":
+        with path.open("r", encoding="utf-8") as handle:
+            json.load(handle)
+        return None, None
+    if check == "text":
+        with path.open("r", encoding="utf-8") as handle:
+            while handle.read(1024 * 1024):
+                pass
+        return None, None
+    if check == "csv":
+        with path.open("r", encoding="utf-8", newline="") as handle:
+            for _ in csv.reader(handle):
+                pass
+        return None, None
+    if check == "mat":
+        is_mat_v5 = len(header) >= 128 and header[126:128] in (b"IM", b"MI")
+        is_mat_v73 = header.startswith(b"\x89HDF\r\n\x1a\n")
+        if not (is_mat_v5 or is_mat_v73):
+            raise ValueError("invalid MATLAB MAT-file header")
+        return None, None
+    if check == "zip":
+        with zipfile.ZipFile(path) as archive:
+            invalid_member = archive.testzip()
+        if invalid_member is not None:
+            raise ValueError(f"invalid ZIP member: {invalid_member}")
+        return None, None
+    if check == "avi":
+        if len(header) < 12 or header[:4] != b"RIFF" or header[8:12] != b"AVI ":
+            raise ValueError("invalid AVI RIFF container header")
+        return None, None
+    if check == "mp4":
+        if b"ftyp" not in header[:1024]:
+            raise ValueError("missing ISO base media ftyp box")
+        return None, None
+    if check == "mp4_or_avi":
+        if b"ftyp" in header[:1024]:
+            return None, None
+        if len(header) >= 12 and header[:4] == b"RIFF" and header[8:12] == b"AVI ":
+            return None, None
+        raise ValueError("expected ISO base media ftyp box or AVI RIFF container header")
+    if check == "ebml":
+        if not header.startswith(b"\x1aE\xdf\xa3"):
+            raise ValueError("invalid EBML container header")
+        return None, None
+    raise ValueError(f"unsupported readability check: {check}")
 
 
 def _component_for(relative_path: str, rules: list[dict[str, str]], dataset_id: str) -> str:
@@ -133,6 +210,7 @@ def iter_file_items(
                         root=root,
                         path=path,
                         relative_path=relative,
+                        readability_check=_readability_check_for(dataset, extension),
                     )
 
     yield from walk(root)
@@ -155,21 +233,7 @@ def inspect_file(item: FileItem) -> FileRecord:
         )
     try:
         digest, header, size = sha256_file(item.path)
-        dimensions = png_dimensions(header) if extension == ".png" else None
-        if extension == ".png" and dimensions is None:
-            return FileRecord(
-                item.dataset_id,
-                item.component_id,
-                item.relative_path,
-                size,
-                digest,
-                extension,
-                None,
-                None,
-                "error",
-                "invalid PNG signature or IHDR",
-            )
-        width, height = dimensions if dimensions else (None, None)
+        width, height = _inspect_readability(item.path, header, item.readability_check)
         return FileRecord(
             item.dataset_id,
             item.component_id,
@@ -300,15 +364,51 @@ def _digest_paths(paths: list[Path]) -> str:
     return digest.hexdigest()
 
 
+def select_datasets(
+    config: dict[str, Any], dataset_ids: Iterable[str] | None = None, include_optional: bool = False
+) -> list[dict[str, Any]]:
+    """Select inventory datasets while retaining the historical default scope."""
+    datasets = config.get("datasets", [])
+    indexed = {str(dataset["dataset_id"]): dataset for dataset in datasets}
+    if len(indexed) != len(datasets):
+        raise ValueError("inventory config has duplicate dataset_id values")
+    if dataset_ids is not None:
+        requested = list(dataset_ids)
+        if len(set(requested)) != len(requested):
+            raise ValueError("dataset_id values must be unique")
+        missing = sorted(set(requested) - indexed.keys())
+        if missing:
+            raise ValueError(f"unknown dataset_id values: {', '.join(missing)}")
+        return [indexed[dataset_id] for dataset_id in requested]
+    return [
+        dataset
+        for dataset in datasets
+        if include_optional or dataset.get("enabled_by_default", True)
+    ]
+
+
 def _write_json(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def calibrate(repo_root: Path, config_path: Path, file_limit: int, workers: int) -> dict[str, Any]:
+def calibrate(
+    repo_root: Path,
+    config_path: Path,
+    file_limit: int,
+    workers: int,
+    dataset_ids: Iterable[str] | None = None,
+    include_optional: bool = False,
+) -> dict[str, Any]:
     config = load_json(config_path)
     ignored_names = set(config.get("ignored_names", []))
     ignored_prefixes = tuple(config.get("ignored_prefixes", []))
-    dataset = config["datasets"][0]
+    selected = select_datasets(config, dataset_ids, include_optional)
+    if dataset_ids is None and not include_optional:
+        # Historical calibration always sampled the first configured dataset.
+        selected = selected[:1]
+    if len(selected) != 1:
+        raise ValueError("calibration requires exactly one selected dataset")
+    dataset = selected[0]
     root = repo_root / dataset["root"]
     items = itertools.islice(iter_file_items(root, dataset, ignored_names, ignored_prefixes), file_limit)
     started = time.perf_counter()
@@ -316,7 +416,7 @@ def calibrate(repo_root: Path, config_path: Path, file_limit: int, workers: int)
     elapsed = time.perf_counter() - started
     ok = sum(record.status == "ok" for record in records)
     rate = len(records) / elapsed if elapsed else 0.0
-    expected_total = sum(item.get("expectations", {}).get("total_files", 0) for item in config["datasets"])
+    expected_total = dataset.get("expectations", {}).get("total_files", 0)
     return {
         "kind": "P0A inventory calibration; not a research result",
         "sample_files": len(records),
@@ -329,7 +429,14 @@ def calibrate(repo_root: Path, config_path: Path, file_limit: int, workers: int)
     }
 
 
-def build_inventory(repo_root: Path, config_path: Path, output_root: Path, workers: int) -> Path:
+def build_inventory(
+    repo_root: Path,
+    config_path: Path,
+    output_root: Path,
+    workers: int,
+    dataset_ids: Iterable[str] | None = None,
+    include_optional: bool = False,
+) -> Path:
     config = load_json(config_path)
     access_path = repo_root / "data/registry/dataset_access.json"
     task_path = repo_root / "data/registry/task_contract.json"
@@ -350,6 +457,9 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
     dataset_summaries: list[dict[str, Any]] = []
     ignored_names = set(config.get("ignored_names", []))
     ignored_prefixes = tuple(config.get("ignored_prefixes", []))
+    selected_datasets = select_datasets(config, dataset_ids, include_optional)
+    if not selected_datasets:
+        raise ValueError("inventory selected no datasets")
     started_at = datetime.now(timezone.utc)
     started_clock = time.perf_counter()
 
@@ -361,7 +471,7 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
                 with io.TextIOWrapper(compressed, encoding="utf-8", newline="") as text_handle:
                     writer = csv.DictWriter(text_handle, fieldnames=CSV_FIELDS, lineterminator="\n")
                     writer.writeheader()
-                    for dataset in config["datasets"]:
+                    for dataset in selected_datasets:
                         root = repo_root / dataset["root"]
                         if not root.is_dir():
                             raise FileNotFoundError(f"dataset root is missing: {root}")
@@ -407,6 +517,22 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
         combined_digest = aggregate.hexdigest()
         finished_at = datetime.now(timezone.utc)
         scanner_files = [repo_root / "data/inventory.py", repo_root / "data/contracts.py"]
+        scanner_sha256 = _digest_paths(scanner_files)
+        config_sha256 = hashlib.sha256(config_path.read_bytes()).hexdigest()
+        access_registry_sha256 = hashlib.sha256(access_path.read_bytes()).hexdigest()
+        inventory_identity = hashlib.sha256(
+            json.dumps(
+                {
+                    "access_registry_sha256": access_registry_sha256,
+                    "combined_content_tree_sha256": combined_digest,
+                    "config_sha256": config_sha256,
+                    "scanner_sha256": scanner_sha256,
+                    "selected_dataset_ids": [dataset["dataset_id"] for dataset in selected_datasets],
+                },
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()
         summary = {
             "schema_version": "1.0.0",
             "kind": "P0A local content inventory; not a training or research result",
@@ -415,10 +541,12 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
             "elapsed_seconds": round(time.perf_counter() - started_clock, 3),
             "workers": workers,
             "config_path": config_path.relative_to(repo_root).as_posix(),
-            "config_sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(),
-            "scanner_sha256": _digest_paths(scanner_files),
+            "config_sha256": config_sha256,
+            "scanner_sha256": scanner_sha256,
+            "access_registry_sha256": access_registry_sha256,
             "git": _git_provenance(repo_root),
             "combined_content_tree_sha256": combined_digest,
+            "inventory_identity_sha256": inventory_identity,
             "datasets": dataset_summaries,
         }
         _write_json(temporary / "inventory_summary.json", summary)
@@ -435,28 +563,47 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
         schema_approval["verdict"] = "PASS" if not schema_approval["issues"] else "FAIL"
         _write_json(temporary / "schema_approval.json", schema_approval)
 
-        ucf_summary = next(item for item in dataset_summaries if item["dataset_id"] == "ucf_crime_kaggle_frames")
-        local_terms_unknown = [
+        ucf_summary = next(
+            (item for item in dataset_summaries if item["dataset_id"] == "ucf_crime_kaggle_frames"), None
+        )
+        pending_core_license_evidence = [
             f"{dataset['dataset_id']}/{component['component_id']}"
             for dataset in access["datasets"]
             for component in dataset["components"]
             if component["access_status"].startswith("present_local")
+            and component["role"] == "core"
             and component["license_evidence_digest"] is None
         ]
-        vd1_issues = ucf_summary["expectation_issues"]
+        pending_noncore_license_evidence = [
+            f"{dataset['dataset_id']}/{component['component_id']}"
+            for dataset in access["datasets"]
+            for component in dataset["components"]
+            if component["access_status"].startswith("present_local")
+            and component["role"] != "core"
+            and component["license_evidence_digest"] is None
+        ]
+        vd1_issues = (
+            ucf_summary["expectation_issues"]
+            if ucf_summary is not None
+            else ["ucf_crime_kaggle_frames was not selected; V-D1 was not evaluated"]
+        )
         vd5_issues = contract_issues["manifest_schema"] + contract_issues["task_contract"]
         vd6_issues = contract_issues["access_registry"]
         verification = {
             "schema_version": "1.0.0",
             "inventory_digest": combined_digest,
             "checks": {
-                "V-D1": {"verdict": "PASS" if not vd1_issues else "FAIL", "issues": vd1_issues},
+                "V-D1": {
+                    "verdict": "PASS" if ucf_summary is not None and not vd1_issues else ("BLOCKED" if ucf_summary is None else "FAIL"),
+                    "issues": vd1_issues,
+                },
                 "V-D5": {"verdict": "PASS" if not vd5_issues else "FAIL", "issues": vd5_issues},
                 "V-D6": {
-                    "verdict": "BLOCKED" if local_terms_unknown else ("PASS" if not vd6_issues else "FAIL"),
+                    "verdict": "BLOCKED" if pending_core_license_evidence else ("PASS" if not vd6_issues else "FAIL"),
                     "issues": vd6_issues,
-                    "pending_local_license_evidence": local_terms_unknown,
-                    "safety_action": "Affected use and all raw redistribution remain blocked until terms evidence is supplied.",
+                    "pending_core_license_evidence": pending_core_license_evidence,
+                    "pending_noncore_license_evidence": pending_noncore_license_evidence,
+                    "safety_action": "Affected components and all raw redistribution remain blocked until terms evidence is supplied. Conditional, optional, and watch-only components do not block the active core path.",
                 },
             },
             "scope_assertions": {
@@ -476,9 +623,9 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
                 artifact_hashes[artifact.name] = hashlib.sha256(artifact.read_bytes()).hexdigest()
         _write_json(temporary / "artifact_hashes.json", artifact_hashes)
 
-        final = output_root / f"inventory-{combined_digest[:16]}"
+        final = output_root / f"inventory-{inventory_identity[:16]}"
         if final.exists():
-            reproduction_path = output_root / f"reproduction-{combined_digest[:16]}.json"
+            reproduction_path = output_root / f"reproduction-{inventory_identity[:16]}.json"
             if reproduction_path.exists():
                 raise FileExistsError(f"reproduction evidence already exists: {reproduction_path}")
             existing_summary = load_json(final / "inventory_summary.json")
@@ -491,6 +638,8 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
                 "existing_artifact": final.relative_to(repo_root).as_posix(),
                 "existing_content_tree_sha256": existing_summary["combined_content_tree_sha256"],
                 "candidate_content_tree_sha256": combined_digest,
+                "existing_inventory_identity_sha256": existing_summary.get("inventory_identity_sha256"),
+                "candidate_inventory_identity_sha256": inventory_identity,
                 "existing_inventory_csv_sha256": existing_csv_digest,
                 "candidate_inventory_csv_sha256": candidate_csv_digest,
                 "content_tree_match": existing_summary["combined_content_tree_sha256"] == combined_digest,
@@ -498,7 +647,9 @@ def build_inventory(repo_root: Path, config_path: Path, output_root: Path, worke
             }
             reproduction["verdict"] = (
                 "PASS"
-                if reproduction["content_tree_match"] and reproduction["byte_identical_detailed_inventory"]
+                if reproduction["content_tree_match"]
+                and reproduction["byte_identical_detailed_inventory"]
+                and reproduction["existing_inventory_identity_sha256"] == inventory_identity
                 else "FAIL"
             )
             _write_json(reproduction_path, reproduction)

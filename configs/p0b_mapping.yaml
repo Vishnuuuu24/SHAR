@@ -1,0 +1,17 @@
+schema_version: 1.0.0
+status: DATA_MAPPING_ONLY_NO_MANIFEST_OR_RESEARCH
+source_dataset: ucf_crime_kaggle_frames
+frame_root: Datasets/UCF Crime Dataset Kaggle
+official_annotation_text: Datasets/UCF Crime Official/annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate/Temporal_Anomaly_Annotation.txt
+annotation_version: UCF-Crime official Temporal_Anomaly_Annotation TXT release
+interval_coordinate_system: official_source_video_frame_index
+interval_boundary_semantics: inclusive_start_inclusive_end
+frame_filename_contract: Train_or_Test/Class/<source_video_id>_<source_frame_index>.png
+quarantine_policy: exclude_from_any_manifest_until_resolved
+gates:
+  require_zero_source_video_split_leakage: true
+  require_zero_quarantined_frames: true
+  prohibited:
+    - manifest_materialization
+    - model_training
+    - headline_evaluation

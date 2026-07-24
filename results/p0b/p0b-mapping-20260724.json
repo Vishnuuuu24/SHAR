@@ -1,0 +1,33 @@
+{
+  "annotation_count": 290,
+  "annotation_version": "UCF-Crime official Temporal_Anomaly_Annotation TXT release",
+  "anomalous_test_membership_counts": {
+    "inside": 8548,
+    "outside": 37808
+  },
+  "execution_mode": "streaming_full_local_scan",
+  "frame_root": "Datasets/UCF Crime Dataset Kaggle",
+  "interval_boundary_semantics": "inclusive_start_inclusive_end",
+  "interval_coordinate_system": "official source-video frame index",
+  "kind": "P0B UCF source-video and temporal-interval mapping report",
+  "mapped_by_outer_split": {
+    "test": 111308,
+    "train": 1266345
+  },
+  "mapped_row_count": 1377653,
+  "official_annotation_sha256": "3b9542413f2ed9e94f73bf0488c151b3d7d595a8d2ad30f524e9243a2ae2a17c",
+  "official_annotation_text": "Datasets/UCF Crime Official/annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate/Temporal_Anomaly_Annotation.txt",
+  "p0b_config_sha256": "00b1a8cbaa21ad091865bdd4807e4afbaa3bf1663ebcea17abadbae4a0559be7",
+  "quarantine_examples": [],
+  "quarantine_reason_counts": {},
+  "quarantined_row_count": 0,
+  "ready_for_manifest_materialization": true,
+  "schema_version": "1.1.0",
+  "scope_assertions": {
+    "headline_evaluation": false,
+    "manifest_written": false,
+    "model_training": false
+  },
+  "source_dataset": "ucf_crime_kaggle_frames",
+  "source_video_split_leakage": {}
+}

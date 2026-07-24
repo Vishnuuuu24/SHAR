@@ -1,0 +1,27 @@
+{
+  "column_order": [
+    "filepath",
+    "source_dataset",
+    "source_video_id",
+    "source_frame_index",
+    "label",
+    "label_scope",
+    "label_source",
+    "annotation_version",
+    "inside_official_interval",
+    "split",
+    "file_digest"
+  ],
+  "inside_official_interval_null_semantics": "null for training, Normal, external-task, and not-yet-mapped rows; boolean is required for mapped anomalous UCF test rows",
+  "issues": [],
+  "quarantine_semantics": "Keep unresolved source-video mappings outside compliant manifests in a separate quarantine report.",
+  "schema": "data/schemas/frame_manifest_row.schema.json",
+  "schema_sha256": "e42ffc7c20a235d50b95ef63516e52d82628d35a0cee63ea917c8634405335cb",
+  "teacher_resolution": {
+    "checkpoint_identity": "Store exact checkpoint/version/digest in the provenance record referenced by the run or derived artifact.",
+    "evaluation_ground_truth": false,
+    "label_scope": "teacher_roi",
+    "label_source": "teacher"
+  },
+  "verdict": "PASS"
+}

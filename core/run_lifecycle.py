@@ -85,6 +85,17 @@ class RunLifecycle:
 
     @classmethod
     def create(cls, root: Path, run_id: str, provenance: dict[str, Any]) -> "RunLifecycle":
+        if not isinstance(run_id, str) or not run_id:
+            raise ValueError("run_id must be a non-empty string")
+        pure_run_id = PurePosixPath(run_id)
+        if (
+            pure_run_id.is_absolute()
+            or not pure_run_id.parts
+            or ".." in pure_run_id.parts
+            or "\\" in run_id
+            or pure_run_id.as_posix() != run_id
+        ):
+            raise ValueError("run_id must be a canonical relative POSIX path")
         if provenance.get("run_id") != run_id:
             raise ValueError("run_id must match provenance run_id")
         issues = validate_provenance(provenance)
@@ -108,6 +119,11 @@ class RunLifecycle:
         missing = ATTEMPT_FIELDS - set(attempt)
         if missing:
             raise ValueError(f"attempt missing fields: {sorted(missing)}")
+        unexpected = set(attempt) - ATTEMPT_FIELDS
+        if unexpected:
+            raise ValueError(f"attempt has unregistered fields: {sorted(unexpected)}")
+        if not isinstance(attempt["attempt_id"], str) or not attempt["attempt_id"]:
+            raise ValueError("attempt_id must be a non-empty string")
         if attempt["status"] not in {"RUNNING", *FINAL_STATUSES}:
             raise ValueError("attempt status is not registered")
         if not isinstance(attempt["seed"], int) or isinstance(attempt["seed"], bool):

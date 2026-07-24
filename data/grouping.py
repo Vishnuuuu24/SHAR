@@ -100,6 +100,21 @@ class SourceGroupedSampler:
     """Yield row indices group-by-group without changing group membership."""
 
     def __init__(self, rows: list[ManifestRow], indices: list[int], *, seed: int = 0, shuffle: bool = True):
+        if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
+            raise ValueError("seed must be a non-negative integer")
+        if not isinstance(shuffle, bool):
+            raise TypeError("shuffle must be bool")
+        if not isinstance(indices, list):
+            raise TypeError("indices must be a list of integers")
+        seen_indices: set[int] = set()
+        for index in indices:
+            if isinstance(index, bool) or not isinstance(index, int):
+                raise TypeError("indices must contain integers")
+            if index < 0 or index >= len(rows):
+                raise IndexError(f"index is outside rows: {index}")
+            if index in seen_indices:
+                raise ValueError("indices must not contain duplicates")
+            seen_indices.add(index)
         groups: dict[GroupKey, list[int]] = defaultdict(list)
         for index in indices:
             row = rows[index]

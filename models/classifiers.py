@@ -123,9 +123,18 @@ class CNNLSTMTemporalBaseline(nn.Module):
         if clips.ndim != 5 or clips.shape[2] != 3:
             raise ValueError("temporal baseline expects [batch,time,3,height,width]")
         batch, time = clips.shape[:2]
+        if not isinstance(lengths, torch.Tensor):
+            raise TypeError("lengths must be a torch.Tensor")
         if lengths.shape != (batch,):
             raise ValueError("lengths must contain one value per clip")
-        if len(source_video_ids) != batch or any(not value for value in source_video_ids):
+        if lengths.dtype not in (torch.int8, torch.int16, torch.int32, torch.int64, torch.uint8):
+            raise TypeError("lengths must use an integer dtype")
+        if lengths.device != clips.device:
+            raise ValueError("lengths and clips must be on the same device")
+        if (
+            len(source_video_ids) != batch
+            or any(not isinstance(value, str) or not value for value in source_video_ids)
+        ):
             raise ValueError("source_video_ids must identify every source-grouped clip")
         if torch.any(lengths < 1) or torch.any(lengths > time):
             raise ValueError("clip lengths must be within [1,time]")

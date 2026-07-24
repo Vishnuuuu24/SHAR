@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "ignored_names": [".DS_Store"],
   "ignored_prefixes": ["._"],
   "datasets": [
@@ -46,6 +46,107 @@
           {"prefix": "Avenue Dataset/testing_videos", "extension": ".avi", "count": 21}
         ]
       }
+    },
+    {
+      "dataset_id": "ucf_crime_official",
+      "enabled_by_default": false,
+      "root": "Datasets/UCF Crime Official",
+      "include_extensions": [],
+      "readability_checks": {
+        ".mat": "mat",
+        ".txt": "text",
+        ".docx": "zip",
+        ".avi": "avi",
+        ".mp4": "mp4_or_avi",
+        ".mkv": "ebml",
+        ".webm": "ebml"
+      },
+      "component_rules": [
+        {"prefix": "annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Matlab_formate", "component_id": "ucf_official_temporal_intervals_matlab"},
+        {"prefix": "annotations/Temporal_Anomaly_Annotation_For_Testing_Videos/Txt_formate", "component_id": "ucf_official_temporal_intervals_text"},
+        {"prefix": "annotations", "component_id": "ucf_official_annotation_support"},
+        {"prefix": "raw/UCF_Crimes", "component_id": "ucf_official_source_media"}
+      ],
+      "group_depth": 3,
+      "expectations": {}
+    },
+    {
+      "dataset_id": "ucf_crime2local",
+      "enabled_by_default": false,
+      "root": "Datasets/UCF-Crime2Local",
+      "include_extensions": [],
+      "readability_checks": {
+        ".txt": "text",
+        ".csv": "csv",
+        ".json": "json",
+        ".zip": "zip"
+      },
+      "component_rules": [
+        {"prefix": "annotations", "component_id": "ucf_crime2local_annotations"}
+      ],
+      "group_depth": 4,
+      "expectations": {}
+    },
+    {
+      "dataset_id": "coco_2017_kaggle_mirror",
+      "enabled_by_default": false,
+      "root": "Datasets/COCO 2017 Dataset Kaggle",
+      "include_extensions": [],
+      "readability_checks": {
+        ".jpg": "image",
+        ".jpeg": "image",
+        ".json": "json"
+      },
+      "component_rules": [
+        {"prefix": "train2017", "component_id": "coco_2017_train_media"},
+        {"prefix": "val2017", "component_id": "coco_2017_val_media"},
+        {"prefix": "test2017", "component_id": "coco_2017_test_media"},
+        {"prefix": "annotations", "component_id": "coco_2017_annotations"}
+      ],
+      "group_depth": 2,
+      "expectations": {}
+    },
+    {
+      "dataset_id": "ava_v22",
+      "enabled_by_default": false,
+      "root": "Datasets/AVA v2.2",
+      "include_extensions": [],
+      "readability_checks": {
+        ".csv": "csv",
+        ".txt": "text",
+        ".pbtxt": "text",
+        ".json": "json",
+        ".zip": "zip",
+        ".mp4": "mp4",
+        ".mkv": "ebml",
+        ".webm": "ebml"
+      },
+      "component_rules": [
+        {"prefix": "annotations/extracted", "component_id": "ava_v22_annotations"},
+        {"prefix": "annotations", "component_id": "ava_v22_annotation_archives"},
+        {"prefix": "raw/trainval", "component_id": "ava_v22_trainval_media"},
+        {"prefix": "raw", "component_id": "ava_v22_media_support"}
+      ],
+      "group_depth": 3,
+      "expectations": {}
+    },
+    {
+      "dataset_id": "cuva",
+      "enabled_by_default": false,
+      "root": "Datasets/CUVA",
+      "include_extensions": [],
+      "readability_checks": {
+        ".json": "json",
+        ".mp4": "mp4",
+        ".mkv": "ebml",
+        ".webm": "ebml"
+      },
+      "component_rules": [
+        {"prefix": "annotations", "component_id": "cuva_annotations"},
+        {"prefix": "raw", "component_id": "cuva_media"}
+      ],
+      "group_depth": 3,
+      "expectations": {}
     }
   ]
 }

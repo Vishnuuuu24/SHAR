@@ -1,0 +1,39 @@
+{
+  "checks": {
+    "V-D1": {
+      "issues": [
+        "ucf_crime_kaggle_frames was not selected; V-D1 was not evaluated"
+      ],
+      "verdict": "BLOCKED"
+    },
+    "V-D5": {
+      "issues": [],
+      "verdict": "PASS"
+    },
+    "V-D6": {
+      "issues": [],
+      "pending_core_license_evidence": [],
+      "pending_noncore_license_evidence": [
+        "ucf_crime_official/ucf_official_videos",
+        "ucf_crime2local/ucf_crime2local_annotations",
+        "coco_2017/coco_media",
+        "coco_2017/coco_annotations",
+        "ava_v2_2/ava_media",
+        "ava_v2_2/ava_annotations",
+        "cuva/cuva_media",
+        "cuva/cuva_annotations"
+      ],
+      "safety_action": "Affected components and all raw redistribution remain blocked until terms evidence is supplied. Conditional, optional, and watch-only components do not block the active core path.",
+      "verdict": "PASS"
+    }
+  },
+  "inventory_digest": "ed66e4a2034c05850b44b6d4cc59b2c56150f7455c427e721670ca2cc9f21235",
+  "overall_verdict": "BLOCKED",
+  "schema_version": "1.0.0",
+  "scope_assertions": {
+    "benefit_claim_made": false,
+    "headline_evaluation_performed": false,
+    "interval_mapping_performed": false,
+    "training_performed": false
+  }
+}

@@ -36,7 +36,7 @@
 ## Data requirements
 
 - **DR-1 Resolved:** the local Kaggle UCF mirror contains 64×64 images; verified totals are 1,266,345 train and 111,308 test images.
-- **DR-2:** acquire and checksum official UCF temporal annotations before the classification baseline; verify filename/frame-index alignment with known examples.
+- **DR-2 Resolved for manifest construction:** the local official UCF temporal-annotation package is the verified Kaggle mirror `minmints/ufc-crime-full-dataset`, Version 1. Its exact annotation checksum and filename/frame-index alignment pass. Use is limited to owner-authorized internal non-commercial work; raw annotations, media, and crops may not be redistributed.
 - **DR-3:** original-resolution UCF videos are required only for activated compatible ROI experiments and only if access terms are recorded. Never upsample 64×64 images and imply recovered detail.
 - **DR-4:** UCF-Crime2Local is conditional: acquire and record its six-class scope/split before reporting localization metrics or reviving custom-detector work. It does not block the core stock-ROI downstream-classification study.
 - **DR-5:** CUHK Avenue remains binary anomaly evaluation only. Its masks may not be reported as SHAR instance-segmentation ground truth.

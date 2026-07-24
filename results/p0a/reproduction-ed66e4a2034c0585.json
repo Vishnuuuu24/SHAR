@@ -1,0 +1,13 @@
+{
+  "byte_identical_detailed_inventory": true,
+  "candidate_content_tree_sha256": "ed66e4a2034c05850b44b6d4cc59b2c56150f7455c427e721670ca2cc9f21235",
+  "candidate_inventory_csv_sha256": "8ab0780dfa8cfa88dab0fad18da1706a7d7bd2a06c935da6fe0f2aa66fa1fcba",
+  "content_tree_match": true,
+  "existing_artifact": "results/p0a/inventory-ed66e4a2034c0585",
+  "existing_content_tree_sha256": "ed66e4a2034c05850b44b6d4cc59b2c56150f7455c427e721670ca2cc9f21235",
+  "existing_inventory_csv_sha256": "8ab0780dfa8cfa88dab0fad18da1706a7d7bd2a06c935da6fe0f2aa66fa1fcba",
+  "kind": "P0A unchanged-data reproducibility check; not a research result",
+  "schema_version": "1.0.0",
+  "verdict": "PASS",
+  "verified_at_utc": "2026-07-24T04:30:47.039572+00:00"
+}

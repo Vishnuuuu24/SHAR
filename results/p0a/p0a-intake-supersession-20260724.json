@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "P0A intake supersession; not a research result",
+  "superseded_artifact": "results/p0a/inventory-8fc79248bbd69688/inventory_summary.json",
+  "superseded_artifact_sha256": "ecac2787b63301c4be97fa6e2a8ea6a8eafbce2c0502e128a2fbd7a737ae964d",
+  "replacement_artifact": "results/p0a/inventory-ed66e4a2034c0585/inventory_summary.json",
+  "replacement_artifact_sha256": "fa3e396cc64ad59c31f90adccb60490dfeda32af4e110f300dc20320961a589a",
+  "reason": "The initial optional-package scanner assumed every .mp4 filename used an ISO-base-media container. Three official-UCF files are AVI RIFF containers with a .mp4 filename. Header inspection confirmed the alternate container, the checker was extended with an explicit mp4_or_avi policy, a regression test was added, and the full core intake was rerun.",
+  "scope_assertions": {
+    "dataset_content_changed": false,
+    "mapping_performed": false,
+    "training_performed": false,
+    "research_claim_made": false
+  }
+}
